@@ -1,0 +1,5 @@
+{
+  "ruby.rubocop.suppressRubocopWarnings": true,
+  "ruby.rubocop.onSave": false,
+  "ruby.format": false
+}

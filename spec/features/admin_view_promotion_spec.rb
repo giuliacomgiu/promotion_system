@@ -62,13 +62,11 @@ feature 'Admin view promotions' do
   end
 
   scenario 'and return to promotions page' do
-    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
-                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033')
+    @promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+                                   code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
+                                   expiration_date: '22/12/2033')
 
-    visit root_path
-    click_on 'Promoções'
-    click_on 'Natal'
+    visit promotion_path(@promotion)
     click_on 'Voltar'
 
     expect(current_path).to eq promotions_path
