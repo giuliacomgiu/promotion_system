@@ -28,4 +28,15 @@ describe Promotion do
       expect(promotion.errors[:code]).to include('deve ser único')
     end
   end
+
+  context 'deletion' do
+    it 'is destroyed successfully' do
+      promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+                                    code: 'NATAL10', discount_rate: 10,
+                                    coupon_quantity: 100, expiration_date: '22/12/2033')
+      promotion.destroy!
+
+      expect(promotion.destroyed?).to be true
+    end
+  end
 end
