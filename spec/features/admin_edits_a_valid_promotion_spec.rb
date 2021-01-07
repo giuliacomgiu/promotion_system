@@ -1,14 +1,16 @@
 require 'rails_helper'
 
-feature 'Admin registers a valid promotion' do
-  scenario 'and attributes cannot be blank' do
+feature 'Admin edits a valid promotion' do
+  scenario 'and items cannot be blank' do
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033')
 
     visit root_path
     click_on 'Promoções'
-    click_on 'Registrar uma promoção'
+    click_on 'Natal'
+    click_on 'Editar'
+
     fill_in 'Nome', with: ''
     fill_in 'Descrição', with: ''
     fill_in 'Código', with: ''
@@ -24,11 +26,16 @@ feature 'Admin registers a valid promotion' do
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033')
+    Promotion.create!(name: 'Natal Melhor', description: 'Promoção de Natal',
+                      code: 'NATAL20', discount_rate: 10, coupon_quantity: 100,
+                      expiration_date: '22/12/2033')
 
     visit root_path
     click_on 'Promoções'
-    click_on 'Registrar uma promoção'
-    fill_in 'Código', with: 'NATAL10'
+    click_on 'Natal'
+    click_on 'Editar'
+
+    fill_in 'Código', with: 'NATAL20'
     click_on 'Salvar promoção'
 
     expect(page).to have_content('deve ser único')

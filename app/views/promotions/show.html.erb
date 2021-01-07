@@ -11,5 +11,6 @@
   <dd><%= @promotion.coupon_quantity %></dd>
 </dl>
 
+<%= link_to 'Editar', edit_promotion_path(@promotion) %>
 <%= link_to 'Deletar', @promotion, method: :delete %>
 <%= link_to 'Voltar', promotions_path %>

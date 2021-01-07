@@ -20,10 +20,26 @@ class PromotionsController < ApplicationController
     end
   end
 
+  def edit
+    @promotion = Promotion.find(params[:id])
+  end
+
+  def update
+    @promotion = Promotion.find(params[:id])
+
+    if @promotion.update(promotion_params)
+      redirect_to @promotion
+    else
+      render :edit
+    end
+  end
+
   def destroy
     Promotion.find(params[:id]).destroy
     redirect_to promotions_path
   end
+
+  private
 
   def promotion_params
     params
