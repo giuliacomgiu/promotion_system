@@ -1,0 +1,6 @@
+<dl>
+  <% @product_categories.each do |product_category| %>
+    <dt><%= product_category.code %></dt>
+    <dd><%= product_category.name%></dd>
+  <% end %>
+</dl>
