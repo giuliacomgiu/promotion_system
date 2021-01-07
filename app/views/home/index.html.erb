@@ -1,5 +1,12 @@
 <h1>Promotion System</h1>
 <p>Boas vindas ao sistema de gestão de promoções</p>
 
+<% if user_signed_in? %>
+  <p><%= current_user.email %></p>
+  <%= link_to 'Sair', root_path %>
+<% else %>
+  <%= link_to "Login", new_user_session_path%>
+<% end %>
+
 <%= link_to "Promoções", promotions_path %>
 <%= link_to "Categorias de produto", product_categories_path %>
