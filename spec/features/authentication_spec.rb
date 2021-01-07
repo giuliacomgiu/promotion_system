@@ -11,13 +11,13 @@ feature 'Log in' do
     click_on 'Entrar'
 
     expect(current_path).to eq(root_path)
-    # expect(page).to have_content('Login efetuado com sucesso')
+    expect(page).to have_content('Login efetuado com sucesso')
     expect(page).to have_content('teste@email.com')
     expect(page).not_to have_link('Login')
     expect(page).to have_link('Sair')
   end
 
-  scenario 'and logout' do
+  xscenario 'and logout' do
     User.create!(email: 'teste@email.com', password: 'teste1')
 
     visit root_path
