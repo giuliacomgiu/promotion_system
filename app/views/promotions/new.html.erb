@@ -1,3 +1,7 @@
+<% @promotion.errors.full_messages.each do |message| %>
+  <p><%= message %></p>
+<% end %>
+
 <%= form_with model: @promotion do |f| %>
   <p><%= f.label :name, "Nome" %></p>
   <p><%= f.text_field :name %></p>
