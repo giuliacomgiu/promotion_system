@@ -42,7 +42,7 @@ describe Promotion do
 
   context 'editing' do
     it 'edits successfully' do
-      promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+      promotion = Promotion.new(name: 'Natal', description: 'Promoção de Natal',
                                     code: 'NATAL10', discount_rate: 10,
                                     coupon_quantity: 100, expiration_date: '22/12/2033')
       promotion.update!(name: 'Pascoa', code: 'PASCOA20', description: 'Promoção de páscoa')
