@@ -35,8 +35,8 @@ feature 'Log in' do
   end
 end
 
-feature 'Register' do
-  scenario 'with correct domain' do
+feature 'Registers' do
+  scenario 'fails with incorrect domain' do
     visit root_path
     click_on 'Cadastre-se'
     fill_in 'Email', with: 'teste@email.com.br'
@@ -44,7 +44,20 @@ feature 'Register' do
     fill_in 'Confirme sua senha', with: 'teste1'
     click_on 'Cadastrar'
 
-    expect(page).to have_content('Email inválido')
-    expect(page).to have_link('Log In')
+    expect(page).to have_content('Email não é válido')
+    expect(page).to have_content('Log in')
+  end
+
+  scenario 'successfully' do
+    visit new_user_registration_path
+    fill_in 'Email', with: 'teste@locaweb.com.br'
+    fill_in 'Senha', with: 'teste1'
+    fill_in 'Confirme sua senha', with: 'teste1'
+    click_on 'Cadastrar'
+
+    expect(page).to have_content('Login efetuado com sucesso')
+    expect(page).to have_content('teste@locaweb.com.br')
+    expect(page).not_to have_link('Login')
+    expect(page).to have_link('Sair')
   end
 end
