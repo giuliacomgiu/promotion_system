@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 feature 'Admin deletes a promotion' do
+  background do
+    user = User.create!(email: 'test@example.com', password: 'f4k3p455w0rd')
+    login_as(user, scope: :user)
+  end
+
   scenario 'and it succeeds' do
     Promotion.create!(name: 'Cyber Monday', coupon_quantity: 90,
                       description: 'Promoção de Cyber Monday',

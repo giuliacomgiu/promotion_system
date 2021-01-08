@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 feature 'Admin view promotions' do
+  background do
+    user = User.create!(email: 'test@example.com', password: 'f4k3p455w0rd')
+    login_as(user, scope: :user)
+  end
+
   scenario 'successfully' do
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,

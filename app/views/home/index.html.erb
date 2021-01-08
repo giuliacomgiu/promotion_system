@@ -2,10 +2,11 @@
 <p>Boas vindas ao sistema de gestão de promoções</p>
 
 <% if user_signed_in? %>
+  <%= link_to 'Sair', destroy_user_session_path, method: :delete %>
   <p><%= current_user.email %></p>
-  <%= link_to 'Sair', root_path %>
 <% else %>
   <%= link_to "Login", new_user_session_path%>
+  <%= link_to "Cadastre-se", new_user_registration_path%>
 <% end %>
 
 <%= link_to "Promoções", promotions_path %>

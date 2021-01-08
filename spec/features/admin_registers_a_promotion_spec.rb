@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 feature 'Admin registers a promotion' do
+  background do
+    user = User.create!(email: 'test@example.com', password: 'f4k3p455w0rd')
+    login_as(user, scope: :user)
+  end
+
   scenario 'from index page' do
     visit root_path
     click_on 'Promoções'
