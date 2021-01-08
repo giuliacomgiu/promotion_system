@@ -5,4 +5,8 @@
   <% end %>
 </dl>
 
+<% if @product_categories.empty? %>
+  <p>Nenhuma categoria de produto cadastrada</p>
+<% end %>
+
 <%= link_to "Voltar", root_path %>
