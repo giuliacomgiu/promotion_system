@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Admin registers a valid promotion' do
   background do
-    user = User.create!(email: 'test@example.com', password: 'f4k3p455w0rd')
+    user = User.create!(email: 'test@locaweb.com.br', password: 'f4k3p455w0rd')
     login_as(user, scope: :user)
   end
 

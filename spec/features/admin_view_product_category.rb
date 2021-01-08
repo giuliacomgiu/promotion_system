@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 feature 'Admin views product category' do
+  background do
+    user = User.create!(email: 'test@locaweb.com.br', password: 'f4k3p455w0rd')
+    login_as(user, scope: :user)
+  end
+
   scenario 'successfully' do
     ProductCategory.create!(name: 'Hospedagem', code: 'HOSP')
     ProductCategory.create!(name: 'E-mail', code: 'EMAIL')
@@ -15,9 +20,13 @@ feature 'Admin views product category' do
     expect(page).to have_link('Voltar', href: root_path)
   end
 
-  xscenario 'and shows empty message' do
+  scenario 'and shows empty message' do
+    visit product_categories_path
+
+    expect(page).to have_content('Nenhuma categoria de produto cadastrada')
   end
 
   xscenario 'and views details' do
+    # what details? irrelevant for now
   end
 end
