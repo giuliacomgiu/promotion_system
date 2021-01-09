@@ -2,5 +2,5 @@ Rails.application.routes.draw do
   devise_for :users
   root 'home#index'
   resources :promotions
-  resources :product_categories, only: %i[index new create show]
+  resources :product_categories, only: %i[index new create show destroy]
 end

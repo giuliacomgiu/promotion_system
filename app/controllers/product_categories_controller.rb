@@ -23,6 +23,10 @@ class ProductCategoriesController < ApplicationController
     @product_category = ProductCategory.find(params[:id])
   end
 
+  def destroy
+    redirect_to action: 'index' if ProductCategory.find(params[:id]).destroy
+  end
+
   private
 
   def product_category_params
