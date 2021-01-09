@@ -5,4 +5,8 @@ class ProductCategory < ApplicationRecord
   def code
     self[:code].upcase if self[:code].present?
   end
+
+  def code=(val)
+    self[:code] = val.upcase
+  end
 end
