@@ -25,7 +25,17 @@ describe Promotion do
 
       promotion.valid?
 
-      expect(promotion.errors[:code]).to include('deve ser único')
+      expect(promotion.errors[:code]).to include('já está em uso')
+    end
+
+    it 'code is case insensitive' do
+      Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+                        code: 'NATAL10', discount_rate: 10,
+                        coupon_quantity: 100, expiration_date: '22/12/2033')
+      promotion = Promotion.new(code: 'NATAL10')
+      promotion.valid?
+
+      expect(promotion.errors.of_kind?(:code, :taken)).to be true
     end
   end
 
@@ -40,7 +50,7 @@ describe Promotion do
 
       promotion.update(code: 'NATAL10')
 
-      expect(promotion.errors[:code]).to include('deve ser único')
+      expect(promotion.errors[:code]).to include('já está em uso')
     end
 
     it 'validates non blank fields' do
@@ -49,7 +59,7 @@ describe Promotion do
                                     coupon_quantity: 100, expiration_date: '22/12/2033')
 
       promotion.update(name: '', code: '', discount_rate: '',
-                        coupon_quantity: '', expiration_date: '')
+                       coupon_quantity: '', expiration_date: '')
 
       expect(promotion.errors[:name]).to include('não pode ficar em branco')
       expect(promotion.errors[:code]).to include('não pode ficar em branco')

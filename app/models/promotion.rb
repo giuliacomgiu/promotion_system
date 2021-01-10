@@ -3,5 +3,13 @@ class Promotion < ApplicationRecord
             :coupon_quantity, :expiration_date,
             presence: { message: 'não pode ficar em branco' }
 
-  validates :code, uniqueness: { message: 'deve ser único' }
+  validates :code, uniqueness: { case_sensitive: false }
+
+  def code
+    self[:code].upcase if self[:code].present?
+  end
+
+  def code=(val)
+    self[:code] = val.upcase
+  end
 end

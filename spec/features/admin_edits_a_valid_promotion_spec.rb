@@ -43,6 +43,6 @@ feature 'Admin edits a valid promotion' do
     fill_in 'Código', with: 'NATAL20'
     click_on 'Salvar promoção'
 
-    expect(page).to have_content('deve ser único')
+    expect(page).to have_content('já está em uso')
   end
 end
