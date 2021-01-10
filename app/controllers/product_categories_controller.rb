@@ -1,5 +1,6 @@
 class ProductCategoriesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_product_category, only: %i[edit update show destory]
 
   def index
     @product_categories = ProductCategory.all
@@ -19,15 +20,27 @@ class ProductCategoriesController < ApplicationController
     end
   end
 
-  def show
-    @product_category = ProductCategory.find(params[:id])
+  def show; end
+
+  def edit; end
+
+  def update
+    if @product_category.update(product_category_params)
+      redirect_to @product_category
+    else
+      render :edit
+    end
   end
 
   def destroy
-    redirect_to action: 'index' if ProductCategory.find(params[:id]).destroy
+    redirect_to action: 'index' if @product_category.destroy
   end
 
   private
+
+  def set_product_category
+    @product_category = ProductCategory.find(params[:id])
+  end
 
   def product_category_params
     params.require(:product_category).permit(:name, :code)
