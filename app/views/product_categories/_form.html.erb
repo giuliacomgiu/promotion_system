@@ -1,7 +1,7 @@
 <%= form_with model: product_category do |f| %>
-  <%= f.label :name, "Nome" %>
+  <%= f.label :name %>
   <%= f.text_field :name %>
-  <%= f.label :code, "Código" %>
+  <%= f.label :code %>
   <%= f.text_field :code %>
   <%= f.submit "Salvar categoria" %>
 <% end %>
