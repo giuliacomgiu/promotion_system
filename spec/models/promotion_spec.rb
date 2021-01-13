@@ -90,7 +90,7 @@ describe Promotion do
       expect(coupons.map(&:persisted?)).to all be_truthy
       expect(coupons.map(&:code)).to contain_exactly('CYBER15-0001', 'CYBER15-0002')
     end
-    
+
     it 'cant be issued twice' do
       promotion = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 2,
                                     description: 'Promoção de Cyber Monday',
@@ -99,9 +99,19 @@ describe Promotion do
       promotion.issue_coupons!
       coupons = promotion.coupons
 
-      expect{ promotion.issue_coupons! }.to raise_error('Cupons já foram gerados!')
+      expect { promotion.issue_coupons! }.to raise_error('Cupons já foram gerados!')
       expect(coupons.count).to eq 2
       expect(coupons.map(&:code)).to contain_exactly('CYBER15-0001', 'CYBER15-0002')
+    end
+
+    it 'cant issue coupons after promotion\'s expiration date' do
+      promotion = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 2,
+                                    description: 'Promoção de Cyber Monday',
+                                    code: 'CYBER15', discount_rate: 15,
+                                    expiration_date: '22/12/1933')
+
+      expect { promotion.issue_coupons! }.to raise_error('A promoção já expirou')
+      expect(promotion.coupons).to be_empty
     end
   end
 end

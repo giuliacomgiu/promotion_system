@@ -17,10 +17,19 @@ class Promotion < ApplicationRecord
 
   def issue_coupons!
     raise 'Cupons já foram gerados!' if coupons.any?
+    raise 'A promoção já expirou' if expired?
 
     coupons
       .create_with(created_at: Time.now, updated_at: Time.now)
       .insert_all!(coupon_codes)
+  end
+
+  def expired?
+    Time.now > expiration_date
+  end
+
+  def unexpired?
+    !expired?
   end
 
   private

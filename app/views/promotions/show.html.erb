@@ -15,7 +15,7 @@
 <%= link_to 'Deletar', @promotion, method: :delete %>
 <%= link_to 'Voltar', promotions_path %>
 
-<% if @promotion.coupons.empty? %>
+<% if(@promotion.coupons.empty? and @promotion.unexpired?) %>
   <%= link_to 'Emitir cupons', issue_coupons_promotion_path(@promotion), method: :post %>
 <% else %>
   <h1>Cupons</h1>
