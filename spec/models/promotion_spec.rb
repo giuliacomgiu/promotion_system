@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Promotion do
-  context 'validation' do
+  context 'validation on create' do
     it 'attributes cannot be blank' do
       promotion = Promotion.new
 
@@ -32,15 +32,15 @@ describe Promotion do
       Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                         code: 'NATAL10', discount_rate: 10,
                         coupon_quantity: 100, expiration_date: '22/12/2033')
-      promotion = Promotion.new(code: 'NATAL10')
+      promotion = Promotion.new(code: 'natal10')
       promotion.valid?
 
       expect(promotion.errors.of_kind?(:code, :taken)).to be true
     end
   end
 
-  context 'editing' do
-    it 'validates code\'s uniqueness' do
+  context 'validation on edit' do
+    it 'code must be unique' do
       Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                         code: 'NATAL10', discount_rate: 10,
                         coupon_quantity: 100, expiration_date: '22/12/2033')
@@ -53,7 +53,7 @@ describe Promotion do
       expect(promotion.errors[:code]).to include('já está em uso')
     end
 
-    it 'validates non blank fields' do
+    it 'attributes cannot be blank' do
       promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                                     code: 'NATAL20', discount_rate: 10,
                                     coupon_quantity: 100, expiration_date: '22/12/2033')
@@ -66,6 +66,42 @@ describe Promotion do
       expect(promotion.errors[:discount_rate]).to include('não pode ficar em branco')
       expect(promotion.errors[:coupon_quantity]).to include('não pode ficar em branco')
       expect(promotion.errors[:expiration_date]).to include('não pode ficar em branco')
+    end
+  end
+
+  context '#code' do
+    it 'must save in uppercase' do
+      promotion = Promotion.new(code: 'test')
+
+      expect(promotion.code).to eq 'TEST'
+    end
+  end
+
+  context '#issue_coupons!' do
+    it 'for the first time in a promotion' do
+      promotion = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 2,
+                                    description: 'Promoção de Cyber Monday',
+                                    code: 'CYBER15', discount_rate: 15,
+                                    expiration_date: '22/12/2033')
+      promotion.issue_coupons!
+      coupons = promotion.coupons
+
+      expect(coupons.count).to eq 2
+      expect(coupons.map(&:persisted?)).to all be_truthy
+      expect(coupons.map(&:code)).to contain_exactly('CYBER15-0001', 'CYBER15-0002')
+    end
+    
+    it 'cant be issued twice' do
+      promotion = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 2,
+                                    description: 'Promoção de Cyber Monday',
+                                    code: 'CYBER15', discount_rate: 15,
+                                    expiration_date: '22/12/2033')
+      promotion.issue_coupons!
+      coupons = promotion.coupons
+
+      expect{ promotion.issue_coupons! }.to raise_error('Cupons já foram gerados!')
+      expect(coupons.count).to eq 2
+      expect(coupons.map(&:code)).to contain_exactly('CYBER15-0001', 'CYBER15-0002')
     end
   end
 end

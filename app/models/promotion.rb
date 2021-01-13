@@ -16,12 +16,18 @@ class Promotion < ApplicationRecord
   end
 
   def issue_coupons!
-    codes =
-      (1..coupon_quantity).map do |number|
-        { code: "#{code}-#{'%04d' % number}" }
-      end
+    raise 'Cupons já foram gerados!' if coupons.any?
+
     coupons
       .create_with(created_at: Time.now, updated_at: Time.now)
-      .insert_all!(codes)
+      .insert_all!(coupon_codes)
+  end
+
+  private
+
+  def coupon_codes
+    (1..coupon_quantity).map do |amount|
+      { code: "#{code}-#{'%04d' % amount}" }
+    end
   end
 end

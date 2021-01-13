@@ -22,7 +22,4 @@ feature 'Admin generates coupons' do
     expect(page).to have_content('Cupons gerados com sucesso')
     expect(page).not_to have_link('Emitir cupons')
   end
-
-  xscenario 'and coupons cant be issued twice' do
-  end
 end
