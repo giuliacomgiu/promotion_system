@@ -14,3 +14,16 @@
 <%= link_to 'Editar', edit_promotion_path(@promotion) %>
 <%= link_to 'Deletar', @promotion, method: :delete %>
 <%= link_to 'Voltar', promotions_path %>
+
+<% if @promotion.coupons.empty? %>
+  <%= link_to 'Emitir cupons', issue_coupons_promotion_path(@promotion), method: :post %>
+<% else %>
+  <h1>Cupons</h1>
+
+  <% @promotion.coupons.each do |coupon| %>
+    <dl>
+      <dt>Código</dt>
+      <dd><%= coupon.code %></dd>
+    </dl>
+  <% end %>
+<% end %>

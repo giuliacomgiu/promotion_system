@@ -1,6 +1,6 @@
 class PromotionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_promotion, only: %i[show edit update destroy]
+  before_action :set_promotion, only: %i[show edit update destroy issue_coupons]
 
   def index
     @promotions = Promotion.all
@@ -34,6 +34,13 @@ class PromotionsController < ApplicationController
   def destroy
     @promotion.destroy
     redirect_to promotions_path
+  end
+
+  def issue_coupons
+    @promotion.issue_coupons!
+    flash[:success] = 'Cupons gerados com sucesso'
+
+    redirect_to @promotion
   end
 
   private
