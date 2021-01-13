@@ -5,4 +5,7 @@ Rails.application.routes.draw do
     post 'issue_coupons', on: :member
   end
   resources :product_categories
+  resources :coupons, only: [] do
+    put :archive, on: :member
+  end
 end

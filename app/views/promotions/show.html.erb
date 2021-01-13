@@ -23,7 +23,12 @@
   <% @promotion.coupons.each do |coupon| %>
     <dl>
       <dt>Código</dt>
-      <dd><%= coupon.code %></dd>
+      <% if coupon.active? %>
+        <dd><%= coupon.code %></dd>
+        <dd><%= link_to 'Arquivar', archive_coupon_path(coupon), method: :put %></dd>
+      <% elsif coupon.archived? %>
+        <dd><%= "#{coupon.code} (arquivado)" if coupon.archived? %></dd>
+      <% end %>
     </dl>
   <% end %>
 <% end %>
