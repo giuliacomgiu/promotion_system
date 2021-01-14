@@ -17,7 +17,7 @@ feature 'Admin archives coupon' do
     click_on 'Arquivar'
 
     expect(page).to have_content('Cupom arquivado com sucesso')
-    expect(page).to have_content('CYBER15-0001 (arquivado)')
+    expect(page).to have_content('CYBER15-0001 (Arquivado)')
     expect(page).not_to have_link('Arquivar')
     expect(coupon.reload).to be_archived
   end

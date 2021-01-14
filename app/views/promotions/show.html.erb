@@ -1,13 +1,13 @@
 <h3><%= @promotion.name %></h3>
 <p><%= @promotion.description %></p>
 <dl>
-  <dt> Desconto (%) </dt>
+  <dt> <%= Promotion.human_attribute_name('discount_rate') %> </dt>
   <dd><%= number_to_percentage @promotion.discount_rate, precision: 2, separator: ',' %></dd>
-  <dt> Código da promoção </dt>
+  <dt> <%= Promotion.human_attribute_name('code') %> </dt>
   <dd><%= @promotion.code %></dd>
-  <dt> Prazo da promoção </dt>
+  <dt> <%= Promotion.human_attribute_name('expiration_date') %> </dt>
   <dd><%= @promotion.expiration_date.strftime('%d/%m/%Y') %></dd>
-  <dt> Número de cupons </dt>
+  <dt> <%= Promotion.human_attribute_name('coupon_quantity') %> </dt>
   <dd><%= @promotion.coupon_quantity %></dd>
 </dl>
 
@@ -18,17 +18,7 @@
 <% if(@promotion.coupons.empty? and @promotion.unexpired?) %>
   <%= link_to 'Emitir cupons', issue_coupons_promotion_path(@promotion), method: :post %>
 <% else %>
-  <h1>Cupons</h1>
+  <h1><%= Coupon.model_name.human(count:2) %></h1>
 
-  <% @promotion.coupons.each do |coupon| %>
-    <dl>
-      <dt>Código</dt>
-      <% if coupon.active? %>
-        <dd><%= coupon.code %></dd>
-        <dd><%= link_to 'Arquivar', archive_coupon_path(coupon), method: :put %></dd>
-      <% elsif coupon.archived? %>
-        <dd><%= "#{coupon.code} (arquivado)" if coupon.archived? %></dd>
-      <% end %>
-    </dl>
-  <% end %>
+  <%= render @promotion.coupons %>
 <% end %>

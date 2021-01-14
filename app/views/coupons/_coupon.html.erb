@@ -1,0 +1,7 @@
+<dl>
+  <dt><%= Coupon.human_attribute_name('code') %></dt>
+  <dd><%= coupon.code %></dd>
+  <dd><%= coupon.name %> 
+      <%= link_to t('.archive_coupon'), archive_coupon_path(coupon), method: :put if coupon.active? %>
+  </dd>
+</dl>
