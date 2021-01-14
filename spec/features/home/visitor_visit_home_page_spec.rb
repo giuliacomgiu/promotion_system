@@ -9,9 +9,10 @@ feature 'Visitor visits home page' do
                                  'promoções')
   end
 
-  xscenario 'and doesnt see the website\'s paths' do
+  scenario 'and doesnt see the website\'s paths' do
     visit root_path
 
     expect(page).not_to have_link('Promoções', href: promotions_path)
+    expect(page).not_to have_link('Categorias de produto', href: product_categories_path)
   end
 end
