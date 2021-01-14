@@ -3,7 +3,7 @@ pt-BR:
     models:
       product_category:
         one: "Categoria de produto"
-        other: "Categoria de produtos"
+        other: "Categorias de produtos"
     attributes:
       product_category:
         name: "Nome"

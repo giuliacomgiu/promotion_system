@@ -1,0 +1,16 @@
+pt-BR:
+  activerecord:
+    models:
+      coupon:
+        one: "Cupom"
+        other: "Cupons"
+    attributes:
+      coupon:
+        promotion: "Promoção"
+        code: "Código do cupom"
+      coupon/status:
+        active: "Disponível"
+        archived: "Arquivado"
+  coupons:
+    archive:
+      success: "Cupom arquivado com sucesso"
