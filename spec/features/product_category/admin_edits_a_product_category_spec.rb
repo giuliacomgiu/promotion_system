@@ -7,11 +7,11 @@ feature 'Admin edits a product category' do
   end
 
   scenario 'and succeeds' do
-    product_category = ProductCategory.create!(name: 'test', code: 'test')
+    product_category = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
 
     visit root_path
     click_on 'Categorias de produto'
-    click_on 'test'
+    click_on 'Wordpress'
     click_on 'Editar'
 
     fill_in 'Nome',	with: 'Novo'
@@ -21,8 +21,8 @@ feature 'Admin edits a product category' do
     expect(current_path).to eq product_category_path(product_category)
     expect(page).to have_content('Novo')
     expect(page).to have_content('NOVO')
-    expect(page).not_to have_content('test')
-    expect(page).not_to have_content('TEST')
+    expect(page).not_to have_content('Wordpress')
+    expect(page).not_to have_content('WORDP')
   end
 
   scenario 'and items cannot be blank' do
