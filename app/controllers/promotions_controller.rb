@@ -43,6 +43,12 @@ class PromotionsController < ApplicationController
     redirect_to @promotion
   end
 
+  def search
+    query_param = "%#{params[:query]}%"
+    @promotions = Promotion.where('name LIKE ? OR description LIKE ?',
+                                  query_param, query_param)
+  end
+
   private
 
   def set_promotion

@@ -1,9 +1,8 @@
 <%= link_to 'Registrar uma promoção', new_promotion_path %>
-<% @promotions.each do |promotion| %>
-  <h3><%= link_to promotion.name, promotion %></h3>
-  <p><%= promotion.description %></p>
-  <p><%= number_to_percentage promotion.discount_rate, precision: 2, separator: ',' %></p>
-<% end %>
+
+<%= render 'search' %>
+
+<%= render partial: 'promotions_preview', locals: { promotions: @promotions } %>
 
 <% if @promotions.empty? %>
   <p>Nenhuma promoção cadastrada</p>

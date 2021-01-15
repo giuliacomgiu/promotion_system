@@ -18,12 +18,13 @@ feature 'Admin searches for a coupon' do
     fill_in 'Buscar cupom',	with: 'PASCOA10'
     click_on 'Buscar'
 
+    expect(page).to have_content 'Os seguintes resultados foram encontrados'
     expect(page).to have_content 'PASCOA10-0001'
     expect(page).to have_content 'PASCOA10-0002'
     expect(page).to have_link('Voltar', href: root_path)
   end
 
-  scenario 'and displays blank message' do
+  scenario 'and no results message is displayed' do
     visit root_path
 
     fill_in 'Buscar cupom',	with: 'PASCOA10'
