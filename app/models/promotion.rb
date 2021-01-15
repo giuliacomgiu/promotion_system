@@ -28,7 +28,7 @@ class Promotion < ApplicationRecord
     Time.now > expiration_date
   end
 
-  def unexpired?
+  def not_expired?
     !expired?
   end
 

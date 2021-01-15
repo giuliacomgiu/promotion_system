@@ -114,4 +114,32 @@ describe Promotion do
       expect(promotion.coupons).to be_empty
     end
   end
+
+  context '#expired?' do
+    it 'returns true if expired' do
+      promotion = Promotion.new(expiration_date: 1.day.ago)
+
+      expect(promotion.expired?).to be true
+    end
+
+    it 'returns false if not expired' do
+      promotion = Promotion.new(expiration_date: 1.day.from_now)
+
+      expect(promotion.expired?).to be false
+    end
+  end
+
+  context '#not_expired?' do
+    it 'returns false if expired' do
+      promotion = Promotion.new(expiration_date: 1.day.ago)
+
+      expect(promotion.not_expired?).to be false
+    end
+
+    it 'returns true if not expired' do
+      promotion = Promotion.new(expiration_date: 1.day.from_now)
+
+      expect(promotion.not_expired?).to be true
+    end
+  end
 end
