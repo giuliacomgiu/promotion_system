@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :product_categories
   resources :coupons, only: [] do
     put :archive, on: :member
+    get :search, on: :collection
   end
 
   namespace :api do

@@ -14,5 +14,7 @@ feature 'Visitor visits home page' do
 
     expect(page).not_to have_link('Promoções', href: promotions_path)
     expect(page).not_to have_link('Categorias de produto', href: product_categories_path)
+    expect(page).not_to have_content('Buscar cupom')
+    expect(page).not_to have_button('Buscar')
   end
 end
