@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
   resources :product_categories
   resources :coupons, only: [] do
-    put :archive, on: :member
+    put :archive, :reactivate, on: :member
     get :search, on: :collection
   end
 

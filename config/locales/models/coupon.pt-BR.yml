@@ -14,5 +14,8 @@ pt-BR:
   coupons:
     archive:
       success: "Cupom arquivado com sucesso"
+    reactivate:
+      success: "Cupom reativado com sucesso"
     coupon:
       archive_coupon: "Arquivar"
+      reactivate_coupon: "Reativar"
