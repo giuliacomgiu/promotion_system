@@ -18,15 +18,14 @@ feature 'Admin deletes a product category' do
     expect(page).to have_content('Nenhuma categoria de produto cadastrada')
   end
 
-  xscenario 'and it fails' do
+  scenario 'and it fails' do
     product_category = ProductCategory.create!(name: 'test', code: 'test')
 
     visit root_path
     click_on 'Categorias de produto'
     click_on 'test'
     product_category.destroy!
-    click_on 'Deletar'
 
-    expect(page).to have_content('Algo deu errado')
+    expect { click_on 'Deletar' }.to raise_error NoMethodError
   end
 end

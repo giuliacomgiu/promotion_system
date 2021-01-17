@@ -43,4 +43,44 @@ feature 'Admin edits a promotion' do
     expect(page).to have_content('90')
     expect(page).to have_link('Voltar')
   end
+
+  scenario 'and fails if items are blank' do
+    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
+                      expiration_date: '22/12/2033')
+
+    visit root_path
+    click_on 'Promoções'
+    click_on 'Natal'
+    click_on 'Editar'
+
+    fill_in 'Nome', with: ''
+    fill_in 'Descrição', with: ''
+    fill_in 'Código', with: ''
+    fill_in 'Desconto', with: ''
+    fill_in 'Quantidade de cupons', with: ''
+    fill_in 'Data de término', with: ''
+    click_on 'Salvar promoção'
+
+    expect(page).to have_content('não pode ficar em branco', count: 5)
+  end
+
+  scenario 'and fails if code isnt unique' do
+    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
+                      expiration_date: '22/12/2033')
+    Promotion.create!(name: 'Natal Melhor', description: 'Promoção de Natal',
+                      code: 'NATAL20', discount_rate: 10, coupon_quantity: 100,
+                      expiration_date: '22/12/2033')
+
+    visit root_path
+    click_on 'Promoções'
+    click_on 'Natal'
+    click_on 'Editar'
+
+    fill_in 'Código', with: 'NATAL20'
+    click_on 'Salvar promoção'
+
+    expect(page).to have_content('já está em uso')
+  end
 end
