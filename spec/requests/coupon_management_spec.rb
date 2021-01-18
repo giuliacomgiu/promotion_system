@@ -15,5 +15,8 @@ describe 'Coupon management' do
       expect(response.body).to include(I18n.l(promotion.expiration_date))
       # expect(response.body).to include(promotion.maximum_discount.to_s)
     end
+
+    xit 'render maximum discount ' do
+    end
   end
 end

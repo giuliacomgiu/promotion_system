@@ -28,4 +28,6 @@ feature 'Admin deletes a product category' do
 
     expect { click_on 'Deletar' }.to raise_error NoMethodError
   end
+
+  xscenario 'and it fails and redirects to not found page'
 end
