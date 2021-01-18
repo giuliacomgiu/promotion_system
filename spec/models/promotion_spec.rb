@@ -7,14 +7,11 @@ describe Promotion do
 
       promotion.valid?
 
-      expect(promotion.errors[:name]).to include('não pode ficar em branco')
-      expect(promotion.errors[:code]).to include('não pode ficar em branco')
-      expect(promotion.errors[:discount_rate]).to include('não pode ficar em '\
-                                                          'branco')
-      expect(promotion.errors[:coupon_quantity]).to include('não pode ficar em'\
-                                                            ' branco')
-      expect(promotion.errors[:expiration_date]).to include('não pode ficar em'\
-                                                            ' branco')
+      expect(promotion.errors.of_kind?(:name, :blank)).to be true
+      expect(promotion.errors.of_kind?(:code, :blank)).to be true
+      expect(promotion.errors.of_kind?(:discount_rate, :blank)).to be true
+      expect(promotion.errors.of_kind?(:coupon_quantity, :blank)).to be true
+      expect(promotion.errors.of_kind?(:expiration_date, :blank)).to be true
     end
 
     it 'code must be uniq' do
@@ -25,7 +22,7 @@ describe Promotion do
 
       promotion.valid?
 
-      expect(promotion.errors[:code]).to include('já está em uso')
+      expect(promotion.errors.of_kind?(:code, :taken)).to be true
     end
 
     it 'code is case insensitive' do
@@ -50,7 +47,7 @@ describe Promotion do
 
       promotion.update(code: 'NATAL10')
 
-      expect(promotion.errors[:code]).to include('já está em uso')
+      expect(promotion.errors.of_kind?(:code, :taken)).to be true
     end
 
     it 'attributes cannot be blank' do
@@ -61,11 +58,11 @@ describe Promotion do
       promotion.update(name: '', code: '', discount_rate: '',
                        coupon_quantity: '', expiration_date: '')
 
-      expect(promotion.errors[:name]).to include('não pode ficar em branco')
-      expect(promotion.errors[:code]).to include('não pode ficar em branco')
-      expect(promotion.errors[:discount_rate]).to include('não pode ficar em branco')
-      expect(promotion.errors[:coupon_quantity]).to include('não pode ficar em branco')
-      expect(promotion.errors[:expiration_date]).to include('não pode ficar em branco')
+      expect(promotion.errors.of_kind?(:name, :blank)).to be true
+      expect(promotion.errors.of_kind?(:code, :blank)).to be true
+      expect(promotion.errors.of_kind?(:discount_rate, :blank)).to be true
+      expect(promotion.errors.of_kind?(:coupon_quantity, :blank)).to be true
+      expect(promotion.errors.of_kind?(:expiration_date, :blank)).to be true
     end
   end
 
@@ -74,6 +71,16 @@ describe Promotion do
       promotion = Promotion.new(code: 'test')
 
       expect(promotion.code).to eq 'TEST'
+    end
+
+    it 'code is case insensitive' do
+      Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+                        code: 'test', discount_rate: 10,
+                        coupon_quantity: 100, expiration_date: '22/12/2033')
+      promotion = Promotion.new(code: 'TEST')
+      promotion.valid?
+
+      expect(promotion.errors.of_kind?(:code, :taken)).to be true
     end
   end
 
