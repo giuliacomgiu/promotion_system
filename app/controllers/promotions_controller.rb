@@ -32,13 +32,8 @@ class PromotionsController < ApplicationController
   end
 
   def destroy
-    teste
-    begin
-      @promotion.destroy
-      redirect_to promotions_path
-    rescue RecordNotFound
-      render file: 'public/404', status: 404, formats: [:html]
-    end
+    @promotion.destroy
+    redirect_to promotions_path
   end
 
   def issue_coupons
