@@ -1,6 +1,6 @@
 <%= link_to 'Registrar uma promoção', new_promotion_path %>
 
-<%= render 'search' %>
+<%= render partial: 'search' %>
 
 <%= render partial: 'promotions_preview', locals: { promotions: @promotions } %>
 
