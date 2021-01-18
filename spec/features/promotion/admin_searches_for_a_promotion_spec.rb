@@ -16,8 +16,8 @@ feature 'Admin searches for a promotion' do
 
     visit root_path
     click_on 'Promoções'
-    fill_in 'Buscar promoção',	with: 'NATAL', match: :prefer_exact
-    click_on 'Buscar promoção'
+    fill_in('promo-search',	with: 'NATAL')
+    click_on 'promo-search-button'
 
     expect(page).to have_content 'Os seguintes resultados foram encontrados'
     expect(page).to have_content 'Natal'
@@ -25,10 +25,20 @@ feature 'Admin searches for a promotion' do
     expect(page).to have_link('Voltar', href: promotions_path)
   end
 
+  scenario 'and displays message if search field is blank' do
+    visit root_path
+    click_on 'Promoções'
+    click_on 'promo-search-button'
+
+    expect(page).to have_content 'não pode ficar em branco'
+    expect(page).not_to have_content 'Nenhum resultado foi encontrado'
+    expect(current_path).to eq promotions_path
+  end
+
   scenario 'and no results message is displayed' do
     visit promotions_path
-    fill_in 'Buscar promoção',	with: 'NATAL', match: :prefer_exact
-    click_on 'Buscar promoção'
+    fill_in 'promo-search',	with: 'NATAL', match: :prefer_exact
+    click_on 'promo-search-button'
 
     expect(page).to have_content 'Nenhum resultado foi encontrado'
     expect(page).to have_link('Voltar', href: promotions_path)
