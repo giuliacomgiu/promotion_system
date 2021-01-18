@@ -19,3 +19,5 @@ pt-BR:
     coupon:
       archive_coupon: "Arquivar"
       reactivate_coupon: "Reativar"
+    show:
+      not_found: "Cupom não encontrado"

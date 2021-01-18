@@ -13,7 +13,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      get 'coupons/:code', to: 'coupons#show'
+      resources :coupons, param: :code, only: %i[show] do
+        patch :burn, on: :member
+      end
     end
   end
 end
