@@ -17,6 +17,14 @@ RSpec.describe ProductCategory, type: :model do
 
       expect(product_category.errors.of_kind?(:code, :taken)).to be true
     end
+  end
+
+  context '#code' do
+    it 'code is displayed on uppercase' do
+      product_category = ProductCategory.create!(name: 'test', code: 'code')
+
+      expect(product_category.code).to eq 'CODE'
+    end
 
     it 'code is case insensitive' do
       ProductCategory.create!(name: 'test', code: 'CODE')
