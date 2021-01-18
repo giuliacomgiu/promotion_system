@@ -7,7 +7,7 @@ feature 'Admin generates coupons' do
     login_as user, scope: :user
   end
 
-  scenario 'with coupon quantity available' do
+  scenario 'and there are coupons available to be generated' do
     promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
                                   discount_rate: 10, code: 'PASCOA10',
                                   expiration_date: 1.day.from_now)

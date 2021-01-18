@@ -23,7 +23,7 @@ RSpec.describe User, type: :model do
       expect(user.errors.of_kind?(:password, :too_short)).to be true
     end
 
-    it 'password cannot be too short' do
+    it 'password has minimal lenght' do
       user = User.new(email: 'test@locaweb.com.br', password: '123456')
 
       expect(user.valid?).to be true

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Admin attemps to reactivate again' do
+feature 'Admin attemps to reactivate coupon' do
   background do
     user = User.create!(email: 'jane_doe@locaweb.com.br', password: '123456')
     login_as user, scope: :user

@@ -36,7 +36,7 @@ feature 'Log in' do
 end
 
 feature 'Registers' do
-  scenario 'and fails with incorrect domain' do
+  scenario 'and fails if domain is not locaweb.com.br' do
     visit root_path
     click_on 'Cadastre-se'
     fill_in 'Email', with: 'teste@email.com.br'
