@@ -14,9 +14,8 @@ feature 'Admin searches for a coupon' do
                     { promotion: promo, code: 'PASCOA10-0002' }])
 
     visit root_path
-
-    fill_in 'Buscar cupom',	with: 'PASCOA10'
-    click_on 'Buscar'
+    fill_in 'coupon-search',	with: 'PASCOA10'
+    click_on 'coupon-search-button'
 
     expect(page).to have_content 'Os seguintes resultados foram encontrados'
     expect(page).to have_content 'PASCOA10-0001'
@@ -27,8 +26,8 @@ feature 'Admin searches for a coupon' do
   scenario 'and no results message is displayed' do
     visit root_path
 
-    fill_in 'Buscar cupom',	with: 'PASCOA10'
-    click_on 'Buscar'
+    fill_in 'coupon-search',	with: 'PASCOA10'
+    click_on 'coupon-search-button'
 
     expect(page).to have_content 'Nenhum resultado foi encontrado'
     expect(page).to have_link('Voltar', href: root_path)
