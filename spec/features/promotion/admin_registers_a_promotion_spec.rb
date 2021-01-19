@@ -44,12 +44,6 @@ feature 'Admin registers a promotion' do
     visit root_path
     click_on 'Promoções'
     click_on 'Registrar uma promoção'
-    fill_in 'Nome', with: ''
-    fill_in 'Descrição', with: ''
-    fill_in 'Código', with: ''
-    fill_in 'Desconto', with: ''
-    fill_in 'Quantidade de cupons', with: ''
-    fill_in 'Data de término', with: ''
     click_on 'Salvar promoção'
 
     expect(page).to have_content('não pode ficar em branco', count: 5)
