@@ -2,7 +2,7 @@ class Coupon < ApplicationRecord
   belongs_to :promotion
 
   validates :code, presence: true
-  validates :order, presence: :true, on: :burn!
+  validates :order, presence: true, on: :burn!
 
   enum status: { active: 0, archived: 1, burned: 2 }
 
@@ -17,7 +17,7 @@ class Coupon < ApplicationRecord
   def as_json(options = {})
     super(default_json_options(options)).merge!(coupon_json_status)
   end
-  
+
   private
 
   def default_json_options(options)
