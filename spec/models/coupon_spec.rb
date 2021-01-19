@@ -29,5 +29,13 @@ RSpec.describe Coupon, type: :model do
 
       expect(coupon.errors.of_kind?(:code, :blank)).to be true
     end
+
+    it 'order cant be blank on #burn' do
+      coupon = Coupon.new
+
+      coupon.valid? :burn!
+
+      expect(coupon.errors.of_kind?(:order, :blank)).to be true
+    end
   end
 end

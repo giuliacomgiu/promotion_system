@@ -8,8 +8,9 @@ module Api
       end
 
       def burn
-        @coupon.update(order: coupon_order_params[:code], status: :burned)
+        @coupon.burn!(coupon_order)
         render json: 'Cupom utilizado com sucesso', status: :ok
+
       rescue ActionController::ParameterMissing
         render json: 'Cupom só pode ser utilizado com código do pedido', status: 422
       end
@@ -20,8 +21,11 @@ module Api
         @coupon = Coupon.find_by!(code: params[:code])
       end
 
-      def coupon_order_params
-        params.require(:order).permit(:code)
+      def coupon_order
+        params
+          .require(:order)
+          .permit(:code)
+          .fetch(:code)
       end
     end
   end
