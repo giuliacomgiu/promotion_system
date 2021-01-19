@@ -10,7 +10,7 @@ feature 'Admin generates coupons' do
   scenario 'and there are coupons available to be generated' do
     promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
                                   discount_rate: 10, code: 'PASCOA10',
-                                  expiration_date: 1.day.from_now)
+                                  expiration_date: 1.day.from_now, maximum_discount: 10)
     visit root_path
     click_on 'Promoções'
     click_on promotion.name
@@ -29,7 +29,7 @@ feature 'Admin generates coupons' do
   scenario 'but they had already been generated' do
     promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
                                   discount_rate: 10, code: 'PASCOA10',
-                                  expiration_date: 1.day.from_now)
+                                  expiration_date: 1.day.from_now, maximum_discount: 10)
     coupon = promotion.coupons.create(code: 'ABCD')
 
     visit promotion_path(promotion)
@@ -41,7 +41,7 @@ feature 'Admin generates coupons' do
   scenario 'but it was after promotions expiration date' do
     promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
                                   discount_rate: 10, code: 'PASCOA10',
-                                  expiration_date: '10/01/1910')
+                                  expiration_date: '10/01/1910', maximum_discount: 10)
 
     visit promotion_path(promotion)
 

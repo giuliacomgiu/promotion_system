@@ -10,7 +10,7 @@ feature 'Admin archives coupon' do
     promotion = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 100,
                                   description: 'Promoção de Cyber Monday',
                                   code: 'CYBER15', discount_rate: 15,
-                                  expiration_date: '22/12/2033')
+                                  expiration_date: '22/12/2033', maximum_discount: 10)
     coupon = Coupon.create!(promotion: promotion, code: 'CYBER15-0001')
 
     visit promotion_path(promotion)

@@ -10,5 +10,6 @@ pt-BR:
         description: "Descrição"
         code: "Código do cupom"
         discount_rate: "Desconto (%)"
+        maximum_discount: "Valor máximo de desconto (R$)"
         coupon_quantity: "Quantidade de cupons"
         expiration_date: "Data de término"

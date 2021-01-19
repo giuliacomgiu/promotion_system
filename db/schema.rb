@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_18_200641) do
+ActiveRecord::Schema.define(version: 2021_01_19_013601) do
 
   create_table "coupons", force: :cascade do |t|
     t.string "code"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2021_01_18_200641) do
     t.date "expiration_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "maximum_discount"
   end
 
   create_table "users", force: :cascade do |t|

@@ -8,7 +8,8 @@ feature 'Admin attemps to reactivate coupon' do
 
   scenario 'and there is a reactivate button' do
     promo = Promotion.create!(name: 'Pascoa', coupon_quantity: 2, code: 'PASCOA10',
-                              discount_rate: 10, expiration_date: 1.day.from_now)
+                              discount_rate: 10, expiration_date: 1.day.from_now,
+                              maximum_discount: 10)
     Coupon.create!(promotion: promo, code: 'PASCOA10-0001', status: 'archived')
 
     visit root_path
@@ -21,7 +22,8 @@ feature 'Admin attemps to reactivate coupon' do
 
   scenario 'and succeeds if coupon is archived' do
     promo = Promotion.create!(name: 'Pascoa', coupon_quantity: 2, code: 'PASCOA10',
-                              discount_rate: 10, expiration_date: 1.day.from_now)
+                              discount_rate: 10, expiration_date: 1.day.from_now,
+                              maximum_discount: 10)
     coupon = Coupon.create!(promotion: promo, code: 'PASCOA10-0001', status: 'archived')
 
     visit promotion_path(promo)
@@ -35,7 +37,8 @@ feature 'Admin attemps to reactivate coupon' do
 
   scenario 'and cant do it if coupon is active' do
     promo = Promotion.create!(name: 'Pascoa', coupon_quantity: 2, code: 'PASCOA10',
-                              discount_rate: 10, expiration_date: 1.day.from_now)
+                              discount_rate: 10, expiration_date: 1.day.from_now,
+                              maximum_discount: 10)
     Coupon.create!(promotion: promo, code: 'PASCOA10-0001', status: 'active')
 
     visit promotion_path(promo)

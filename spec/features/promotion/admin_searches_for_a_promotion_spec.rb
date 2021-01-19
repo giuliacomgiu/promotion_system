@@ -9,10 +9,10 @@ feature 'Admin searches for a promotion' do
   scenario 'successfully' do
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL20', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: 1.day.from_now)
+                      expiration_date: 1.day.from_now, maximum_discount: 10)
     Promotion.create!(name: 'NATALMELHOR', description: 'Promoção de Natal',
                       code: 'NATAL17', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: 1.day.from_now)
+                      expiration_date: 1.day.from_now, maximum_discount: 10)
 
     visit root_path
     click_on 'Promoções'

@@ -12,11 +12,12 @@ describe Promotion do
       expect(promotion.errors.of_kind?(:discount_rate, :blank)).to be true
       expect(promotion.errors.of_kind?(:coupon_quantity, :blank)).to be true
       expect(promotion.errors.of_kind?(:expiration_date, :blank)).to be true
+      expect(promotion.errors.of_kind?(:maximum_discount, :blank)).to be true
     end
 
     it 'code must be uniq' do
       Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
-                        code: 'NATAL10', discount_rate: 10,
+                        code: 'NATAL10', discount_rate: 10, maximum_discount: 10,
                         coupon_quantity: 100, expiration_date: '22/12/2033')
       promotion = Promotion.new(code: 'NATAL10')
 
@@ -27,7 +28,7 @@ describe Promotion do
 
     it 'code is case insensitive' do
       Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
-                        code: 'NATAL10', discount_rate: 10,
+                        code: 'NATAL10', discount_rate: 10, maximum_discount: 10,
                         coupon_quantity: 100, expiration_date: '22/12/2033')
       promotion = Promotion.new(code: 'natal10')
       promotion.valid?
@@ -39,10 +40,10 @@ describe Promotion do
   context 'validation on edit' do
     it 'code must be unique' do
       Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
-                        code: 'NATAL10', discount_rate: 10,
+                        code: 'NATAL10', discount_rate: 10, maximum_discount: 10,
                         coupon_quantity: 100, expiration_date: '22/12/2033')
       promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
-                                    code: 'NATAL20', discount_rate: 10,
+                                    code: 'NATAL20', discount_rate: 10, maximum_discount: 10,
                                     coupon_quantity: 100, expiration_date: '22/12/2033')
 
       promotion.update(code: 'NATAL10')
@@ -52,10 +53,10 @@ describe Promotion do
 
     it 'attributes cannot be blank' do
       promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
-                                    code: 'NATAL20', discount_rate: 10,
+                                    code: 'NATAL20', discount_rate: 10, maximum_discount: 10,
                                     coupon_quantity: 100, expiration_date: '22/12/2033')
 
-      promotion.update(name: '', code: '', discount_rate: '',
+      promotion.update(name: '', code: '', discount_rate: '', maximum_discount: '',
                        coupon_quantity: '', expiration_date: '')
 
       expect(promotion.errors.of_kind?(:name, :blank)).to be true
@@ -63,6 +64,7 @@ describe Promotion do
       expect(promotion.errors.of_kind?(:discount_rate, :blank)).to be true
       expect(promotion.errors.of_kind?(:coupon_quantity, :blank)).to be true
       expect(promotion.errors.of_kind?(:expiration_date, :blank)).to be true
+      expect(promotion.errors.of_kind?(:maximum_discount, :blank)).to be true
     end
   end
 
@@ -75,7 +77,7 @@ describe Promotion do
 
     it 'code is case insensitive' do
       Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
-                        code: 'test', discount_rate: 10,
+                        code: 'test', discount_rate: 10, maximum_discount: 10,
                         coupon_quantity: 100, expiration_date: '22/12/2033')
       promotion = Promotion.new(code: 'TEST')
       promotion.valid?
@@ -89,7 +91,7 @@ describe Promotion do
       promotion = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 2,
                                     description: 'Promoção de Cyber Monday',
                                     code: 'CYBER15', discount_rate: 15,
-                                    expiration_date: '22/12/2033')
+                                    expiration_date: '22/12/2033', maximum_discount: 10)
       promotion.issue_coupons!
       coupons = promotion.coupons
 
@@ -102,7 +104,7 @@ describe Promotion do
       promotion = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 2,
                                     description: 'Promoção de Cyber Monday',
                                     code: 'CYBER15', discount_rate: 15,
-                                    expiration_date: '22/12/2033')
+                                    expiration_date: '22/12/2033', maximum_discount: 10)
       promotion.issue_coupons!
       coupons = promotion.coupons
 
@@ -115,7 +117,7 @@ describe Promotion do
       promotion = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 2,
                                     description: 'Promoção de Cyber Monday',
                                     code: 'CYBER15', discount_rate: 15,
-                                    expiration_date: '22/12/1933')
+                                    expiration_date: '22/12/1933', maximum_discount: 10)
 
       expect { promotion.issue_coupons! }.to raise_error('A promoção já expirou')
       expect(promotion.coupons).to be_empty

@@ -10,7 +10,7 @@ feature 'Admin deletes a promotion' do
     Promotion.create!(name: 'Cyber Monday', coupon_quantity: 90,
                       description: 'Promoção de Cyber Monday',
                       code: 'CYBER15', discount_rate: 15,
-                      expiration_date: '22/12/2033')
+                      expiration_date: '22/12/2033', maximum_discount:10)
 
     visit root_path
     click_on 'Promoções'
@@ -24,7 +24,7 @@ feature 'Admin deletes a promotion' do
     promotion = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 90,
                                   description: 'Promoção de Cyber Monday',
                                   code: 'CYBER15', discount_rate: 15,
-                                  expiration_date: '22/12/2033')
+                                  expiration_date: '22/12/2033', maximum_discount:10)
 
     visit root_path
     click_on 'Promoções'

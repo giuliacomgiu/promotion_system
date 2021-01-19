@@ -5,7 +5,7 @@ describe 'Coupon management' do
     it 'render coupon json with discount' do
       promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
                                     discount_rate: 10, code: 'PASCOA10',
-                                    expiration_date: 1.day.from_now)
+                                    expiration_date: 1.day.from_now, maximum_discount: 10)
       coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
 
       get "/api/v1/coupons/#{coupon.code}"
@@ -28,7 +28,7 @@ describe 'Coupon management' do
     xit 'coupon has already expired' do
       promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
                                     discount_rate: 10, code: 'PASCOA10',
-                                    expiration_date: 1.day.from_now)
+                                    expiration_date: 1.day.from_now, maximum_discount: 10)
       coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
       promotion.update!(expiration_date: 1.day.ago)
 
@@ -45,7 +45,7 @@ describe 'Coupon management' do
     it 'order code cant be blank' do
       promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
                                     discount_rate: 10, code: 'PASCOA10',
-                                    expiration_date: 1.day.from_now)
+                                    expiration_date: 1.day.from_now, maximum_discount: 10)
       coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
 
       patch "/api/v1/coupons/#{coupon.code}/burn"
@@ -60,7 +60,7 @@ describe 'Coupon management' do
     it 'change coupon status' do
       promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
                                     discount_rate: 10, code: 'PASCOA10',
-                                    expiration_date: 1.day.from_now)
+                                    expiration_date: 1.day.from_now, maximum_discount: 10)
       coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
 
       patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' } }

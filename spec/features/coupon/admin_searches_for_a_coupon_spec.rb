@@ -9,7 +9,7 @@ feature 'Admin searches for a coupon' do
   scenario 'successfully' do
     promo = Promotion.create!(name: 'Pascoa', coupon_quantity: 2,
                               discount_rate: 10, code: 'PASCOA10',
-                              expiration_date: 1.day.from_now)
+                              expiration_date: 1.day.from_now, maximum_discount: 10)
     Coupon.create!([{ promotion: promo, code: 'PASCOA10-0001' },
                     { promotion: promo, code: 'PASCOA10-0002' }])
 

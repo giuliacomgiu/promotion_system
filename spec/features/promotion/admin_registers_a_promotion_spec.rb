@@ -22,6 +22,7 @@ feature 'Admin registers a promotion' do
     fill_in 'Descrição', with: 'Promoção de Cyber Monday'
     fill_in 'Código', with: 'CYBER15'
     fill_in 'Desconto', with: '15'
+    fill_in 'Valor máximo de desconto (R$)', with: '20'
     fill_in 'Quantidade de cupons', with: '90'
     fill_in 'Data de término', with: '22/12/2033'
     click_on 'Salvar promoção'
@@ -30,6 +31,7 @@ feature 'Admin registers a promotion' do
     expect(page).to have_content('Cyber Monday')
     expect(page).to have_content('Promoção de Cyber Monday')
     expect(page).to have_content('15,00%')
+    expect(page).to have_content('R$ 20,00')
     expect(page).to have_content('CYBER15')
     expect(page).to have_content('22/12/2033')
     expect(page).to have_content('90')
@@ -37,22 +39,18 @@ feature 'Admin registers a promotion' do
   end
 
   scenario 'and attributes cannot be blank' do
-    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
-                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033')
-
     visit root_path
     click_on 'Promoções'
     click_on 'Registrar uma promoção'
     click_on 'Salvar promoção'
 
-    expect(page).to have_content('não pode ficar em branco', count: 5)
+    expect(page).to have_content('não pode ficar em branco', count: 6)
   end
 
   scenario 'and code must be unique' do
     Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033')
+                      expiration_date: '22/12/2033', maximum_discount: 10)
 
     visit root_path
     click_on 'Promoções'

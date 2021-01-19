@@ -2,11 +2,13 @@
 <p><%= promotion.description %></p>
 <dl>
   <dt> <%= Promotion.human_attribute_name('discount_rate') %> </dt>
-  <dd><%= number_to_percentage promotion.discount_rate, precision: 2, separator: ',' %></dd>
+  <dd> <%= number_to_percentage promotion.discount_rate, precision: 2, separator: ',' %></dd>
+  <dt> <%= Promotion.human_attribute_name('maximum_discount') %> </dt>
+  <dd> <%= number_to_currency promotion.maximum_discount %> </dd>
   <dt> <%= Promotion.human_attribute_name('code') %> </dt>
-  <dd><%= promotion.code %></dd>
+  <dd> <%= promotion.code %></dd>
   <dt> <%= Promotion.human_attribute_name('expiration_date') %> </dt>
-  <dd><%= promotion.expiration_date.strftime('%d/%m/%Y') %></dd>
+  <dd> <%= promotion.expiration_date.strftime('%d/%m/%Y') %></dd>
   <dt> <%= Promotion.human_attribute_name('coupon_quantity') %> </dt>
-  <dd><%= promotion.coupon_quantity %></dd>
+  <dd> <%= promotion.coupon_quantity %></dd>
 </dl>
