@@ -10,7 +10,7 @@ class Coupon < ApplicationRecord
   end
 
   def as_json(options = {})
-    super({ methods: %i[discount_rate expiration_date],
+    super({ methods: %i[discount_rate expiration_date maximum_discount],
             only: %i[] }.merge(options))
   end
 
@@ -22,5 +22,9 @@ class Coupon < ApplicationRecord
 
   def expiration_date
     I18n.l(promotion.expiration_date)
+  end
+
+  def maximum_discount
+    "R$ #{promotion.maximum_discount}"
   end
 end
