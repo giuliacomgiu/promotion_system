@@ -22,6 +22,7 @@ class Coupon < ApplicationRecord
 
   def coupon_json_status
     return { 'status' => 'valid' } if active? && promotion.not_expired?
+    return { 'status' => 'burned' } if burned? && promotion.not_expired?
     return { 'status' => 'expired' } if active? && promotion.expired?
     return { 'status' => 'burned, expired' } if burned? && promotion.expired?
   end

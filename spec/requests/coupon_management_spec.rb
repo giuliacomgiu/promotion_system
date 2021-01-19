@@ -35,7 +35,30 @@ describe 'Coupon management' do
       expect(response.body).to include('expired')
     end
 
-    xit 'coupon is archived' do
+    it 'coupon is burned' do
+      promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
+                                    discount_rate: 10, code: 'PASCOA10',
+                                    expiration_date: 1.day.from_now, maximum_discount: 10)
+      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001', status: :burned)
+      
+      get "/api/v1/coupons/#{coupon.code}"
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to include('burned')
+    end
+
+    it 'coupon is burned and expired' do
+      promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
+                                    discount_rate: 10, code: 'PASCOA10',
+                                    expiration_date: 1.day.from_now, maximum_discount: 10)
+      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001', status: :burned)
+      promotion.update!(expiration_date: 1.day.ago)
+      
+      get "/api/v1/coupons/#{coupon.code}"
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to include('burned')
+      expect(response.body).to include('expired')
     end
 
     it 'order code cant be blank' do
