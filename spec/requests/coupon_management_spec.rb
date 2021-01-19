@@ -22,7 +22,7 @@ describe 'Coupon management' do
       expect(response).to have_http_status(:not_found)
     end
 
-    xit 'coupon has already expired' do
+    it 'coupon has already expired' do
       promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
                                     discount_rate: 10, code: 'PASCOA10',
                                     expiration_date: 1.day.from_now, maximum_discount: 10)
@@ -32,8 +32,7 @@ describe 'Coupon management' do
       get "/api/v1/coupons/#{coupon.code}"
 
       expect(response).to have_http_status(200)
-      expect(response).to include('Cupom já expirou')
-      expect(response).to include('discount_rate')
+      expect(response.body).to include('expired')
     end
 
     xit 'coupon is archived' do
@@ -67,5 +66,7 @@ describe 'Coupon management' do
       expect(coupon.reload).to be_burned
       expect(coupon.reload.order).to eq 'ORDER123'
     end
+
+    xit 'fail if coupon has expired'
   end
 end

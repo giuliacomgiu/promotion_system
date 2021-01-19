@@ -10,11 +10,21 @@ class Coupon < ApplicationRecord
   end
 
   def as_json(options = {})
-    super({ methods: %i[discount_rate expiration_date maximum_discount],
-            only: %i[] }.merge(options))
+    super(default_json_options(options)).merge!(coupon_json_status)
   end
 
   private
+
+  def default_json_options(options)
+    { methods: %i[discount_rate expiration_date maximum_discount],
+      only: %i[] }.merge(options)
+  end
+
+  def coupon_json_status
+    return { 'status' => 'valid' } if active? && promotion.not_expired?
+    return { 'status' => 'expired' } if active? && promotion.expired?
+    return { 'status' => 'burned, expired' } if burned? && promotion.expired?
+  end
 
   def discount_rate
     promotion.discount_rate
