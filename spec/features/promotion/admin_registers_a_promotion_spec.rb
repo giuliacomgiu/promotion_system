@@ -14,7 +14,9 @@ feature 'Admin registers a promotion' do
                               href: new_promotion_path)
   end
 
-  scenario 'successfully' do
+  scenario 'successfully with 1 product category' do
+    ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+
     visit promotions_path
     click_on 'Registrar uma promoção'
 
@@ -25,6 +27,7 @@ feature 'Admin registers a promotion' do
     fill_in 'Valor máximo de desconto (R$)', with: '20'
     fill_in 'Quantidade de cupons', with: '90'
     fill_in 'Data de término', with: '22/12/2033'
+    check 'Wordpress'
     click_on 'Salvar promoção'
 
     expect(current_path).to eq(promotion_path(Promotion.last))
@@ -35,6 +38,38 @@ feature 'Admin registers a promotion' do
     expect(page).to have_content('CYBER15')
     expect(page).to have_content('22/12/2033')
     expect(page).to have_content('90')
+    expect(page).to have_content('Wordpress')
+    expect(page).to have_link('Voltar')
+  end
+
+  scenario 'successfully with 2 product categories' do
+    ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    ProductCategory.create!(name: 'Email', code: 'MAILER')
+
+    visit promotions_path
+    click_on 'Registrar uma promoção'
+
+    fill_in 'Nome', with: 'Cyber Monday'
+    fill_in 'Descrição', with: 'Promoção de Cyber Monday'
+    fill_in 'Código', with: 'CYBER15'
+    fill_in 'Desconto', with: '15'
+    fill_in 'Valor máximo de desconto (R$)', with: '20'
+    fill_in 'Quantidade de cupons', with: '90'
+    fill_in 'Data de término', with: '22/12/2033'
+    check 'Wordpress'
+    check 'Email'
+    click_on 'Salvar promoção'
+
+    expect(current_path).to eq(promotion_path(Promotion.last))
+    expect(page).to have_content('Cyber Monday')
+    expect(page).to have_content('Promoção de Cyber Monday')
+    expect(page).to have_content('15,00%')
+    expect(page).to have_content('R$ 20,00')
+    expect(page).to have_content('CYBER15')
+    expect(page).to have_content('22/12/2033')
+    expect(page).to have_content('90')
+    expect(page).to have_content('Email')
+    expect(page).to have_content('Wordpress')
     expect(page).to have_link('Voltar')
   end
 
