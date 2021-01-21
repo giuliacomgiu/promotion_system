@@ -1,6 +1,6 @@
 class Promotion < ApplicationRecord
   has_many :coupons, dependent: :destroy
-  has_many :product_category_promotions
+  has_many :product_category_promotions, dependent: :delete_all
   has_many :product_categories, through: :product_category_promotions
 
   validates :name, :code, :discount_rate, :maximum_discount,

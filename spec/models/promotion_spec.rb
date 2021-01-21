@@ -73,6 +73,20 @@ describe Promotion do
     end
   end
 
+  context 'deletion' do
+    it 'associations are deleted, but product category still exists' do
+      product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+      promotion = Promotion.create!(product_categories: [product], name: 'Natal',
+                                    code: 'NATAL20', discount_rate: 10, maximum_discount: 10,
+                                    coupon_quantity: 100, expiration_date: '22/12/2033')
+      
+      promotion.destroy!
+
+      expect(product.reload).not_to be nil
+      expect(promotion.destroyed?).to be true
+    end
+  end
+
   context '#code' do
     it 'must save in uppercase' do
       promotion = Promotion.new(code: 'test')
