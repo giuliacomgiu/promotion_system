@@ -13,4 +13,5 @@
   <dd> <%= promotion.coupon_quantity %></dd>
   <dt> <%= Promotion.human_attribute_name('product_categories') %> </dt>
   <dd> <%= promotion.product_categories %></dd>
+  <p>Criada por: <%= promotion.creator.email %></p>
 </dl>
