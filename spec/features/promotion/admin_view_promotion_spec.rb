@@ -7,10 +7,11 @@ feature 'Admin view promotions' do
   end
 
   scenario 'successfully' do
-    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    Promotion.create!(product_categories: [product], name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033', maximum_discount: 10)
-    Promotion.create!(name: 'Cyber Monday', coupon_quantity: 100,
+    Promotion.create!(product_categories: [product], name: 'Cyber Monday', coupon_quantity: 100,
                       description: 'Promoção de Cyber Monday',
                       code: 'CYBER15', discount_rate: 15,
                       expiration_date: '22/12/2033', maximum_discount: 10)
@@ -27,10 +28,11 @@ feature 'Admin view promotions' do
   end
 
   scenario 'and view details' do
-    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    Promotion.create!(product_categories: [product], name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033', maximum_discount: 10)
-    Promotion.create!(name: 'Cyber Monday', coupon_quantity: 90,
+    Promotion.create!(product_categories: [product], name: 'Cyber Monday', coupon_quantity: 90,
                       description: 'Promoção de Cyber Monday',
                       code: 'CYBER15', discount_rate: 15,
                       expiration_date: '22/12/2033', maximum_discount: 10)
@@ -55,7 +57,8 @@ feature 'Admin view promotions' do
   end
 
   scenario 'and return to home page' do
-    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    Promotion.create!(product_categories: [product], name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033', maximum_discount: 10)
 
@@ -67,11 +70,12 @@ feature 'Admin view promotions' do
   end
 
   scenario 'and return to promotions page' do
-    @promotion = Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    promotion = Promotion.create!(product_categories: [product], name: 'Natal', description: 'Promoção de Natal',
                                    code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                                    expiration_date: '22/12/2033', maximum_discount:10)
 
-    visit promotion_path(@promotion)
+    visit promotion_path(promotion)
     click_on 'Voltar'
 
     expect(current_path).to eq promotions_path

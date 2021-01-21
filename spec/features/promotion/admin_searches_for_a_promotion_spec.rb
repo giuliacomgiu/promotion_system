@@ -7,10 +7,11 @@ feature 'Admin searches for a promotion' do
   end
 
   scenario 'successfully' do
-    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    Promotion.create!(product_categories: [product], name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL20', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: 1.day.from_now, maximum_discount: 10)
-    Promotion.create!(name: 'NATALMELHOR', description: 'Promoção de Natal',
+    Promotion.create!(product_categories: [product], name: 'NATALMELHOR', description: 'Promoção de Natal',
                       code: 'NATAL17', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: 1.day.from_now, maximum_discount: 10)
 

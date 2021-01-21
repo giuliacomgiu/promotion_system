@@ -7,9 +7,9 @@ feature 'Admin deletes a promotion' do
   end
 
   scenario 'and it succeeds' do
-    Promotion.create!(name: 'Cyber Monday', coupon_quantity: 90,
-                      description: 'Promoção de Cyber Monday',
-                      code: 'CYBER15', discount_rate: 15,
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    Promotion.create!(product_categories: [product], name: 'Cyber Monday', coupon_quantity: 90,
+                      description: 'Promoção de Cyber Monday', code: 'CYBER15', discount_rate: 15,
                       expiration_date: '22/12/2033', maximum_discount:10)
 
     visit root_path
@@ -21,10 +21,10 @@ feature 'Admin deletes a promotion' do
   end
 
   scenario 'and it fails, so not found page is rendered' do
-    promotion = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 90,
-                                  description: 'Promoção de Cyber Monday',
-                                  code: 'CYBER15', discount_rate: 15,
-                                  expiration_date: '22/12/2033', maximum_discount:10)
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    Promotion.create!(product_categories: [product], name: 'Cyber Monday', coupon_quantity: 90,
+                      description: 'Promoção de Cyber Monday', code: 'CYBER15', 
+                      discount_rate: 15, expiration_date: '22/12/2033', maximum_discount:10)
 
     visit root_path
     click_on 'Promoções'

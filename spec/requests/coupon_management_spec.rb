@@ -3,8 +3,9 @@ require 'rails_helper'
 describe 'Coupon management' do
   context 'show' do
     it 'render coupon json with discount' do
-      promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
-                                    discount_rate: 10, code: 'PASCOA10',
+      product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+      promotion = Promotion.create!(product_categories: [product], name: 'Pascoa', 
+                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
                                     expiration_date: 1.day.from_now, maximum_discount: 15)
       coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
 
@@ -23,8 +24,9 @@ describe 'Coupon management' do
     end
 
     it 'coupon has already expired' do
-      promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
-                                    discount_rate: 10, code: 'PASCOA10',
+      product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+      promotion = Promotion.create!(product_categories: [product],name: 'Pascoa',
+                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
                                     expiration_date: 1.day.from_now, maximum_discount: 10)
       coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
       promotion.update!(expiration_date: 1.day.ago)
@@ -36,8 +38,9 @@ describe 'Coupon management' do
     end
 
     it 'coupon is burned' do
-      promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
-                                    discount_rate: 10, code: 'PASCOA10',
+      product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+      promotion = Promotion.create!(product_categories: [product],name: 'Pascoa',
+                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
                                     expiration_date: 1.day.from_now, maximum_discount: 10)
       coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001', status: :burned)
       
@@ -48,8 +51,9 @@ describe 'Coupon management' do
     end
 
     it 'coupon is burned and expired' do
-      promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
-                                    discount_rate: 10, code: 'PASCOA10',
+      product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+      promotion = Promotion.create!(product_categories: [product],name: 'Pascoa',
+                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
                                     expiration_date: 1.day.from_now, maximum_discount: 10)
       coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001', status: :burned)
       promotion.update!(expiration_date: 1.day.ago)
@@ -62,8 +66,9 @@ describe 'Coupon management' do
     end
 
     it 'order code cant be blank' do
-      promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
-                                    discount_rate: 10, code: 'PASCOA10',
+      product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+      promotion = Promotion.create!(product_categories: [product],name: 'Pascoa',
+                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
                                     expiration_date: 1.day.from_now, maximum_discount: 10)
       coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
 
@@ -77,8 +82,9 @@ describe 'Coupon management' do
 
   context 'burn' do
     it 'change coupon status' do
-      promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
-                                    discount_rate: 10, code: 'PASCOA10',
+      product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+      promotion = Promotion.create!(product_categories: [product], name: 'Pascoa', 
+                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
                                     expiration_date: 1.day.from_now, maximum_discount: 10)
       coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
 

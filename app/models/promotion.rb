@@ -4,7 +4,7 @@ class Promotion < ApplicationRecord
   has_many :product_categories, through: :product_category_promotions
 
   validates :name, :code, :discount_rate, :maximum_discount,
-            :coupon_quantity, :expiration_date,
+            :coupon_quantity, :expiration_date, :product_category_ids,
             presence: true
 
   validates :code, uniqueness: { case_sensitive: false }

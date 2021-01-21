@@ -7,9 +7,9 @@ feature 'Admin edits a promotion' do
   end
 
   scenario 'there is an editing path' do
-    Promotion.create!(name: 'Cyber Monday', coupon_quantity: 90,
-                      description: 'Promoção de Cyber Monday',
-                      code: 'CYBER15', discount_rate: 15,
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    Promotion.create!(product_categories: [product], name: 'Cyber Monday', coupon_quantity: 90,
+                      description: 'Promoção de Cyber Monday', code: 'CYBER15', discount_rate: 15,
                       expiration_date: '22/12/2033', maximum_discount: 10)
 
     visit root_path
@@ -21,9 +21,10 @@ feature 'Admin edits a promotion' do
   end
 
   scenario 'and it succeeds' do
-    promotion = Promotion.create!(name: 'Cyber Monday', coupon_quantity: 90,
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    promotion = Promotion.create!(product_categories: [product], name: 'Cyber Monday', 
+                                  coupon_quantity: 90, code: 'CYBER15', discount_rate: 15,
                                   description: 'Promoção de Cyber Monday',
-                                  code: 'CYBER15', discount_rate: 15,
                                   expiration_date: '22/12/2033', maximum_discount: 10)
 
     visit promotion_path(promotion)
@@ -46,8 +47,9 @@ feature 'Admin edits a promotion' do
   end
 
   scenario 'and fails if items are blank' do
-    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
-                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    Promotion.create!(product_categories: [product], name: 'Natal', coupon_quantity: 100,
+                      code: 'NATAL10', discount_rate: 10, description: 'Promoção de Natal',
                       expiration_date: '22/12/2033', maximum_discount: 10)
 
     visit root_path
@@ -68,10 +70,11 @@ feature 'Admin edits a promotion' do
   end
 
   scenario 'and fails if code isnt unique' do
-    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    Promotion.create!(product_categories: [product], name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033', maximum_discount: 10)
-    Promotion.create!(name: 'Natal Melhor', description: 'Promoção de Natal',
+    Promotion.create!(product_categories: [product], name: 'Natal Melhor', description: 'Promoção de Natal',
                       code: 'NATAL20', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033', maximum_discount: 10)
 

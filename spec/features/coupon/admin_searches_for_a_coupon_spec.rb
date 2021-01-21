@@ -7,7 +7,8 @@ feature 'Admin searches for a coupon' do
   end
 
   scenario 'successfully' do
-    promo = Promotion.create!(name: 'Pascoa', coupon_quantity: 2,
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    promo = Promotion.create!(product_categories: [product], name: 'Pascoa', coupon_quantity: 2,
                               discount_rate: 10, code: 'PASCOA10',
                               expiration_date: 1.day.from_now, maximum_discount: 10)
     Coupon.create!([{ promotion: promo, code: 'PASCOA10-0001' },

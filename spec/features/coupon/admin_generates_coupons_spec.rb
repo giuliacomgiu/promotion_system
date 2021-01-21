@@ -8,7 +8,8 @@ feature 'Admin generates coupons' do
   end
 
   scenario 'and there are coupons available to be generated' do
-    promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    promotion = Promotion.create!(product_categories: [product], name: 'Pascoa', coupon_quantity: 5,
                                   discount_rate: 10, code: 'PASCOA10',
                                   expiration_date: 1.day.from_now, maximum_discount: 10)
     visit root_path
@@ -27,8 +28,9 @@ feature 'Admin generates coupons' do
   end
 
   scenario 'but they had already been generated' do
-    promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
-                                  discount_rate: 10, code: 'PASCOA10',
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    promotion = Promotion.create!(product_categories: [product], name: 'Pascoa', 
+                                  coupon_quantity: 5, discount_rate: 10, code: 'PASCOA10',
                                   expiration_date: 1.day.from_now, maximum_discount: 10)
     coupon = promotion.coupons.create(code: 'ABCD')
 
@@ -39,8 +41,9 @@ feature 'Admin generates coupons' do
   end
 
   scenario 'but it was after promotions expiration date' do
-    promotion = Promotion.create!(name: 'Pascoa', coupon_quantity: 5,
-                                  discount_rate: 10, code: 'PASCOA10',
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    promotion = Promotion.create!(product_categories: [product], name: 'Pascoa', 
+                                  coupon_quantity: 5, discount_rate: 10, code: 'PASCOA10',
                                   expiration_date: '10/01/1910', maximum_discount: 10)
 
     visit promotion_path(promotion)

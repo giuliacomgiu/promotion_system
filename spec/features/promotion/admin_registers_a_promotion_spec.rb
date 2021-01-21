@@ -74,16 +74,16 @@ feature 'Admin registers a promotion' do
   end
 
   scenario 'and attributes cannot be blank' do
-    visit root_path
-    click_on 'Promoções'
+    visit promotions_path
     click_on 'Registrar uma promoção'
     click_on 'Salvar promoção'
 
-    expect(page).to have_content('não pode ficar em branco', count: 6)
+    expect(page).to have_content('não pode ficar em branco', count: 7)
   end
 
   scenario 'and code must be unique' do
-    Promotion.create!(name: 'Natal', description: 'Promoção de Natal',
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    Promotion.create!(product_categories: [product], name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
                       expiration_date: '22/12/2033', maximum_discount: 10)
 
