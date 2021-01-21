@@ -5,7 +5,7 @@
 
     <!-- Links de apoio -->
     <div class="ls-alerts-list">
-      <a href="#" class="ls-ico-bell-o" data-counter="8" data-ls-module="topbarCurtain" data-target="#ls-notification-curtain"><span>Notificações</span></a>
+      <a href="#" class="ls-ico-bell-o" data-counter="" data-ls-module="topbarCurtain" data-target="#ls-notification-curtain"><span>Notificações</span></a>
       <a href="#" class="ls-ico-bullhorn" data-ls-module="topbarCurtain" data-target="#ls-help-curtain"><span>Ajuda</span></a>
       <a href="#" class="ls-ico-question" data-ls-module="topbarCurtain" data-target="#ls-feedback-curtain"><span>Sugestões</span></a>
     </div>
@@ -35,37 +35,25 @@
 
   <!-- Nome do produto/marca -->
     <h1 class="ls-brand-name">
-      <a href="#" class="ls-ico-earth">
+      <a class="ls-ico-earth">
         LocaPromo
       </a>
     </h1>
 </div>
 
-<aside class="ls-sidebar">
-  <div class="ls-sidebar-inner">
-    <a href="#" class="ls-go-prev"><span class="ls-text">Voltar à lista de serviços</span></a>
-    <nav class="ls-menu">
-      <ul>
-        <li class="ls-active"><a href="#" class="ls-ico-dashboard">Dashboard</a></li>
-        <li><%= link_to Promotion.model_name.human(count:2), promotions_path %></li>
-        <li><%= link_to ProductCategory.model_name.human(count:2), product_categories_path %></li>
-        <li><%= link_to ProductCategory.model_name.human(count:2), product_categories_path %></li>
-        <li><%= render partial: "coupons/search" %></li>
-      </ul>
-    </nav>
-  </div>
-</aside>
-<!--
-<nav>
-  <% if user_signed_in? %>
-    <%= current_user.email %>
-    <%= link_to 'Sair', destroy_user_session_path, method: :delete %>
-    <%= link_to Promotion.model_name.human(count:2), promotions_path %>
-    <%= link_to ProductCategory.model_name.human(count:2), product_categories_path %>
-    <%= render partial: "coupons/search" %>
-  <% else %>
-    <%= link_to "Login", new_user_session_path%>
-    <%= link_to "Cadastre-se", new_user_registration_path%>
-  <% end %>
-</nav>
--->
+<% if user_signed_in? %>
+  <aside class="ls-sidebar">
+    <div class="ls-sidebar-inner">
+      <a href="#" class="ls-go-prev"><span class="ls-text">Voltar à lista de serviços</span></a>
+      <nav class="ls-menu">
+        <ul>
+          <li class="ls-active"><a href="/" class="ls-ico-dashboard">Dashboard</a></li>
+          <li><%= link_to Promotion.model_name.human(count:2), promotions_path, class: "ls-ico-bars" %></li>
+          <li><%= link_to ProductCategory.model_name.human(count:2), product_categories_path, 
+                  class: "ls-ico-multibuckets" %></li>
+          <li><%= render partial: "coupons/search" %></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+<% end %>
