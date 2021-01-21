@@ -1,5 +1,4 @@
 class Promotion < ApplicationRecord
-  belongs_to :creator, class_name: 'User', foreign_key: :user_id
   has_many :coupons, dependent: :destroy
   has_many :product_category_promotions
   has_many :product_categories, through: :product_category_promotions
@@ -9,8 +8,6 @@ class Promotion < ApplicationRecord
             presence: true
 
   validates :code, uniqueness: { case_sensitive: false }
-
-  enum status: { active: 0, pending: 1 }
 
   def product_categories
     super
