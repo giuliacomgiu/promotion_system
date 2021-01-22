@@ -1,0 +1,13 @@
+<%= render @promotion %>
+
+<%= link_to 'Editar', edit_promotion_path(@promotion) %>
+<%= link_to 'Deletar', @promotion, method: :delete %>
+<%= link_to 'Voltar', promotions_path %>
+
+<% if(@promotion.coupons.empty? and @promotion.not_expired?) %>
+  <%= link_to 'Emitir cupons', issue_coupons_promotion_path(@promotion), method: :post %>
+<% else %>
+  <h1><%= Coupon.model_name.human(count:2) %></h1>
+
+  <%= render @promotion.coupons %>
+<% end %>

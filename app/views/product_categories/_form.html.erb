@@ -1,0 +1,7 @@
+<%= form_with model: product_category, local: true do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :code %>
+  <%= f.text_field :code %>
+  <%= f.submit "Salvar categoria" %>
+<% end %>

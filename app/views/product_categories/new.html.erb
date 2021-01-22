@@ -1,0 +1,9 @@
+<% if @product_category.errors.any? %>
+  <ul>
+  <% @product_category.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+  </ul>
+<% end %>
+
+<%= render partial: 'form', locals: {product_category: @product_category} %>

@@ -1,0 +1,13 @@
+<dl>
+  <% @product_categories.each do |product_category| %>
+    <dt><%= product_category.code %></dt>
+    <dd><%= link_to product_category.name, product_category %></dd>
+  <% end %>
+</dl>
+
+<% if @product_categories.empty? %>
+  <p>Nenhuma categoria de produto cadastrada</p>
+<% end %>
+
+<%= link_to "Cadastrar categoria", new_product_category_path %>
+<%= link_to "Voltar", root_path %>

@@ -1,0 +1,5 @@
+<% promotions.each do |promotion| %>
+  <h3><%= link_to promotion.name, promotion %></h3>
+  <p><%= promotion.description %></p>
+  <p><%= number_to_percentage promotion.discount_rate, precision: 2, separator: ',' %></p>
+<% end %>

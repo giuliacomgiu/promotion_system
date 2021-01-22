@@ -1,0 +1,13 @@
+<%= link_to 'Registrar uma promoção', new_promotion_path %>
+
+<%= render partial: 'search' %>
+
+<%= render partial: 'promotions_preview', locals: { promotions: @promotions } %>
+
+<% if @promotions.empty? %>
+  <p>Nenhuma promoção cadastrada</p>
+<% end %>
+
+<%# content_tag(:p, "Nenhuma promoção cadastrada" if @promotions.empty?) %>
+
+<%= link_to 'Voltar', root_path %>

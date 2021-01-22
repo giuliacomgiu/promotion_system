@@ -1,0 +1,10 @@
+pt-BR:
+  activerecord:
+    models:
+      product_category:
+        one: "Categoria de produto"
+        other: "Categorias de produtos"
+    attributes:
+      product_category:
+        name: "Nome"
+        code: "Código da categoria"
