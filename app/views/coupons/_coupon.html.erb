@@ -1,10 +1,11 @@
-<dl>
-  <dt><%= Coupon.human_attribute_name('code') %></dt>
-  <dd><%= coupon.name %> 
-      <% if coupon.active? %>
-        <%= link_to t('.archive_coupon'), archive_coupon_path(coupon), method: :put %>
-      <% elsif coupon.archived? %>
-        <%= link_to t('.reactivate_coupon'), reactivate_coupon_path(coupon), method: :put %>
-      <% end %>
-  </dd>
-</dl>
+<%= coupon.name %> 
+<% if coupon.active? %>
+  <%= link_to t('.archive_coupon'), archive_coupon_path(coupon), method: :put %>
+<% elsif coupon.archived? %>
+  <%= link_to t('.reactivate_coupon'), reactivate_coupon_path(coupon), method: :put %>
+<% end %>
+
+ <%= "#{Promotion.model_name.human}: " %><%= link_to coupon.promotion.name, promotion_path(coupon.promotion) %>
+ <%= "#{Promotion.human_attribute_name(:discount_rate)}: #{coupon.discount_rate}" %>
+ <%= "#{Promotion.human_attribute_name(:expiration_date)}: #{coupon.expiration_date}" %>
+ <%= "#{Promotion.human_attribute_name(:maximum_discount)}: #{coupon.maximum_discount}" %>

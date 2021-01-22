@@ -10,6 +10,19 @@ class Coupon < ApplicationRecord
     "#{code} (#{Coupon.human_attribute_name("status.#{status}")})"
   end
 
+  def discount_rate
+    promotion.discount_rate
+  end
+
+  def expiration_date
+    I18n.l(promotion.expiration_date)
+  end
+
+  def maximum_discount
+    #TODO: change to I18n formatting, correct precision and separator
+    "R$ #{promotion.maximum_discount}"
+  end
+
   def burn!(order)
     update!(order: order, status: :burned)
   end
@@ -30,17 +43,5 @@ class Coupon < ApplicationRecord
     return { 'status' => 'burned' } if burned? && promotion.not_expired?
     return { 'status' => 'expired' } if active? && promotion.expired?
     return { 'status' => 'burned, expired' } if burned? && promotion.expired?
-  end
-
-  def discount_rate
-    promotion.discount_rate
-  end
-
-  def expiration_date
-    I18n.l(promotion.expiration_date)
-  end
-
-  def maximum_discount
-    "R$ #{promotion.maximum_discount}"
   end
 end
