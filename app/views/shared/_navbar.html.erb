@@ -3,7 +3,7 @@
   <%= link_to 'Sair', destroy_user_session_path, method: :delete %>
   <%= link_to Promotion.model_name.human(count:2), promotions_path %>
   <%= link_to ProductCategory.model_name.human(count:2), product_categories_path %>
-  <%= render partial: "coupons/search" %>
+  <%= render partial: "coupons/search_form" %>
 <% else %>
   <%= link_to "Login", new_user_session_path%>
   <%= link_to "Cadastre-se", new_user_registration_path%>
