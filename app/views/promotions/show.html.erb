@@ -1,7 +1,7 @@
 <%= render @promotion %>
 
-<%= link_to 'Editar', edit_promotion_path(@promotion) %>
-<%= link_to 'Deletar', @promotion, method: :delete %>
+<%= link_to t(:edit, scope: :interface), edit_promotion_path(@promotion) %>
+<%= link_to t(:delete, scope: :interface), @promotion, method: :delete %>
 <%= link_to t(:back, scope: :interface), promotions_path %>
 
 <% if(@promotion.coupons.empty? and @promotion.not_expired?) %>
