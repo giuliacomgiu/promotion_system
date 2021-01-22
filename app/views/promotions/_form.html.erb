@@ -15,5 +15,5 @@
   <p><%= f.date_field :expiration_date %></p>
   <p><%= f.label :product_categories %></p>
   <p><%= f.collection_check_boxes :product_category_ids, ProductCategory.all, :id, :name %></p>
-  <p><%= f.submit t :save %></p>
+  <p><%= f.submit t :save, scope: :interface %></p>
 <% end %>

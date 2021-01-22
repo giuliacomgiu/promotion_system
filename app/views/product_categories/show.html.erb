@@ -3,6 +3,6 @@
   <dd><%= @product_category.name %></dd>
 </dl>
 
-<%= link_to 'Editar', edit_product_category_path(@product_category) %>
-<%= link_to 'Deletar', @product_category, method: :delete %>
-<%= link_to "Voltar", product_categories_path %>
+<%= link_to t(:edit, scope: :interface), edit_product_category_path(@product_category) %>
+<%= link_to t(:delete, scope: :interface), @product_category, method: :delete %>
+<%= link_to t(:back, scope: :interface), product_categories_path %>

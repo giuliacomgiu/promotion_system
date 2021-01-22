@@ -1,6 +1,9 @@
 ---
 pt-BR:
-  not_found: 'Não encontrado'
-  save: 'Salvar'
-  edit: 'Editar'
-  delete: 'Deletar'
+  interface:
+    not_found: 'Não encontrado'
+    save: 'Salvar'
+    edit: 'Editar'
+    delete: 'Deletar'
+    search: 'Buscar'
+    back: 'Voltar'

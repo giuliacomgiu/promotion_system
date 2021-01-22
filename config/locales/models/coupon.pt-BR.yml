@@ -2,22 +2,24 @@ pt-BR:
   activerecord:
     models:
       coupon:
-        one: "Cupom"
-        other: "Cupons"
+        one: 'Cupom'
+        other: 'Cupons'
     attributes:
       coupon:
-        promotion: "Promoção"
-        code: "Código do cupom"
+        promotion: 'Promoção'
+        code: 'Código do cupom'
       coupon/status:
-        active: "Disponível"
-        archived: "Arquivado"
+        active: 'Disponível'
+        archived: 'Arquivado'
   coupons:
     archive:
-      success: "Cupom arquivado com sucesso"
+      success: 'Cupom arquivado com sucesso'
     reactivate:
-      success: "Cupom reativado com sucesso"
+      success: 'Cupom reativado com sucesso'
     coupon:
-      archive_coupon: "Arquivar"
-      reactivate_coupon: "Reativar"
+      archive_coupon: 'Arquivar'
+      reactivate_coupon: 'Reativar'
     show:
-      not_found: "Cupom não encontrado"
+      not_found: 'Cupom não encontrado'
+    search:
+      coupon_search: 'Buscar cupom'
