@@ -16,7 +16,7 @@ pt-BR:
       success: 'Cupom arquivado com sucesso'
     reactivate:
       success: 'Cupom reativado com sucesso'
-    coupon:
+    search_result:
       archive_coupon: 'Arquivar'
       reactivate_coupon: 'Reativar'
     show:

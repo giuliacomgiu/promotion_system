@@ -14,6 +14,6 @@ class CouponsController < ApplicationController
   end
 
   def search
-    @coupons = Coupon.where('code = upper(?)', params[:query].upcase)
+    @search_results = Coupon.where('code = upper(?)', params[:query].upcase)
   end
 end

@@ -1,0 +1,13 @@
+<h5>
+  <%= search_result.name %> 
+  <% if search_result.active? %>
+    <%= link_to t('.archive_coupon'), archive_coupon_path(search_result), method: :put %>
+  <% elsif search_result.archived? %>
+    <%= link_to t('.reactivate_coupon'), reactivate_coupon_path(search_result), method: :put %>
+  <% end %>
+</h5>
+
+<p><%= "#{Promotion.model_name.human}: " %><%= link_to search_result.promotion.name, promotion_path(search_result.promotion) %></p>
+<p><%= "#{Promotion.human_attribute_name(:discount_rate)}: #{search_result.discount_rate}" %></p>
+<p><%= "#{Promotion.human_attribute_name(:expiration_date)}: #{search_result.expiration_date}" %></p>
+<p><%= "#{Promotion.human_attribute_name(:maximum_discount)}: #{search_result.maximum_discount}" %></p>

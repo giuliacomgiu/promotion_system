@@ -1,6 +1,6 @@
-<% if @coupons.any? %>
+<% if @search_results.any? %>
   <h1>Os seguintes resultados foram encontrados</h1>
-  <%= render @coupons %>
+  <%= render partial: 'search_result', collection: @search_results %>
 <% else %>
   <h1>Nenhum resultado foi encontrado</h1>
 <% end %>
