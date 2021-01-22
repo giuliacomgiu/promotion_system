@@ -8,7 +8,7 @@ module Api
       private
 
       def not_found
-        render json: t('.not_found'), status: :not_found
+        render json: 'Não encontrado', status: :not_found
       end
     end
   end
