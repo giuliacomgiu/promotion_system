@@ -15,14 +15,15 @@
   <body>
     <%= render 'shared/topbar' %>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    
-    <% if flash[:success] %>
-      <p><%= flash[:success] %></p>
-    <% end %>
 
     <main class="ls-main container-fluid">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      
+      <% if flash[:success] %>
+        <p><%= flash[:success] %></p>
+      <% end %>
+
       <%= yield %>
     </main>
 
