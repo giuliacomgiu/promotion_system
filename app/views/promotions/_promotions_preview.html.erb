@@ -3,7 +3,7 @@
   <dl>
     <dt> <%= Promotion.human_attribute_name('product_categories') %> </dt>
     <dd> <%= promotion.product_categories %></dd>
-    <dt> <%= Promotion.human_attribute_name(:discount_rate) %></dt>
+    <dt> <%= Promotion.human_attribute_name('discount_rate') %></dt>
     <dd> <%= number_to_percentage promotion.discount_rate, precision: 2, separator: ',' %></dd>
     <dt> <%= Promotion.human_attribute_name('maximum_discount') %> </dt>
     <dd> <%= number_to_currency promotion.maximum_discount %> </dd>
