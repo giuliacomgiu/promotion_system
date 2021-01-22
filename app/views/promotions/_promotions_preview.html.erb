@@ -1,5 +1,13 @@
 <% promotions.each do |promotion| %>
   <h3><%= link_to promotion.name, promotion %></h3>
-  <p><%= promotion.description %></p>
-  <p><%= number_to_percentage promotion.discount_rate, precision: 2, separator: ',' %></p>
+  <dl>
+    <dt> <%= Promotion.human_attribute_name('product_categories') %> </dt>
+    <dd> <%= promotion.product_categories %></dd>
+    <dt> <%= Promotion.human_attribute_name(:discount_rate) %></dt>
+    <dd> <%= number_to_percentage promotion.discount_rate, precision: 2, separator: ',' %></dd>
+    <dt> <%= Promotion.human_attribute_name('maximum_discount') %> </dt>
+    <dd> <%= number_to_currency promotion.maximum_discount %> </dd>
+    <dt> <%= Promotion.human_attribute_name('expiration_date') %> </dt>
+    <dd> <%= promotion.expiration_date.strftime('%d/%m/%Y') %></dd>
+  </dl>
 <% end %>

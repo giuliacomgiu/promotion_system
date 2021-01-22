@@ -9,10 +9,10 @@ feature 'Admin searches for a promotion' do
   scenario 'successfully' do
     product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
     Promotion.create!(product_categories: [product], name: 'Natal', description: 'Promoção de Natal',
-                      code: 'NATAL20', discount_rate: 10, coupon_quantity: 100,
+                      code: 'NATAL20', discount_rate: 15, coupon_quantity: 100,
                       expiration_date: 1.day.from_now, maximum_discount: 10)
     Promotion.create!(product_categories: [product], name: 'NATALMELHOR', description: 'Promoção de Natal',
-                      code: 'NATAL17', discount_rate: 10, coupon_quantity: 100,
+                      code: 'NATAL17', discount_rate: 15, coupon_quantity: 100,
                       expiration_date: 1.day.from_now, maximum_discount: 10)
 
     visit root_path
@@ -23,6 +23,12 @@ feature 'Admin searches for a promotion' do
     expect(page).to have_content 'Os seguintes resultados foram encontrados'
     expect(page).to have_content 'Natal'
     expect(page).to have_content 'NATALMELHOR'
+    expect(page).to have_content 'Categorias de produtos', count: 3 # Results and menu
+    expect(page).to have_content 'Wordpress', count: 2
+    expect(page).to have_content 'Valor máximo de desconto', count: 2
+    expect(page).to have_content 'R$ 10,00', count: 2
+    expect(page).to have_content 'Data de término', count: 2
+    expect(page).to have_content  1.day.from_now.strftime('%d/%m/%Y') , count: 2
     expect(page).to have_link('Voltar', href: promotions_path)
   end
 
