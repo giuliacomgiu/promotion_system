@@ -10,7 +10,7 @@ feature 'Admin registers a promotion' do
     visit root_path
     click_on 'Promoções'
 
-    expect(page).to have_link('Registrar uma promoção',
+    expect(page).to have_link('Cadastrar promoção',
                               href: new_promotion_path)
   end
 
@@ -18,7 +18,7 @@ feature 'Admin registers a promotion' do
     ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
 
     visit promotions_path
-    click_on 'Registrar uma promoção'
+    click_on 'Cadastrar promoção'
 
     fill_in 'Nome', with: 'Cyber Monday'
     fill_in 'Descrição', with: 'Promoção de Cyber Monday'
@@ -47,7 +47,7 @@ feature 'Admin registers a promotion' do
     ProductCategory.create!(name: 'Email', code: 'MAILER')
 
     visit promotions_path
-    click_on 'Registrar uma promoção'
+    click_on 'Cadastrar promoção'
 
     fill_in 'Nome', with: 'Cyber Monday'
     fill_in 'Descrição', with: 'Promoção de Cyber Monday'
@@ -75,7 +75,7 @@ feature 'Admin registers a promotion' do
 
   scenario 'and attributes cannot be blank' do
     visit promotions_path
-    click_on 'Registrar uma promoção'
+    click_on 'Cadastrar promoção'
     click_on 'Salvar'
 
     expect(page).to have_content('não pode ficar em branco', count: 7)
@@ -89,7 +89,7 @@ feature 'Admin registers a promotion' do
 
     visit root_path
     click_on 'Promoções'
-    click_on 'Registrar uma promoção'
+    click_on 'Cadastrar promoção'
     fill_in 'Código', with: 'NATAL10'
     click_on 'Salvar'
 
