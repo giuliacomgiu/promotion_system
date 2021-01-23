@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  add_flash_types :success
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   private

@@ -24,3 +24,5 @@ pt-BR:
       results_found: 'Os seguintes resultados foram encontrados'
       no_results_found: 'Nenhum resultado foi encontrado'
       blank_field: 'Campo não pode ficar em branco'
+    issue_coupons:
+      success: 'Cupons gerados com sucesso'

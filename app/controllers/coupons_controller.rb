@@ -3,14 +3,12 @@ class CouponsController < ApplicationController
 
   def archive
     @coupon = Coupon.find(params[:id])
-    flash[:success] = t('.success') if @coupon.archived!
-    redirect_to @coupon.promotion
+    redirect_to @coupon.promotion, success: t('.success') if @coupon.archived!
   end
 
   def reactivate
     @coupon = Coupon.find(params[:id])
-    flash[:success] = t('.success') if @coupon.active!
-    redirect_to @coupon.promotion
+    redirect_to @coupon.promotion, success: t('.success') if @coupon.active!
   end
 
   def search

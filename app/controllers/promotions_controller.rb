@@ -38,9 +38,8 @@ class PromotionsController < ApplicationController
 
   def issue_coupons
     @promotion.issue_coupons!
-    flash[:success] = 'Cupons gerados com sucesso'
-
-    redirect_to @promotion
+    
+    redirect_to @promotion, success: t('.success')
   end
 
   def search
