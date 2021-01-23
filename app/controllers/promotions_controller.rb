@@ -45,12 +45,11 @@ class PromotionsController < ApplicationController
 
   def search
     if params[:query].empty?
-      redirect_to promotions_path
-      flash[:alert] = 'campo não pode ficar em branco'
+      redirect_to promotions_path, alert: t('.blank_field')
     else
       query_param = "%#{params[:query]}%"
       @promotions = Promotion.where('name LIKE ? OR description LIKE ?',
-                                    query_param, query_param)
+                                        query_param, query_param)
     end
   end
 
