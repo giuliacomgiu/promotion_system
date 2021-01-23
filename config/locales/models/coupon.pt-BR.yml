@@ -24,6 +24,9 @@ pt-BR:
     search:
       results_found: 'Os seguintes resultados foram encontrados'
       no_results_found: 'Nenhum resultado foi encontrado'
+      blank_field: 'Campo não pode ficar em branco'
+    search_form:
+      coupon_search: 'Buscar cupons'
     search_result:
       archive_coupon: 'Arquivar'
       reactivate_coupon: 'Reativar'

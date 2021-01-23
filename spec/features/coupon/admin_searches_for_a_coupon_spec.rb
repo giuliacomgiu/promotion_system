@@ -83,4 +83,13 @@ feature 'Admin searches for a coupon' do
     expect(page).to have_content 'Nenhum resultado foi encontrado'
     expect(page).to have_link('Voltar', href: root_path)
   end
+
+  scenario 'and field cant be blank' do
+    visit root_path
+
+    click_on 'coupon-search-button'
+
+    expect(page).to have_content 'Campo não pode ficar em branco'
+  end
 end
+
