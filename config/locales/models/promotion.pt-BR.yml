@@ -18,3 +18,8 @@ pt-BR:
     index:
       no_record_found: 'Nenhuma promoção cadastrada'
       new_promotion: 'Cadastrar promoção'
+    show:
+      issue_coupons: 'Emitir cupons'
+    search:
+      results_found: 'Os seguintes resultados foram encontrados'
+      no_results_found: 'Nenhum resultado foi encontrado'
