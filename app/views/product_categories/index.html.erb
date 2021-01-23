@@ -6,8 +6,8 @@
 </dl>
 
 <% if @product_categories.empty? %>
-  <p>Nenhuma categoria de produto cadastrada</p>
+  <p><%= t('.no_record_found') %></p>
 <% end %>
 
-<%= link_to "Cadastrar categoria", new_product_category_path %>
+<%= link_to t('.new_category'), new_product_category_path %>
 <%= link_to t(:back, scope: :interface), root_path %>

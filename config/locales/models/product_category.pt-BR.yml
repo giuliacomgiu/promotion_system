@@ -2,9 +2,13 @@ pt-BR:
   activerecord:
     models:
       product_category:
-        one: "Categoria de produto"
-        other: "Categorias de produtos"
+        one: 'Categoria de produto'
+        other: 'Categorias de produtos'
     attributes:
       product_category:
-        name: "Nome"
-        code: "Código da categoria"
+        name: 'Nome'
+        code: 'Código da categoria'
+  product_categories:
+    index:
+      no_record_found: 'Nenhuma categoria de produto cadastrada'
+      new_category: 'Cadastrar categoria'
