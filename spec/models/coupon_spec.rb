@@ -19,6 +19,12 @@ RSpec.describe Coupon, type: :model do
 
       expect(coupon.name).to eq 'PASCOA10 (Arquivado)'
     end
+
+    it 'status burned' do
+      coupon = Coupon.new(code: 'PASCOA10', status: :burned)
+
+      expect(coupon.name).to eq 'PASCOA10 (Utilizado)'
+    end
   end
 
   context 'validation' do

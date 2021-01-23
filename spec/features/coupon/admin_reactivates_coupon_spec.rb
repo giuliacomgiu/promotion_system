@@ -37,6 +37,22 @@ feature 'Admin attemps to reactivate coupon' do
     expect(coupon.reload).to be_active
   end
 
+  scenario 'and succeeds if coupon is burned' do
+    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    promo = Promotion.create!(product_categories: [product], name: 'Pascoa', coupon_quantity: 2,
+                              discount_rate: 10, expiration_date: 1.day.from_now,
+                              code: 'PASCOA10', maximum_discount: 10)
+    coupon = Coupon.create!(promotion: promo, code: 'PASCOA10-0001', status: 'burned')
+
+    visit promotion_path(promo)
+    click_on 'Reativar'
+
+    expect(page).to have_content 'Cupom reativado com sucesso'
+    expect(page).to have_content 'Disponível'
+    expect(page).to have_link 'Arquivar'
+    expect(coupon.reload).to be_active
+  end
+
   scenario 'and cant do it if coupon is active' do
     product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
     promo = Promotion.create!(product_categories: [product], name: 'Pascoa', coupon_quantity: 2, 

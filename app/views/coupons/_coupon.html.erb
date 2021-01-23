@@ -1,6 +1,6 @@
 <%= coupon.name %> 
 <% if coupon.active? %>
   <%= link_to t('.archive_coupon'), archive_coupon_path(coupon), method: :put %>
-<% elsif coupon.archived? %>
+<% else %>
   <%= link_to t('.reactivate_coupon'), reactivate_coupon_path(coupon), method: :put %>
 <% end %>

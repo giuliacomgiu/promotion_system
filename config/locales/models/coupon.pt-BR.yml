@@ -11,6 +11,7 @@ pt-BR:
       coupon/status:
         active: 'Disponível'
         archived: 'Arquivado'
+        burned: 'Utilizado'
   coupons:
     archive:
       success: 'Cupom arquivado com sucesso'
