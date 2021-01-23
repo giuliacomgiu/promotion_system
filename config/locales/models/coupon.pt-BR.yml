@@ -22,7 +22,8 @@ pt-BR:
     show:
       not_found: 'Cupom não encontrado'
     search:
-      coupon_search: 'Buscar cupom'
+      results_found: 'Os seguintes resultados foram encontrados'
+      no_results_found: 'Nenhum resultado foi encontrado'
     search_result:
       archive_coupon: 'Arquivar'
       reactivate_coupon: 'Reativar'

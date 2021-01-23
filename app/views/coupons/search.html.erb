@@ -1,8 +1,8 @@
 <% if @search_results.any? %>
-  <h1>Os seguintes resultados foram encontrados</h1>
+  <h1><%= t('.results_found') %></h1>
   <%= render partial: 'search_result', collection: @search_results %>
 <% else %>
-  <h1>Nenhum resultado foi encontrado</h1>
+  <h1><%= t('.no_results_found') %></h1>
 <% end %>
 
 <%= link_to t(:back, scope: :interface), root_path %>
