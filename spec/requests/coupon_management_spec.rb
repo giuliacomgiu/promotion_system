@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Coupon management' do
   context 'show' do
-    it 'render coupon json with discount' do
+    it 'render coupon json successfully' do
       product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
       promotion = Promotion.create!(product_categories: [product], name: 'Pascoa', 
                                     discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
@@ -82,18 +82,35 @@ describe 'Coupon management' do
 
   context 'burn' do
     it 'change coupon status' do
-      product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-      promotion = Promotion.create!(product_categories: [product], name: 'Pascoa', 
+      products = ProductCategory.create!([{name: 'Wordpress', code: 'WORDP'},
+                                         {name: 'Cloud', code: 'CLOUD'}])
+      promotion = Promotion.create!(product_categories: products, name: 'Pascoa', 
                                     discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
                                     expiration_date: 1.day.from_now, maximum_discount: 10)
       coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
 
-      patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' } }
+      patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' }, 
+                                                            product_category: { code: 'CLOUD' } }
 
       expect(response).to have_http_status(200)
       expect(response.body).to include('Cupom utilizado com sucesso')
       expect(coupon.reload).to be_burned
       expect(coupon.reload.order).to eq 'ORDER123'
+    end
+
+    it 'fail if order code is missing' do
+      products = ProductCategory.create!([{name: 'Wordpress', code: 'WORDP'},
+                                         {name: 'Cloud', code: 'CLOUD'}])
+      promotion = Promotion.create!(product_categories: products, name: 'Pascoa', 
+                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
+                                    expiration_date: 1.day.from_now, maximum_discount: 10)
+      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
+
+      patch "/api/v1/coupons/#{coupon.code}/burn", params: { product_category: { code: 'CLOUD' } }
+
+      expect(response).to have_http_status(422)
+      expect(response.body).to include('Cupom só pode ser utilizado com código do pedido')
+      expect(coupon.reload).to be_active
     end
 
     xit 'fail if coupon has expired'
