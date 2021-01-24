@@ -10,7 +10,6 @@ module Api
       end
 
       def burn
-        validate_product_category_code
         @coupon.burn!(coupon_order)
         render json: t(:success, scope: %i[coupons api v1 burn]), status: :ok
       end
