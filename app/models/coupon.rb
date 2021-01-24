@@ -31,10 +31,6 @@ class Coupon < ApplicationRecord
     "R$ #{promotion.maximum_discount}"
   end
 
-  def product_categories_codes
-    promotion.product_categories.map(&:code)
-  end
-
   private
 
   def default_json_options(options)
