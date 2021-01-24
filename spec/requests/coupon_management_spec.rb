@@ -74,7 +74,7 @@ describe 'Coupon management' do
 
       patch "/api/v1/coupons/#{coupon.code}/burn"
 
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(400)
       expect(response.body).to include('Cupom só pode ser utilizado com código do pedido')
       expect(coupon.reload).to be_active
     end
@@ -125,7 +125,7 @@ describe 'Coupon management' do
 
       patch "/api/v1/coupons/#{coupon.code}/burn", params: { product_category: { code: 'CLOUD' } }
 
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(400)
       expect(response.body).to include('Cupom só pode ser utilizado com código do pedido')
       expect(coupon.reload).to be_active
     end
@@ -140,7 +140,7 @@ describe 'Coupon management' do
 
       patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' } }
 
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(400)
       expect(response.body).to include('Cupom só pode ser utilizado com código da categoria de produto')
       expect(coupon.reload).to be_active
     end

@@ -25,14 +25,14 @@ module Api
         return if coupon_order.present?
 
       rescue ActionController::ParameterMissing
-        render json: t(:missing_order_code, scope: %i[coupons api v1 burn]), status: 422
+        render json: t(:missing_order_code, scope: %i[coupons api v1 burn]), status: :bad_request
       end
 
       def check_product_category_code_presence
         return if coupon_product_category.present?
 
       rescue ActionController::ParameterMissing
-        render json: t(:missing_product_category_code, scope: %i[coupons api v1 burn]), status: 422
+        render json: t(:missing_product_category_code, scope: %i[coupons api v1 burn]), status: :bad_request
       end
 
       def validate_product_category_code
