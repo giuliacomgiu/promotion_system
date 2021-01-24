@@ -9,9 +9,9 @@ class Promotion < ApplicationRecord
 
   validates :code, uniqueness: { case_sensitive: false }
 
-  def product_categories
-    super
-      .pluck(:name)
+  def product_categories_names
+    product_categories
+      .map(&:name)
       .to_sentence(two_words_connector: ', ', last_word_connector: ' e ')
   end
 

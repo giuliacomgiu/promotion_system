@@ -90,7 +90,7 @@ describe 'Coupon management' do
       coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
 
       patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' }, 
-                                                            product_category: { code: 'CLOUD' } }
+                                                             product_category: { code: 'CLOUD' } }
 
       expect(response).to have_http_status(200)
       expect(response.body).to include('Cupom utilizado com sucesso')
@@ -98,7 +98,24 @@ describe 'Coupon management' do
       expect(coupon.reload.order).to eq 'ORDER123'
     end
 
-    it 'fail if order code is missing' do
+    it 'fails if product category code doesnt belong to the promotion' do
+      products = ProductCategory.create!([{name: 'Wordpress', code: 'WORDP'},
+                                         {name: 'Cloud', code: 'CLOUD'}])
+      promotion = Promotion.create!(product_categories: products, name: 'Pascoa',  
+                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
+                                    expiration_date: 1.day.from_now, maximum_discount: 10)
+      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
+
+      patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' }, 
+                                                             product_category: { code: 'EMAIL' } }
+
+      expect(response).to have_http_status(400)
+      expect(response.body).to include('Categoria de produto inválida para este cupom')
+      expect(coupon.reload).to be_active
+      expect(coupon.reload.order).to be nil
+    end
+
+    it 'fails if order code is missing' do
       products = ProductCategory.create!([{name: 'Wordpress', code: 'WORDP'},
                                          {name: 'Cloud', code: 'CLOUD'}])
       promotion = Promotion.create!(product_categories: products, name: 'Pascoa', 
@@ -110,6 +127,21 @@ describe 'Coupon management' do
 
       expect(response).to have_http_status(422)
       expect(response.body).to include('Cupom só pode ser utilizado com código do pedido')
+      expect(coupon.reload).to be_active
+    end
+
+    it 'fails if product category code is missing' do
+      products = ProductCategory.create!([{name: 'Wordpress', code: 'WORDP'},
+                                         {name: 'Cloud', code: 'CLOUD'}])
+      promotion = Promotion.create!(product_categories: products, name: 'Pascoa', 
+                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
+                                    expiration_date: 1.day.from_now, maximum_discount: 10)
+      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
+
+      patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' } }
+
+      expect(response).to have_http_status(422)
+      expect(response.body).to include('Cupom só pode ser utilizado com código da categoria de produto')
       expect(coupon.reload).to be_active
     end
 

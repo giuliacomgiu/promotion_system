@@ -13,13 +13,19 @@ pt-BR:
         archived: 'Arquivado'
         burned: 'Utilizado'
   coupons:
+    api:
+      v1:
+        burn:
+          missing_order_code: 'Cupom só pode ser utilizado com código do pedido'
+          missing_product_category_code: 'Cupom só pode ser utilizado com código da categoria de produto'
+          success: 'Cupom utilizado com sucesso'
     archive:
       success: 'Cupom arquivado com sucesso'
-    reactivate:
-      success: 'Cupom reativado com sucesso'
     coupon:
       archive_coupon: 'Arquivar'
       reactivate_coupon: 'Reativar'
+    reactivate:
+      success: 'Cupom reativado com sucesso'
     show:
       not_found: 'Cupom não encontrado'
     search:

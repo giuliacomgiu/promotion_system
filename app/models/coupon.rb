@@ -6,6 +6,14 @@ class Coupon < ApplicationRecord
 
   enum status: { active: 0, archived: 1, burned: 2 }
 
+  def burn!(order)
+    update!(order: order, status: :burned)
+  end
+
+  def as_json(options = {})
+    super(default_json_options(options)).merge!(coupon_json_status)
+  end
+  
   def name
     "#{code} (#{Coupon.human_attribute_name("status.#{status}")})"
   end
@@ -23,12 +31,8 @@ class Coupon < ApplicationRecord
     "R$ #{promotion.maximum_discount}"
   end
 
-  def burn!(order)
-    update!(order: order, status: :burned)
-  end
-
-  def as_json(options = {})
-    super(default_json_options(options)).merge!(coupon_json_status)
+  def product_categories_codes
+    promotion.product_categories.map(&:code)
   end
 
   private
