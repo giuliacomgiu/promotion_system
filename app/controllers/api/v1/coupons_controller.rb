@@ -36,7 +36,7 @@ module Api
       end
 
       def validate_product_category_code
-        return if @coupon.product_categories_codes.include? coupon_product_category
+        return if @coupon.product_categories.codes.include? coupon_product_category
 
         render json: 'Categoria de produto inválida para este cupom', status: :bad_request
       end
