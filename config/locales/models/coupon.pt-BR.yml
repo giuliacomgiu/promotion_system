@@ -19,6 +19,7 @@ pt-BR:
           missing_order_code: 'Cupom só pode ser utilizado com código do pedido'
           missing_product_category_code: 'Cupom só pode ser utilizado com código da categoria de produto'
           success: 'Cupom utilizado com sucesso'
+          invalid_product_category: 'Categoria de produto inválida para este cupom'
     archive:
       success: 'Cupom arquivado com sucesso'
     coupon:

@@ -12,7 +12,7 @@ class Promotion < ApplicationRecord
     def codes
       proxy_association.owner
                        .product_categories
-                       .map(&:codes)
+                       .map(&:code)
     end
   end
 
