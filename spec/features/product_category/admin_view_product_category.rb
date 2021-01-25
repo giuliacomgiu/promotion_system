@@ -7,26 +7,26 @@ feature 'Admin views product category' do
   end
 
   scenario 'index view is successful' do
-    ProductCategory.create!(name: 'Hospedagem', code: 'HOSP')
-    ProductCategory.create!(name: 'E-mail', code: 'EMAIL')
+    create :product_category
+    create :product_category, name: 'E-mail', code: 'EMAIL'
 
     visit root_path
     click_on 'Categorias de produto'
 
-    expect(page).to have_content('Hospedagem')
-    expect(page).to have_content('HOSP')
+    expect(page).to have_content('Wordpress')
+    expect(page).to have_content('WORD')
     expect(page).to have_content('E-mail')
     expect(page).to have_content('EMAIL')
     expect(page).to have_link('Voltar', href: root_path)
   end
 
   scenario 'code is displayed uppercase' do
-    ProductCategory.create!(name: 'Hospedagem', code: 'hosp')
+    create :product_category, code: 'wordp'
 
     visit root_path
     click_on 'Categorias de produto'
 
-    expect(page).to have_content('HOSP')
+    expect(page).to have_content('WORDP')
     expect(page).to have_link('Voltar', href: root_path)
   end
 
@@ -37,12 +37,13 @@ feature 'Admin views product category' do
   end
 
   scenario 'and views details' do
-    ProductCategory.create!(name: 'Hospedagem', code: 'HOSP')
-    visit product_categories_path
-    click_on 'Hospedagem'
+    create :product_category
 
-    expect(page).to have_content('Hospedagem')
-    expect(page).to have_content('HOSP')
+    visit product_categories_path
+    click_on 'Wordpress'
+
+    expect(page).to have_content('Wordpress')
+    expect(page).to have_content('WORDP')
     expect(page).to have_link('Voltar', href: product_categories_path)
   end
 end
