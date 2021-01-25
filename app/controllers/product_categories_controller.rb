@@ -33,7 +33,7 @@ class ProductCategoriesController < ApplicationController
   end
 
   def destroy
-    redirect_to action: 'index' if @product_category.destroy!
+    redirect_to action: 'index' if @product_category.destroy
   end
 
   private

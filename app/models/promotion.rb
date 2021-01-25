@@ -17,7 +17,7 @@ class Promotion < ApplicationRecord
   end
 
   validates :name, :code, :discount_rate, :maximum_discount,
-            :coupon_quantity, :expiration_date, :product_category_ids,
+            :coupon_quantity, :expiration_date, :product_categories,
             presence: true
 
   validates :code, uniqueness: { case_sensitive: false }
