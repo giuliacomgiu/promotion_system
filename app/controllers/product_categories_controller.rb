@@ -1,6 +1,6 @@
 class ProductCategoriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_product_category, only: %i[edit update show destory]
+  before_action :set_product_category, only: %i[edit update show destroy]
 
   def index
     @product_categories = ProductCategory.all
@@ -33,7 +33,7 @@ class ProductCategoriesController < ApplicationController
   end
 
   def destroy
-    redirect_to action: 'index' if @product_category.destroy
+    redirect_to action: 'index' if @product_category.destroy!
   end
 
   private
