@@ -1,31 +1,24 @@
 require 'rails_helper'
 
 feature 'Admin edits a promotion' do
-  background do
-    user = User.create!(email: 'test@locaweb.com.br', password: 'f4k3p455w0rd')
-    login_as(user, scope: :user)
-  end
+
+  let!(:creator){ create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'there is an editing path' do
-    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-    Promotion.create!(product_categories: [product], name: 'Cyber Monday', coupon_quantity: 90,
-                      description: 'Promoção de Cyber Monday', code: 'CYBER15', discount_rate: 15,
-                      expiration_date: '22/12/2033', maximum_discount: 10)
+    login_as(creator, scope: :user)
+    promotion = create :promotion, :with_product_category, creator: creator
 
     visit root_path
     click_on 'Promoções'
-    click_on 'Cyber Monday'
+    click_on 'Natal'
 
     expect(page).to have_link('Editar',
-                              href: edit_promotion_path(Promotion.last))
+                              href: edit_promotion_path(promotion))
   end
 
   scenario 'and it succeeds' do
-    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-    promotion = Promotion.create!(product_categories: [product], name: 'Cyber Monday', 
-                                  coupon_quantity: 90, code: 'CYBER15', discount_rate: 15,
-                                  description: 'Promoção de Cyber Monday',
-                                  expiration_date: '22/12/2033', maximum_discount: 10)
+    login_as(creator, scope: :user)
+    promotion = create :promotion, :with_product_category, creator: creator
 
     visit promotion_path(promotion)
     click_on 'Editar'
@@ -38,19 +31,17 @@ feature 'Admin edits a promotion' do
     expect(current_path).to eq(promotion_path(promotion))
     expect(page).to have_content('Black Friday')
     expect(page).to have_content('Promoção de Black Friday')
-    expect(page).to have_content('15,00%')
-    expect(page).to have_content('R$ 10,00')
+    expect(page).to have_content('10,00%')
+    expect(page).to have_content('R$ 50,00')
     expect(page).to have_content('FRIDAY15')
-    expect(page).to have_content('22/12/2033')
-    expect(page).to have_content('90')
+    expect(page).to have_content(1.day.from_now.strftime('%d/%m/%Y'))
+    expect(page).to have_content('5')
     expect(page).to have_link('Voltar')
   end
 
   scenario 'and fails if items are blank' do
-    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-    Promotion.create!(product_categories: [product], name: 'Natal', coupon_quantity: 100,
-                      code: 'NATAL10', discount_rate: 10, description: 'Promoção de Natal',
-                      expiration_date: '22/12/2033', maximum_discount: 10)
+    login_as(creator, scope: :user)
+    promotion = create :promotion, :with_product_category, creator: creator
 
     visit root_path
     click_on 'Promoções'
@@ -70,13 +61,14 @@ feature 'Admin edits a promotion' do
   end
 
   scenario 'and fails if code isnt unique' do
+    login_as(creator, scope: :user)
     product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
     Promotion.create!(product_categories: [product], name: 'Natal', description: 'Promoção de Natal',
                       code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033', maximum_discount: 10)
+                      expiration_date: '22/12/2033', maximum_discount: 10, creator: creator)
     Promotion.create!(product_categories: [product], name: 'Natal Melhor', description: 'Promoção de Natal',
                       code: 'NATAL20', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033', maximum_discount: 10)
+                      expiration_date: '22/12/2033', maximum_discount: 10, creator: creator)
 
     visit root_path
     click_on 'Promoções'
