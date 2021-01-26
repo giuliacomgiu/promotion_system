@@ -7,6 +7,8 @@ feature 'Admin generates coupons' do
     login_as user, scope: :user
   end
 
+  scenario 'fails if promotion is not approved'
+
   scenario 'and there are coupons available to be generated' do
     product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
     promotion = Promotion.create!(product_categories: [product], name: 'Pascoa', coupon_quantity: 5,

@@ -1,6 +1,6 @@
 class PromotionsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_promotion, only: %i[show edit update destroy issue_coupons]
+  before_action :set_promotion, only: %i[show edit update destroy approve issue_coupons]
 
   def index
     @promotions = Promotion.all
@@ -13,7 +13,7 @@ class PromotionsController < ApplicationController
   end
 
   def create
-    @promotion = Promotion.new(promotion_params)
+    @promotion = Promotion.new(promotion_params.merge(creator: current_user))
     if @promotion.save
       redirect_to @promotion
     else
@@ -36,9 +36,13 @@ class PromotionsController < ApplicationController
     redirect_to promotions_path
   end
 
+  def approve
+    @promotion.update(curator: current_user)
+    redirect_to @promotion, success: t('.approve')
+  end
+
   def issue_coupons
     @promotion.issue_coupons!
-    
     redirect_to @promotion, success: t('.success')
   end
 

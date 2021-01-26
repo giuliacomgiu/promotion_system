@@ -6,6 +6,7 @@ FactoryBot.define do
     coupon_quantity { 5 }
     maximum_discount { 50 }
     expiration_date { 1.day.from_now }
-    association :product_categories
+    association :product_categories, factory: :product_category
+    association :creator, factory: :user
   end
 end

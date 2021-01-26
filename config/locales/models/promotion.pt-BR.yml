@@ -15,14 +15,17 @@ pt-BR:
         expiration_date: 'Data de término'
         product_categories: 'Categorias de produtos'
   promotions:
+    approve:
+      success: 'Promoção aprovada com sucesso'
     index:
       no_record_found: 'Nenhuma promoção cadastrada'
       new_promotion: 'Cadastrar promoção'
+    issue_coupons:
+      success: 'Cupons gerados com sucesso'
     show:
       issue_coupons: 'Emitir cupons'
+      approve: 'Aprovar'
     search:
       results_found: 'Os seguintes resultados foram encontrados'
       no_results_found: 'Nenhum resultado foi encontrado'
       blank_field: 'Campo não pode ficar em branco'
-    issue_coupons:
-      success: 'Cupons gerados com sucesso'

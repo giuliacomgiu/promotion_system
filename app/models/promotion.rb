@@ -1,4 +1,6 @@
 class Promotion < ApplicationRecord
+  belongs_to :creator, class_name: 'User'
+  belongs_to :curator, class_name: 'User', optional: true
   has_many :coupons, dependent: :destroy
   has_many :product_category_promotions, dependent: :delete_all
   has_many :product_categories, through: :product_category_promotions do

@@ -1,5 +1,10 @@
 <%= render @promotion %>
-
+<% if @promotion.curator.nil? %>
+  <p>Aguardando aprovação</p>
+  <%= link_to t('.approve'), approve_promotion_path(@promotion), method: :put %>
+<% else %>
+  <p>Aprovada por: <%= @promotion.curator.email %></p>
+<% end %>
 <%= link_to t(:edit, scope: :interface), edit_promotion_path(@promotion) %>
 <%= link_to t(:delete, scope: :interface), @promotion, method: :delete %>
 <%= link_to t(:back, scope: :interface), promotions_path %>
