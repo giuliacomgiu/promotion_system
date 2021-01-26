@@ -7,13 +7,12 @@ def create_promotion_with_product_category
 end
 
 feature 'Admin views promotions' do
-  background do
-    user = User.create!(email: 'test@locaweb.com.br', password: 'f4k3p455w0rd')
-    login_as(user, scope: :user)
-  end
+
+  let!(:user){ create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'and there is 1 previews on index' do
-    create_promotion_with_product_category
+    login_as(user, scope: :user)
+    create :promotion, :with_product_category, creator: user
 
     visit root_path
     click_on 'Promoções'
@@ -27,9 +26,11 @@ feature 'Admin views promotions' do
   end
 
   scenario 'and there are 2 previews on index' do
+    login_as(user, scope: :user)
     create :product_category do |product_category|
-      create :promotion, product_categories: [product_category]
-      create :promotion, name: 'Cyber Monday', code: 'CYBER', product_categories: [product_category]
+      create :promotion, product_categories: [product_category], creator: user
+      create :promotion, name: 'Cyber Monday', code: 'CYBER', 
+                         product_categories: [product_category], creator: user
     end
 
     visit root_path
@@ -45,6 +46,8 @@ feature 'Admin views promotions' do
   end
 
   scenario 'and no promotion are created' do
+    login_as(user, scope: :user)
+  
     visit root_path
     click_on 'Promoções'
 
@@ -52,6 +55,8 @@ feature 'Admin views promotions' do
   end
 
   scenario 'and return to home page' do
+    login_as(user, scope: :user)
+  
     visit root_path
     click_on 'Promoções'
     click_on 'Voltar'
@@ -60,7 +65,8 @@ feature 'Admin views promotions' do
   end
 
   scenario 'and view details' do
-    create_promotion_with_product_category
+    login_as(user, scope: :user)
+    create :promotion, :with_product_category, creator: user
 
     visit root_path
     click_on 'Promoções'
@@ -75,7 +81,8 @@ feature 'Admin views promotions' do
   end
 
   scenario 'and return to promotions page' do
-    create_promotion_with_product_category
+    login_as(user, scope: :user)
+    create :promotion, :with_product_category, creator: user
 
     visit root_path
     click_on 'Promoções'
