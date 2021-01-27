@@ -43,9 +43,7 @@ feature 'Admin edits a promotion' do
     login_as(creator, scope: :user)
     promotion = create :promotion, :with_product_category, creator: creator
 
-    visit root_path
-    click_on 'Promoções'
-    click_on 'Natal'
+    visit promotion_path(promotion)
     click_on 'Editar'
 
     fill_in 'Nome', with: ''
@@ -62,20 +60,14 @@ feature 'Admin edits a promotion' do
 
   scenario 'and fails if code isnt unique' do
     login_as(creator, scope: :user)
-    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-    Promotion.create!(product_categories: [product], name: 'Natal', description: 'Promoção de Natal',
-                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033', maximum_discount: 10, creator: creator)
-    Promotion.create!(product_categories: [product], name: 'Natal Melhor', description: 'Promoção de Natal',
-                      code: 'NATAL20', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033', maximum_discount: 10, creator: creator)
+    promotions = create_list :promotion, 2, :with_product_category, creator: creator
 
     visit root_path
     click_on 'Promoções'
-    click_on 'Natal'
+    click_on promotions[0].name
     click_on 'Editar'
 
-    fill_in 'Código', with: 'NATAL20'
+    fill_in 'Código', with: promotions[1].code
     click_on 'Salvar'
 
     expect(page).to have_content('já está em uso')

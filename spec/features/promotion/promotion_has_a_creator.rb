@@ -21,17 +21,17 @@ feature 'Promotion has a creator' do
     check product_category.name
     click_on 'Salvar'
 
-    expect(page).to have_content 'Criada por: maria@locaweb.com.br'
+    expect(page).to have_content "Criada por: #{user.email}"
   end
 
   scenario 'there is a pending message' do
     login_as(user, scope: :user)
-    promotion = create :promotion, product_categories: [product_category], creator: user
+    promotion = create :promotion, :with_product_category, creator: user
 
     visit promotions_path
     click_on promotion.name
 
     expect(page).to have_content 'Aguardando aprovação'
-    expect(page).not_to have_link 'Aprovar' 
+    expect(page).not_to have_link 'Aprovar'
   end
 end

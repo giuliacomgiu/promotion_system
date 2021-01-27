@@ -3,12 +3,11 @@ require 'rails_helper'
 feature 'Promotion has a curator' do
   let!(:creator){ create :user, email: 'maria@locaweb.com.br' }
   let!(:curator){ create :user, email: 'dandara@locaweb.com.br' }
-  let!(:product_category){ create :product_category }
-  let!(:promotion){ create :promotion, product_categories: [product_category], creator: creator }
 
   scenario 'and approves promotion' do
     login_as(curator, scope: :user)
-    
+    promotion = create :promotion, :with_product_category, creator: creator
+
     visit promotions_path
     click_on promotion.name
     click_on 'Aprovar'

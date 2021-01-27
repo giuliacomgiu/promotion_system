@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 feature 'Admin registers a promotion' do
-  background do
-    user = User.create!(email: 'test@locaweb.com.br', password: 'f4k3p455w0rd')
-    login_as(user, scope: :user)
-  end
+  let!(:user){ create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'from index page' do
+    login_as(user, scope: :user)
+
     visit root_path
     click_on 'Promoções'
 
@@ -15,7 +14,9 @@ feature 'Admin registers a promotion' do
   end
 
   scenario 'successfully with 1 product category' do
-    ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    login_as(user, scope: :user)
+
+    create :product_category
 
     visit promotions_path
     click_on 'Cadastrar promoção'
@@ -43,8 +44,9 @@ feature 'Admin registers a promotion' do
   end
 
   scenario 'successfully with 2 product categories' do
-    ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-    ProductCategory.create!(name: 'Email', code: 'MAILER')
+    login_as(user, scope: :user)
+    create :product_category
+    create :product_category, name: 'Email', code: 'MAILER'
 
     visit promotions_path
     click_on 'Cadastrar promoção'
@@ -74,6 +76,8 @@ feature 'Admin registers a promotion' do
   end
 
   scenario 'and attributes cannot be blank' do
+    login_as(user, scope: :user)
+
     visit promotions_path
     click_on 'Cadastrar promoção'
     click_on 'Salvar'
@@ -82,15 +86,15 @@ feature 'Admin registers a promotion' do
   end
 
   scenario 'and code must be unique' do
-    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-    Promotion.create!(product_categories: [product], name: 'Natal', description: 'Promoção de Natal',
-                      code: 'NATAL10', discount_rate: 10, coupon_quantity: 100,
-                      expiration_date: '22/12/2033', maximum_discount: 10)
+    login_as(user, scope: :user)
+
+    create :product_category
+    promotion = create :promotion, :with_product_category, creator: user
 
     visit root_path
     click_on 'Promoções'
     click_on 'Cadastrar promoção'
-    fill_in 'Código', with: 'NATAL10'
+    fill_in 'Código', with: promotion.code
     click_on 'Salvar'
 
     expect(page).to have_content('já está em uso')
