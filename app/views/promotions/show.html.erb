@@ -1,7 +1,12 @@
 <%= render @promotion %>
+
+<% #TODO: Remove nested ifs %>
 <% if @promotion.curator.nil? %>
-  <p>Aguardando aprovação</p>
-  <%= link_to t('.approve'), approve_promotion_path(@promotion), method: :put %>
+  <% if @promotion.creator.eql? current_user %>
+    <p>Aguardando aprovação</p>
+  <% else %>
+    <%= link_to t('.approve'), approve_promotion_path(@promotion), method: :put %>
+  <% end %>
 <% else %>
   <p>Aprovada por: <%= @promotion.curator.email %></p>
 <% end %>
