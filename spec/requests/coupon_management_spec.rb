@@ -3,11 +3,8 @@ require 'rails_helper'
 describe 'Coupon management' do
   context 'show' do
     it 'render coupon json successfully' do
-      product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-      promotion = Promotion.create!(product_categories: [product], name: 'Pascoa', 
-                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
-                                    expiration_date: 1.day.from_now, maximum_discount: 15)
-      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
+      promotion = create :promotion, :with_product_category
+      coupon = create :coupon, promotion: promotion
 
       get "/api/v1/coupons/#{coupon.code}"
 
@@ -24,12 +21,8 @@ describe 'Coupon management' do
     end
 
     it 'coupon has already expired' do
-      product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-      promotion = Promotion.create!(product_categories: [product],name: 'Pascoa',
-                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
-                                    expiration_date: 1.day.from_now, maximum_discount: 10)
-      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
-      promotion.update!(expiration_date: 1.day.ago)
+      promotion = create :promotion, :with_product_category, :expired
+      coupon = create :coupon, promotion: promotion
 
       get "/api/v1/coupons/#{coupon.code}"
 
@@ -38,11 +31,8 @@ describe 'Coupon management' do
     end
 
     it 'coupon is burned' do
-      product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-      promotion = Promotion.create!(product_categories: [product],name: 'Pascoa',
-                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
-                                    expiration_date: 1.day.from_now, maximum_discount: 10)
-      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001', status: :burned)
+      promotion = create :promotion, :with_product_category
+      coupon = create :coupon, :burned, promotion: promotion
       
       get "/api/v1/coupons/#{coupon.code}"
 
@@ -51,12 +41,8 @@ describe 'Coupon management' do
     end
 
     it 'coupon is burned and expired' do
-      product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-      promotion = Promotion.create!(product_categories: [product],name: 'Pascoa',
-                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
-                                    expiration_date: 1.day.from_now, maximum_discount: 10)
-      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001', status: :burned)
-      promotion.update!(expiration_date: 1.day.ago)
+      promotion = create :promotion, :with_product_category, :expired
+      coupon = create :coupon, :burned, promotion: promotion
       
       get "/api/v1/coupons/#{coupon.code}"
 
@@ -66,11 +52,8 @@ describe 'Coupon management' do
     end
 
     it 'order code cant be blank' do
-      product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-      promotion = Promotion.create!(product_categories: [product],name: 'Pascoa',
-                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
-                                    expiration_date: 1.day.from_now, maximum_discount: 10)
-      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
+      promotion = create :promotion, :with_product_category
+      coupon = create :coupon, promotion: promotion
 
       patch "/api/v1/coupons/#{coupon.code}/burn"
 
@@ -82,15 +65,12 @@ describe 'Coupon management' do
 
   context 'burn' do
     it 'change coupon status' do
-      products = ProductCategory.create!([{name: 'Wordpress', code: 'WORDP'},
-                                         {name: 'Cloud', code: 'CLOUD'}])
-      promotion = Promotion.create!(product_categories: products, name: 'Pascoa', 
-                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
-                                    expiration_date: 1.day.from_now, maximum_discount: 10)
-      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
+      promotion = create :promotion, :with_product_category
+      coupon = create :coupon, promotion: promotion
+      product_category = promotion.product_categories.first.code
 
       patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' }, 
-                                                             product_category: { code: 'CLOUD' } }
+                                                             product_category: { code: "#{product_category}" } }
 
       expect(response).to have_http_status(200)
       expect(response.body).to include('Cupom utilizado com sucesso')
@@ -99,15 +79,11 @@ describe 'Coupon management' do
     end
 
     it 'fails if product category code doesnt belong to the promotion' do
-      products = ProductCategory.create!([{name: 'Wordpress', code: 'WORDP'},
-                                         {name: 'Cloud', code: 'CLOUD'}])
-      promotion = Promotion.create!(product_categories: products, name: 'Pascoa',  
-                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
-                                    expiration_date: 1.day.from_now, maximum_discount: 10)
-      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
+      promotion = create :promotion, :with_product_category
+      coupon = create :coupon, promotion: promotion
 
       patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' }, 
-                                                             product_category: { code: 'EMAIL' } }
+                                                             product_category: { code: '1234' } }
 
       expect(response).to have_http_status(400)
       expect(response.body).to include('Categoria de produto inválida para este cupom')
@@ -116,14 +92,11 @@ describe 'Coupon management' do
     end
 
     it 'fails if order code is missing' do
-      products = ProductCategory.create!([{name: 'Wordpress', code: 'WORDP'},
-                                         {name: 'Cloud', code: 'CLOUD'}])
-      promotion = Promotion.create!(product_categories: products, name: 'Pascoa', 
-                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
-                                    expiration_date: 1.day.from_now, maximum_discount: 10)
-      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
+      promotion = create :promotion, :with_product_category
+      coupon = create :coupon, promotion: promotion
+      product_category = promotion.product_categories.first.code
 
-      patch "/api/v1/coupons/#{coupon.code}/burn", params: { product_category: { code: 'CLOUD' } }
+      patch "/api/v1/coupons/#{coupon.code}/burn", params: { product_category: { code: "#{product_category}" } }
 
       expect(response).to have_http_status(400)
       expect(response.body).to include('Cupom só pode ser utilizado com código do pedido')
@@ -131,12 +104,8 @@ describe 'Coupon management' do
     end
 
     it 'fails if product category code is missing' do
-      products = ProductCategory.create!([{name: 'Wordpress', code: 'WORDP'},
-                                         {name: 'Cloud', code: 'CLOUD'}])
-      promotion = Promotion.create!(product_categories: products, name: 'Pascoa', 
-                                    discount_rate: 10, code: 'PASCOA10', coupon_quantity: 5,
-                                    expiration_date: 1.day.from_now, maximum_discount: 10)
-      coupon = Coupon.create!(promotion: promotion, code: 'PASCOA10-0001')
+      promotion = create :promotion, :with_product_category
+      coupon = create :coupon, promotion: promotion
 
       patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' } }
 

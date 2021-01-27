@@ -1,34 +1,28 @@
 require 'rails_helper'
 
 feature 'Admin attemps to reactivate coupon' do
-  background do
-    user = User.create!(email: 'jane_doe@locaweb.com.br', password: '123456')
-    login_as user, scope: :user
-  end
+
+  let!(:user){ create :user }
 
   scenario 'and there is a reactivate button' do
-    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-    promo = Promotion.create!(product_categories: [product], name: 'Pascoa', coupon_quantity: 2,
-                              discount_rate: 10, expiration_date: 1.day.from_now,
-                              code: 'PASCOA10', maximum_discount: 10)
-    Coupon.create!(promotion: promo, code: 'PASCOA10-0001', status: 'archived')
+    login_as user, scope: :user
+    promotion = create :promotion, :with_product_category, creator: user
+    coupon = create :coupon, :archived, promotion: promotion
 
     visit root_path
     click_on 'Promoções'
-    click_on 'Pascoa'
+    click_on promotion.name
 
-    expect(page).to have_content 'PASCOA10-0001'
+    expect(page).to have_content coupon.code
     expect(page).to have_link 'Reativar'
   end
 
   scenario 'and succeeds if coupon is archived' do
-    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-    promo = Promotion.create!(product_categories: [product], name: 'Pascoa', coupon_quantity: 2,
-                              discount_rate: 10, expiration_date: 1.day.from_now,
-                              code: 'PASCOA10', maximum_discount: 10)
-    coupon = Coupon.create!(promotion: promo, code: 'PASCOA10-0001', status: 'archived')
+    login_as user, scope: :user
+    promotion = create :promotion, :with_product_category, creator: user
+    coupon = create :coupon, :archived, promotion: promotion
 
-    visit promotion_path(promo)
+    visit promotion_path(promotion)
     click_on 'Reativar'
 
     expect(page).to have_content 'Cupom reativado com sucesso'
@@ -38,13 +32,11 @@ feature 'Admin attemps to reactivate coupon' do
   end
 
   scenario 'and succeeds if coupon is burned' do
-    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-    promo = Promotion.create!(product_categories: [product], name: 'Pascoa', coupon_quantity: 2,
-                              discount_rate: 10, expiration_date: 1.day.from_now,
-                              code: 'PASCOA10', maximum_discount: 10)
-    coupon = Coupon.create!(promotion: promo, code: 'PASCOA10-0001', status: 'burned')
+    login_as user, scope: :user
+    promotion = create :promotion, :with_product_category, creator: user
+    coupon = create :coupon, :burned, promotion: promotion
 
-    visit promotion_path(promo)
+    visit promotion_path(promotion)
     click_on 'Reativar'
 
     expect(page).to have_content 'Cupom reativado com sucesso'
@@ -54,13 +46,11 @@ feature 'Admin attemps to reactivate coupon' do
   end
 
   scenario 'and cant do it if coupon is active' do
-    product = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
-    promo = Promotion.create!(product_categories: [product], name: 'Pascoa', coupon_quantity: 2, 
-                              discount_rate: 10, expiration_date: 1.day.from_now,
-                              code: 'PASCOA10', maximum_discount: 10)
-    Coupon.create!(promotion: promo, code: 'PASCOA10-0001', status: 'active')
+    login_as user, scope: :user
+    promotion = create :promotion, :with_product_category, creator: user
+    create :coupon, promotion: promotion
 
-    visit promotion_path(promo)
+    visit promotion_path(promotion)
 
     expect(page).not_to have_link 'Reativar'
   end

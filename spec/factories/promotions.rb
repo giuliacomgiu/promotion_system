@@ -24,6 +24,10 @@ FactoryBot.define do
       expiration_date {  }
     end
 
+    trait :expired do
+      expiration_date { 1.day.ago }
+    end
+
     trait :with_product_category do
       transient do
         product_category_count { 1 }
@@ -32,6 +36,12 @@ FactoryBot.define do
       after(:build) do |promotion, evaluator|
         promotion.product_categories = create_list(:product_category, evaluator.product_category_count)
         promotion.save
+      end
+    end
+
+    trait :with_coupons do
+      after(:create) do |promotion|
+        promotion.coupons = create_list(:coupon, promotion.coupon_quantity, promotion: promotion)
       end
     end
   end
