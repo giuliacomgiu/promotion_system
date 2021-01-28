@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-feature 'Admin deletes a promotion' do
+feature 'Creator deletes a promotion' do
   let!(:creator){ create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'and it succeeds' do
     login_as(creator, scope: :user)
-    create :promotion, :with_product_category, creator: creator
+    promotion = create :promotion, :with_product_category, creator: creator
 
     visit root_path
     click_on 'Promoções'
-    click_on 'Natal'
+    click_on promotion.name
     click_on 'Deletar'
 
     expect(page).to have_content('Nenhuma promoção cadastrada')
@@ -19,9 +19,7 @@ feature 'Admin deletes a promotion' do
     login_as(creator, scope: :user)
     promotion = create :promotion, :with_product_category, creator: creator
 
-    visit root_path
-    click_on 'Promoções'
-    click_on promotion.name
+    visit promotion_path(promotion.name)
     promotion.destroy!
     click_on 'Deletar'
 
