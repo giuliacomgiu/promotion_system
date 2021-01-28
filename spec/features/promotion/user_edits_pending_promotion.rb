@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User attempts to edits a promotion' do
+feature 'User attempts to edit a promotion' do
 
   let!(:creator){ create :user, email: 'maria@locaweb.com.br' }
   let!(:user){ create :user, email: 'user@locaweb.com.br' }
