@@ -21,7 +21,7 @@ feature 'Admin deletes a promotion' do
 
     visit root_path
     click_on 'Promoções'
-    click_on 'Natal'
+    click_on promotion.name
     promotion.destroy!
     click_on 'Deletar'
 

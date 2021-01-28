@@ -1,16 +1,15 @@
 require 'rails_helper'
 
 feature 'Admin views product category' do
-  background do
-    user = User.create!(email: 'test@locaweb.com.br', password: 'f4k3p455w0rd')
-    login_as(user, scope: :user)
-  end
+
+  let!(:user){ create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'and succeeds' do
+    login_as(user, scope: :user)
+
     visit root_path
     click_on 'Categorias de produto'
     click_on 'Cadastrar categoria'
-
     fill_in 'Nome', with: 'Wordpress'
     fill_in 'Código', with: 'WORDP'
 
@@ -20,6 +19,8 @@ feature 'Admin views product category' do
   end
 
   scenario 'and fields cant be blank' do
+    login_as(user, scope: :user)
+
     visit new_product_category_path
     click_on 'Salvar'
 
@@ -27,11 +28,12 @@ feature 'Admin views product category' do
   end
 
   scenario 'and code is unique' do
-    ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    login_as(user, scope: :user)
+    product_category = create :product_category
 
     visit new_product_category_path
     fill_in 'Nome',	with: 'teste'
-    fill_in 'Código',	with: 'WORDP'
+    fill_in 'Código',	with: product_category.code
     click_on 'Salvar'
 
     expect(page).to have_content('já está em uso')

@@ -1,17 +1,16 @@
 require 'rails_helper'
 
 feature 'Admin deletes a product category' do
-  background do
-    user = User.create!(email: 'test@locaweb.com.br', password: 'f4k3p455w0rd')
-    login_as(user, scope: :user)
-  end
+
+  let!(:user){ create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'from show view and it succeeds' do
-    ProductCategory.create!(name: 'test', code: 'test')
+    login_as(user, scope: :user)
+    product_category = create :product_category
 
     visit root_path
     click_on 'Categorias de produto'
-    click_on 'test'
+    click_on product_category.name
     click_on 'Deletar'
 
     expect(current_path).to eq product_categories_path
@@ -19,27 +18,28 @@ feature 'Admin deletes a product category' do
   end
 
   scenario 'and if its the only member of a promotion, its deleted as well' do
-    product = ProductCategory.create!(name: 'test', code: 'test')
-    Promotion.create!(name: 'Natal', code: 'NATAL10', discount_rate: 10, maximum_discount: 50,
-                      coupon_quantity: 5, expiration_date: 1.day.from_now, product_categories: [product])
-    product.destroy
+    login_as(user, scope: :user)
+    promotion = create :promotion, :with_product_category, creator: user
+    product_category = promotion.product_categories.first
+
+    product_category.destroy
 
     visit root_path
     click_on 'Promoções'
 
-    expect(page).not_to have_link('Natal')
+    expect(page).not_to have_link(promotion.name)
   end
 
-  scenario 'and it fails' do
-    product_category = ProductCategory.create!(name: 'test', code: 'test')
+  scenario 'and it fails and redirects to not found page' do
+    login_as(user, scope: :user)
+    product_category = create :product_category
 
     visit root_path
     click_on 'Categorias de produto'
-    click_on 'test'
+    click_on product_category.name
     product_category.destroy!
+    click_on 'Deletar'
 
-    expect { click_on 'Deletar' }.to raise_error NoMethodError
+    expect(page).to have_http_status :not_found
   end
-
-  xscenario 'and it fails and redirects to not found page'
 end

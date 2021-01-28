@@ -1,17 +1,16 @@
 require 'rails_helper'
 
 feature 'Admin edits a product category' do
-  background do
-    user = User.create!(email: 'teste@locaweb.com.br', password: 'f4k3p455w0rd')
-    login_as(user, scope: :user)
-  end
+
+  let!(:user){ create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'and succeeds' do
-    product_category = ProductCategory.create!(name: 'Wordpress', code: 'WORDP')
+    login_as(user, scope: :user)
+    product_category = create :product_category
 
     visit root_path
     click_on 'Categorias de produto'
-    click_on 'Wordpress'
+    click_on product_category.name
     click_on 'Editar'
 
     fill_in 'Nome',	with: 'Novo'
@@ -21,12 +20,13 @@ feature 'Admin edits a product category' do
     expect(current_path).to eq product_category_path(product_category)
     expect(page).to have_content('Novo')
     expect(page).to have_content('NOVO')
-    expect(page).not_to have_content('Wordpress')
-    expect(page).not_to have_content('WORDP')
+    expect(page).not_to have_content(product_category.name)
+    expect(page).not_to have_content(product_category.code)
   end
 
   scenario 'and items cannot be blank' do
-    product_category = ProductCategory.create!(name: 'test', code: 'test')
+    login_as(user, scope: :user)
+    product_category = create :product_category
 
     visit product_category_path(product_category)
     click_on 'Editar'
@@ -39,13 +39,14 @@ feature 'Admin edits a product category' do
   end
 
   scenario 'and code must be unique' do
-    ProductCategory.create!(name: 'test', code: 'test')
-    product_category = ProductCategory.create!(name: 'novo', code: 'novo')
+    login_as(user, scope: :user)
+    original_product_category = create :product_category
+    new_product_category = create :product_category
 
-    visit product_category_path(product_category)
+    visit product_category_path(new_product_category)
     click_on 'Editar'
 
-    fill_in 'Código', with: 'test'
+    fill_in 'Código', with: original_product_category.code
     click_on 'Salvar'
 
     expect(page).to have_content('já está em uso')
