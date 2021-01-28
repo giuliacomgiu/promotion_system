@@ -1,6 +1,7 @@
 class PromotionsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_promotion, only: %i[show edit update destroy approve issue_coupons]
+  before_action :authorize_creator!, only: %i[edit]
 
   def index
     @promotions = Promotion.all
@@ -67,5 +68,11 @@ class PromotionsController < ApplicationController
       .require(:promotion)
       .permit(:name, :description, :code, :discount_rate, :expiration_date,
               :coupon_quantity, :maximum_discount, product_category_ids: [])
+  end
+
+  def authorize_creator!
+    return if @promotion.creator.eql? current_user
+
+    redirect_back fallback_location: root_url, status: :unauthorized, alert: 'Unauthorized'
   end
 end

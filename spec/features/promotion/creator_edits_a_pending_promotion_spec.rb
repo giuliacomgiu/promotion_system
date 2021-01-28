@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Admin edits a promotion' do
+feature 'Creator edits a promotion' do
 
   let!(:creator){ create :user, email: 'maria@locaweb.com.br' }
 
@@ -16,7 +16,7 @@ feature 'Admin edits a promotion' do
                               href: edit_promotion_path(promotion))
   end
 
-  scenario 'and it succeeds' do
+  scenario 'and succeeds if admin is the promotion creator' do
     login_as(creator, scope: :user)
     promotion = create :promotion, :with_product_category, creator: creator
 
@@ -26,16 +26,20 @@ feature 'Admin edits a promotion' do
     fill_in 'Nome', with: 'Black Friday'
     fill_in 'Descrição', with: 'Promoção de Black Friday'
     fill_in 'Código', with: 'FRIDAY15'
+    fill_in 'Desconto', with: '15'
+    fill_in 'Valor máximo de desconto',	with: '20'
+    fill_in 'Quantidade de cupons', with: '2'
+    fill_in 'Data de término', with: 2.day.from_now.strftime('%d/%m/%Y')
     click_on 'Salvar'
 
     expect(current_path).to eq(promotion_path(promotion))
     expect(page).to have_content('Black Friday')
     expect(page).to have_content('Promoção de Black Friday')
-    expect(page).to have_content('10,00%')
-    expect(page).to have_content('R$ 50,00')
+    expect(page).to have_content('15,00%')
+    expect(page).to have_content('R$ 20,00')
     expect(page).to have_content('FRIDAY15')
-    expect(page).to have_content(1.day.from_now.strftime('%d/%m/%Y'))
-    expect(page).to have_content('5')
+    expect(page).to have_content(2.day.from_now.strftime('%d/%m/%Y'))
+    expect(page).to have_content('2')
     expect(page).to have_link('Voltar')
   end
 
@@ -62,9 +66,7 @@ feature 'Admin edits a promotion' do
     login_as(creator, scope: :user)
     promotions = create_list :promotion, 2, :with_product_category, creator: creator
 
-    visit root_path
-    click_on 'Promoções'
-    click_on promotions[0].name
+    visit promotion_path(promotions[0])
     click_on 'Editar'
 
     fill_in 'Código', with: promotions[1].code
