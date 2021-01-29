@@ -29,7 +29,7 @@ feature 'Admin searches for a coupon' do
     expect(page).to have_link promotion.name, href: promotion_path(promotion)
     expect(page).to have_content "Desconto (%): #{promotion.discount_rate}"
     expect(page).to have_content "Data de término: #{promotion.expiration_date.strftime('%d/%m/%Y')}"
-    expect(page).to have_content "Valor máximo de desconto (R$): R$ 50.0" #TODO: use I18n
+    expect(page).to have_content "Valor máximo de desconto (R$): R$ 50,00"
     expect(page).to have_link('Voltar', href: root_path)
   end
 

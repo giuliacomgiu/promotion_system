@@ -9,5 +9,5 @@
 
 <p><%= "#{Promotion.model_name.human}: " %><%= link_to search_result.promotion.name, promotion_path(search_result.promotion) %></p>
 <p><%= "#{Promotion.human_attribute_name(:discount_rate)}: #{search_result.discount_rate}" %></p>
-<p><%= "#{Promotion.human_attribute_name(:expiration_date)}: #{search_result.expiration_date}" %></p>
-<p><%= "#{Promotion.human_attribute_name(:maximum_discount)}: #{search_result.maximum_discount}" %></p>
+<p><%= "#{Promotion.human_attribute_name(:expiration_date)}: #{l(search_result.expiration_date)}" %></p>
+<p><%= "#{Promotion.human_attribute_name(:maximum_discount)}: #{number_to_currency(search_result.maximum_discount)}" %></p>
