@@ -18,14 +18,19 @@ pt-BR:
     approve:
       success: 'Promoção aprovada com sucesso'
     index:
-      no_record_found: 'Nenhuma promoção cadastrada'
       new_promotion: 'Cadastrar promoção'
+      no_record_found: 'Nenhuma promoção cadastrada'
     issue_coupons:
       success: 'Cupons gerados com sucesso'
+    approval:
+      approve: 'Aprovar'
+      pending: 'Aguardando aprovação'
+      approved_by: 'Aprovada por:'
+    promotion:
+      created_by: 'Criada por:'
     show:
       issue_coupons: 'Emitir cupons'
-      approve: 'Aprovar'
     search:
-      results_found: 'Os seguintes resultados foram encontrados'
-      no_results_found: 'Nenhum resultado foi encontrado'
       blank_field: 'Campo não pode ficar em branco'
+      no_results_found: 'Nenhum resultado foi encontrado'
+      results_found: 'Os seguintes resultados foram encontrados'

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Admin registers a promotion' do
+feature 'Creator registers a promotion' do
   let!(:user){ create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'from index page' do
@@ -9,8 +9,7 @@ feature 'Admin registers a promotion' do
     visit root_path
     click_on 'Promoções'
 
-    expect(page).to have_link('Cadastrar promoção',
-                              href: new_promotion_path)
+    expect(page).to have_link('Cadastrar promoção', href: new_promotion_path)
   end
 
   scenario 'all fields are filled correctly with 1 product category' do

@@ -10,7 +10,7 @@ FactoryBot.define do
 
     trait :approved do
       after(:build) do |promotion|
-        promotion.curator = create(:user, email: 'dandara@locaweb.com.br')
+        promotion.curator = create(:user)
         promotion.save
       end
     end

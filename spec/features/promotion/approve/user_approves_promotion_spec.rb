@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Promotion has a curator' do
+feature 'User approves promotion' do
   let!(:creator){ create :user, email: 'maria@locaweb.com.br' }
   let!(:curator){ create :user, email: 'dandara@locaweb.com.br' }
 
-  scenario 'and approves promotion' do
+  scenario 'and succeeds' do
     login_as(curator, scope: :user)
     promotion = create :promotion, :with_product_category, creator: creator
 

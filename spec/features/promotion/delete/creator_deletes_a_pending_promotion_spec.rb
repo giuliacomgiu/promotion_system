@@ -19,10 +19,10 @@ feature 'Creator deletes a promotion' do
     login_as(creator, scope: :user)
     promotion = create :promotion, :with_product_category, creator: creator
 
-    visit promotion_path(promotion.name)
+    visit promotion_path(promotion)
     promotion.destroy!
     click_on 'Deletar'
 
-    expect(page).to have_content '404'
+    expect(page).to have_http_status :not_found
   end
 end

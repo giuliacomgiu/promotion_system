@@ -10,4 +10,6 @@
     <dt> <%= Promotion.human_attribute_name('expiration_date') %> </dt>
     <dd> <%= promotion.expiration_date.strftime('%d/%m/%Y') %></dd>
   </dl>
+
+  <%= render partial: 'approval', locals: { promotion: promotion } %>
 <% end %>

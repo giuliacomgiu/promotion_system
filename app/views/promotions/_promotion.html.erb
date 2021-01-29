@@ -13,5 +13,7 @@
   <dd> <%= promotion.coupon_quantity %></dd>
   <dt> <%= Promotion.human_attribute_name('product_categories') %> </dt>
   <dd> <%= promotion.product_categories.names %></dd>
-  <p>Criada por: <%= promotion.creator.email %></p>
+  <p> <%= "#{t('.created_by')} #{promotion.creator.email}" %></p>
 </dl>
+
+<%= render partial: 'approval', locals: { promotion: promotion } %>
