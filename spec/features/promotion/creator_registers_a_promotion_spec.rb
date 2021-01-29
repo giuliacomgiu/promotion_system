@@ -13,14 +13,12 @@ feature 'Admin registers a promotion' do
                               href: new_promotion_path)
   end
 
-  scenario 'successfully with 1 product category' do
+  scenario 'all fields are filled correctly with 1 product category' do
     login_as(user, scope: :user)
-
-    create :product_category
+    product_category = create :product_category
 
     visit promotions_path
     click_on 'Cadastrar promoção'
-
     fill_in 'Nome', with: 'Cyber Monday'
     fill_in 'Descrição', with: 'Promoção de Cyber Monday'
     fill_in 'Código', with: 'CYBER15'
@@ -28,7 +26,7 @@ feature 'Admin registers a promotion' do
     fill_in 'Valor máximo de desconto (R$)', with: '20'
     fill_in 'Quantidade de cupons', with: '90'
     fill_in 'Data de término', with: '22/12/2033'
-    check 'Wordpress'
+    check product_category.name
     click_on 'Salvar'
 
     expect(current_path).to eq(promotion_path(Promotion.last))
@@ -40,17 +38,17 @@ feature 'Admin registers a promotion' do
     expect(page).to have_content('22/12/2033')
     expect(page).to have_content('90')
     expect(page).to have_content('Wordpress')
+    expect(page).to have_content "Criada por: #{user.email}"
     expect(page).to have_link('Voltar')
   end
 
-  scenario 'successfully with 2 product categories' do
+  scenario 'and there are 2 product categories' do
     login_as(user, scope: :user)
-    create :product_category
-    create :product_category, name: 'Email', code: 'MAILER'
+    category1 = create :product_category
+    category2 = create :product_category, name: 'Email', code: 'MAILER'
 
     visit promotions_path
     click_on 'Cadastrar promoção'
-
     fill_in 'Nome', with: 'Cyber Monday'
     fill_in 'Descrição', with: 'Promoção de Cyber Monday'
     fill_in 'Código', with: 'CYBER15'
@@ -58,21 +56,12 @@ feature 'Admin registers a promotion' do
     fill_in 'Valor máximo de desconto (R$)', with: '20'
     fill_in 'Quantidade de cupons', with: '90'
     fill_in 'Data de término', with: '22/12/2033'
-    check 'Wordpress'
-    check 'Email'
+    check category1.name
+    check category2.name
     click_on 'Salvar'
 
-    expect(current_path).to eq(promotion_path(Promotion.last))
-    expect(page).to have_content('Cyber Monday')
-    expect(page).to have_content('Promoção de Cyber Monday')
-    expect(page).to have_content('15,00%')
-    expect(page).to have_content('R$ 20,00')
-    expect(page).to have_content('CYBER15')
-    expect(page).to have_content('22/12/2033')
-    expect(page).to have_content('90')
-    expect(page).to have_content('Email')
     expect(page).to have_content('Wordpress')
-    expect(page).to have_link('Voltar')
+    expect(page).to have_content('Email')
   end
 
   scenario 'and attributes cannot be blank' do
