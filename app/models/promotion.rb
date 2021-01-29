@@ -43,6 +43,7 @@ class Promotion < ApplicationRecord
   def issue_coupons!
     raise 'Cupons já foram gerados!' if coupons.any?
     raise 'A promoção já expirou' if expired?
+    raise 'A promoção deve estar aprovada' if curator.nil?
 
     coupons
       .create_with(created_at: Time.now, updated_at: Time.now)

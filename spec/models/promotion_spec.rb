@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Promotion do
-  context 'validation on create' do
+  context 'validation' do
     it 'attributes cannot be blank' do
       promotion = build :promotion, :blank
 
@@ -54,7 +54,7 @@ describe Promotion do
 
   context '#issue_coupons!' do
     it 'for the first time in a promotion' do
-      promotion = create :promotion, :with_product_category, coupon_quantity: 2
+      promotion = create :promotion, :with_product_category, :approved, coupon_quantity: 2
 
       promotion.issue_coupons!
       coupons = promotion.coupons
@@ -65,7 +65,7 @@ describe Promotion do
     end
 
     it 'cant be issued twice' do
-      promotion = create :promotion, :with_product_category, coupon_quantity: 2
+      promotion = create :promotion, :with_product_category, :approved, coupon_quantity: 2
 
       promotion.issue_coupons!
       coupons = promotion.coupons
@@ -76,10 +76,16 @@ describe Promotion do
     end
 
     it 'cant issue coupons after promotion\'s expiration date' do
-      promotion = create :promotion, :with_product_category, expiration_date: 1.day.ago
+      promotion = create :promotion, :with_product_category, :approved, expiration_date: 1.day.ago
 
       expect { promotion.issue_coupons! }.to raise_error('A promoção já expirou')
       expect(promotion.coupons).to be_empty
+    end
+
+    it 'cant issue coupons if promotion isnt approved' do
+      promotion = create :promotion, :with_product_category
+
+      expect { promotion.issue_coupons! }.to raise_error('A promoção deve estar aprovada')
     end
   end
 
