@@ -71,8 +71,8 @@ class PromotionsController < ApplicationController
   end
 
   def authorize_creator!
-    return if @promotion.creator.eql? current_user
+    return if @promotion.creator.eql?(current_user) && @promotion.curator.nil?
 
-    redirect_back fallback_location: root_url, status: :unauthorized, alert: 'Unauthorized'
+    redirect_back fallback_location: root_url, status: :forbidden, alert: 'Forbidden'
   end
 end

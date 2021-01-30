@@ -23,15 +23,26 @@ feature 'User attempts to edit a promotion' do
 
     visit edit_promotion_path(promotion)
 
-    expect(page).to have_http_status :unauthorized
+    expect(page).to have_http_status :forbidden
   end
 
-  xscenario 'there is unauthorized notice' do
+  xscenario 'there is forbidden alert' do
+    #TODO: solve redirecting issue on redirect_back method
     login_as(user, scope: :user)
     promotion = create :promotion, :with_product_category, creator: creator
 
     visit edit_promotion_path(promotion)
 
-    expect(page).to have_content 'Unauthorized'
+    expect(page).to have_content 'Forbidden'
+  end
+
+  xscenario 'and there is a forbidden alert' do
+    #TODO: solve redirecting issue on redirect_back method
+    login_as(user, scope: :user)
+    promotion = create :promotion, :with_product_category, :approved, creator: creator
+
+    visit edit_promotion_path(promotion)
+
+    expect(page).to have_content 'Forbidden'
   end
 end
