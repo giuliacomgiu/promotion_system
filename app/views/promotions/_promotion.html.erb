@@ -16,4 +16,8 @@
   <p> <%= "#{t('.created_by')} #{promotion.creator.email}" %></p>
 </dl>
 
-<%= render partial: 'approval', locals: { promotion: promotion } %>
+<% if promotion.curator.present? %>
+  <%= render partial: 'approved_interface', locals: { promotion: promotion } %>
+<% else %>
+  <%= render partial: 'pending_interface', locals: { promotion: promotion } %>
+<% end %>

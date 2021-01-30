@@ -1,0 +1,7 @@
+<% if promotion.creator.eql? current_user %>
+  <p><%= t('.pending') %></p>
+  <%= link_to t(:edit, scope: :interface), edit_promotion_path(promotion) %>
+  <%= link_to t(:delete, scope: :interface), promotion, method: :delete %>
+<% else %>
+  <%= link_to t('.approve'), approve_promotion_path(promotion), method: :put %>
+<% end %>

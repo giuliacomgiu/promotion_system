@@ -10,6 +10,10 @@
     <dt> <%= Promotion.human_attribute_name('expiration_date') %> </dt>
     <dd> <%= promotion.expiration_date.strftime('%d/%m/%Y') %></dd>
   </dl>
-
-  <%= render partial: 'approval', locals: { promotion: promotion } %>
+  
+  <% if promotion.curator.present? %>
+    <%= render partial: 'approved_interface', locals: { promotion: promotion } %>
+  <% else %>
+    <%= render partial: 'pending_interface', locals: { promotion: promotion } %>
+  <% end %>
 <% end %>

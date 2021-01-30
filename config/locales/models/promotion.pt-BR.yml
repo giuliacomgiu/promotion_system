@@ -17,15 +17,16 @@ pt-BR:
   promotions:
     approve:
       success: 'Promoção aprovada com sucesso'
+    approved_interface:
+      approved_by: 'Aprovada por:'
     index:
       new_promotion: 'Cadastrar promoção'
       no_record_found: 'Nenhuma promoção cadastrada'
     issue_coupons:
       success: 'Cupons gerados com sucesso'
-    approval:
+    pending_interface:
       approve: 'Aprovar'
       pending: 'Aguardando aprovação'
-      approved_by: 'Aprovada por:'
     promotion:
       created_by: 'Criada por:'
     show:
