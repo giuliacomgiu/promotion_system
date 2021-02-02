@@ -4,9 +4,7 @@ feature 'Visitor visits home page' do
   scenario 'successfully' do
     visit root_path
 
-    expect(page).to have_content('Promotion System')
-    expect(page).to have_content('Boas vindas ao sistema de gestão de '\
-                                 'promoções')
+    expect(current_path).to eq new_user_session_path
     expect(page).to have_link(href: new_user_session_path)
     expect(page).to have_link(href: new_user_registration_path)
   end

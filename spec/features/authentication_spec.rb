@@ -27,7 +27,7 @@ feature 'Log in' do
     click_on 'Entrar'
     click_on 'Sair'
 
-    expect(current_path).to eq(root_path)
+    expect(current_path).to eq(new_user_session_path)
     expect(page).not_to have_content('Login efetuado com sucesso')
     expect(page).not_to have_content('teste@locaweb.com.br')
     expect(page).to have_link('Login')

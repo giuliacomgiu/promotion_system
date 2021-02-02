@@ -16,14 +16,17 @@
     <%= render 'shared/topbar' %>
 
     <main class="ls-main">
-      <div class="container-fluid">
+      <!-- Authentication content -->
+      <%= yield(:authentication) if content_for?(:authentication) %>
+      
+      <div class="container-fluid" id="body-main">
         <!-- Alerts -->
         <%= content_tag(:div, success, class: 'ls-alert-success') if success.present? %>
         <%= content_tag(:div, notice, class: 'ls-alert-info') if notice.present? %>
         <%= content_tag(:div, alert, class: 'ls-alert-danger') if alert.present? %>
         
         <!-- Content -->
-        <%= yield %>
+        <%= yield unless content_for?(:authentication) %>
       </div>
     </main>
 
