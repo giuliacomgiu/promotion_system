@@ -15,15 +15,16 @@
   <body>
     <%= render 'shared/topbar' %>
 
-    <main class="ls-main container-fluid">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      
-      <% if flash[:success] %>
-        <p><%= success %></p>
-      <% end %>
-
-      <%= yield %>
+    <main class="ls-main">
+      <div class="container-fluid">
+        <!-- Alerts -->
+        <%= content_tag(:div, success, class: 'ls-alert-success') if success.present? %>
+        <%= content_tag(:div, notice, class: 'ls-alert-info') if notice.present? %>
+        <%= content_tag(:div, alert, class: 'ls-alert-danger') if alert.present? %>
+        
+        <!-- Content -->
+        <%= yield %>
+      </div>
     </main>
 
     <!-- JQuery is a Locatyle dependency -->

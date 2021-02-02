@@ -1,9 +1,3 @@
-<% if @promotion.errors.any? %>
-  <ul>
-  <% @promotion.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-  <% end %>
-  </ul>
-<% end %>
+<%= render partial: 'shared/errors', locals: { object: @promotion } %>
 
 <%= render partial: 'form', locals: { promotion: @promotion } %>

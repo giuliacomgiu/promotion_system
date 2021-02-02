@@ -1,23 +1,93 @@
-<h3><%= promotion.name %></h3>
-<p><%= promotion.description %></p>
-<dl>
-  <dt> <%= Promotion.human_attribute_name('discount_rate') %> </dt>
-  <dd> <%= number_to_percentage promotion.discount_rate, precision: 2, separator: ',' %></dd>
-  <dt> <%= Promotion.human_attribute_name('maximum_discount') %> </dt>
-  <dd> <%= number_to_currency promotion.maximum_discount %> </dd>
-  <dt> <%= Promotion.human_attribute_name('code') %> </dt>
-  <dd> <%= promotion.code %></dd>
-  <dt> <%= Promotion.human_attribute_name('expiration_date') %> </dt>
-  <dd> <%= promotion.expiration_date.strftime('%d/%m/%Y') %></dd>
-  <dt> <%= Promotion.human_attribute_name('coupon_quantity') %> </dt>
-  <dd> <%= promotion.coupon_quantity %></dd>
-  <dt> <%= Promotion.human_attribute_name('product_categories') %> </dt>
-  <dd> <%= promotion.product_categories.names %></dd>
-  <p> <%= "#{t('.created_by')} #{promotion.creator.email}" %></p>
-</dl>
-
-<% if promotion.curator.present? %>
-  <%= render partial: 'approved_interface', locals: { promotion: promotion } %>
-<% else %>
-  <%= render partial: 'pending_interface', locals: { promotion: promotion } %>
-<% end %>
+<div class="ls-box ls-board-box">
+  <header class="ls-info-header">
+    <div class="ls-list-title col-md-9">
+      <h2 class="ls-title-3"><%= promotion.name %></h2>
+    </div>
+    <div class="col-md-3 ls-txt-right">
+      <% if promotion.curator.present? %>
+        <%= render partial: 'approved_interface', locals: { promotion: promotion } %>
+      <% else %>
+        <%= render partial: 'pending_interface', locals: { promotion: promotion } %>
+      <% end %>
+    </div>
+  </header>
+  <% if promotion.description.present? %>
+    <div class="row">
+      <div class="col-sm-6 col-md-2">
+        <div class="ls-box">
+          <div class="ls-box-head">
+            <h4 class="ls-title-4"><%= Promotion.human_attribute_name('description') %></h4>
+          </div>
+          <div class="ls-box-body">
+            <p><%= promotion.description %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-sm-6 col-md-2">
+      <div class="ls-box">
+        <div class="ls-box-head">
+          <h4 class="ls-title-4"><%= Promotion.human_attribute_name('code') %></h4>
+        </div>
+        <div class="ls-box-body">
+          <strong><%= promotion.code %></strong>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-2">
+      <div class="ls-box">
+        <div class="ls-box-head">
+          <h4 class="ls-title-4"><%= Promotion.human_attribute_name('coupon_quantity') %></h4>
+        </div>
+        <div class="ls-box-body">
+          <strong><%= promotion.coupon_quantity %></strong>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-2">
+      <div class="ls-box">
+        <div class="ls-box-head">
+          <h4 class="ls-title-4"><%= Promotion.human_attribute_name('discount_rate') %></h4>
+        </div>
+        <div class="ls-box-body">
+          <strong><%= number_to_percentage promotion.discount_rate, precision: 2, separator: ',' %></strong>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-2">
+      <div class="ls-box">
+        <div class="ls-box-head">
+          <h4 class="ls-title-4"><%= Promotion.human_attribute_name('maximum_discount') %></h4>
+        </div>
+        <div class="ls-box-body">
+          <%= number_to_currency promotion.maximum_discount %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-2">
+      <div class="ls-box">
+        <div class="ls-box-head">
+          <h4 class="ls-title-4"><%= Promotion.human_attribute_name('expiration_date') %></h4>
+        </div>
+        <div class="ls-box-body">
+          <%= promotion.expiration_date.strftime('%d/%m/%Y') %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-2">
+      <div class="ls-box">
+        <div class="ls-box-head">
+          <h4 class="ls-title-4"><%= Promotion.human_attribute_name('product_categories') %></h4>
+        </div>
+        <div class="ls-box-body">
+          <%= promotion.product_categories.names %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<h4><%= "#{t('.created_by')} #{promotion.creator.email}" %></h4>
+<h4><%= "#{t('.approved_by')} #{promotion.curator.email}" if promotion.curator.present? %></h4>
+<h4><%= t('.pending') if promotion.curator.nil? %></h4>

@@ -1,6 +1,15 @@
-<%= link_to t('.new_promotion'), new_promotion_path %>
+<h1 class="ls-title-intro ls-ico-list2 ls-no-bg">Promoções</h1>
 
-<%= render partial: 'search_form' %>
+<div class="ls-box ls-md-space">
+  <div class="row">
+    <div class="ls-float-left">
+      <%= render partial: 'search_form' %>
+    </div>
+    <div class="ls-float-right">
+      <%= link_to t('.new_promotion'), new_promotion_path, class: 'ls-btn' %>
+    </div>
+  </div>
+</div>
 
 <% if @promotions.empty? %>
   <p><%= t('.no_record_found') %></p>
@@ -8,6 +17,4 @@
   <%= render partial: 'promotions_preview', locals: { promotions: @promotions } %>
 <% end %>
 
-<%# content_tag(:p, "Nenhuma promoção cadastrada" if @promotions.empty?) %>
-
-<%= link_to t(:back, scope: :interface), root_path %>
+<%= link_to t(:back, scope: :interface), root_path, class:"ls-btn" %>

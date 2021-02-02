@@ -26,9 +26,14 @@ pt-BR:
       success: 'Cupons gerados com sucesso'
     pending_interface:
       approve: 'Aprovar'
-      pending: 'Aguardando aprovação'
     promotion:
+      approved_by: 'Aprovada por:'
       created_by: 'Criada por:'
+      pending: 'Aguardando aprovação'
+    promotions_preview:
+      approved_by: 'Aprovada por:'
+      created_by: 'Criada por:'
+      pending: 'Aguardando aprovação'
     show:
       issue_coupons: 'Emitir cupons'
     search:

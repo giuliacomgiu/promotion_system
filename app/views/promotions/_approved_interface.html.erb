@@ -1,5 +1,3 @@
-<p><%= "#{t('.approved_by')} #{promotion.curator.email}" %></p>
-
 <% if promotion.creator.eql?(current_user) || promotion.curator.eql?(current_user) %>
-  <%= link_to t(:delete, scope: :interface), promotion, method: :delete %>
+  <%= link_to t(:delete, scope: :interface), promotion, method: :delete, class: "ls-btn-primary-danger" %>
 <% end %>

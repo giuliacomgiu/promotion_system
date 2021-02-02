@@ -1,6 +1,6 @@
 <%= render @promotion %>
 
-<%= link_to t(:back, scope: :interface), promotions_path %>
+<%= link_to t(:back, scope: :interface), promotions_path, class: 'ls-btn' %>
 
 <% if @promotion.coupons.empty? %>
   <% if @promotion.not_expired? && @promotion.curator.present? %>

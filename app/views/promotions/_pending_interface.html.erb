@@ -1,7 +1,6 @@
 <% if promotion.creator.eql? current_user %>
-  <p><%= t('.pending') %></p>
-  <%= link_to t(:edit, scope: :interface), edit_promotion_path(promotion) %>
-  <%= link_to t(:delete, scope: :interface), promotion, method: :delete %>
+  <%= link_to t(:edit, scope: :interface), edit_promotion_path(promotion), class: "ls-btn-dark" %>
+  <%= link_to t(:delete, scope: :interface), promotion, method: :delete, class: "ls-btn-primary-danger" %>
 <% else %>
-  <%= link_to t('.approve'), approve_promotion_path(promotion), method: :put %>
+  <%= link_to t('.approve'), approve_promotion_path(promotion), method: :put, class: "ls-btn-primary"%>
 <% end %>

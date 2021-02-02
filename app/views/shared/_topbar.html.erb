@@ -5,17 +5,14 @@
 
     <!-- Links de apoio -->
     <div class="ls-alerts-list">
-      <a href="#" class="ls-ico-bell-o" data-counter="" data-ls-module="topbarCurtain" data-target="#ls-notification-curtain"><span>Notificações</span></a>
-      <a href="#" class="ls-ico-bullhorn" data-ls-module="topbarCurtain" data-target="#ls-help-curtain"><span>Ajuda</span></a>
-      <a href="#" class="ls-ico-question" data-ls-module="topbarCurtain" data-target="#ls-feedback-curtain"><span>Sugestões</span></a>
+      <p data-ls-module = "topbarCurtain"><%= render partial: "coupons/search_form" if user_signed_in? %></p>
     </div>
 
     <!-- Dropdown com detalhes da conta de usuário -->
     <% if user_signed_in? %>
       <div data-ls-module="dropdown" class="ls-dropdown ls-user-account">
-        <a href="#" class="ls-ico-user">
-          <!--<span class="ls-name">João</span>-->
-          <%= current_user.email %>
+        <a class="ls-ico-user">
+          <span class="ls-name"><%= current_user.email %></span>
         </a>
         <nav class="ls-dropdown-nav ls-user-menu">
           <ul>
@@ -34,26 +31,25 @@
   <span class="ls-show-sidebar ls-ico-menu"></span>
 
   <!-- Nome do produto/marca -->
-    <h1 class="ls-brand-name">
-      <a class="ls-ico-earth">
-        LocaPromo
-      </a>
-    </h1>
+  <h1 class="ls-brand-name">
+    <a class="ls-ico-earth">
+      LocaPromo
+    </a>
+  </h1>
 </div>
 
-<% if user_signed_in? %>
-  <aside class="ls-sidebar">
-    <div class="ls-sidebar-inner">
-      <a href="#" class="ls-go-prev"><span class="ls-text">Voltar à lista de serviços</span></a>
-      <nav class="ls-menu">
+<aside class="ls-sidebar">
+  <div class="ls-sidebar-inner">
+    <a href="#" class="ls-go-prev"><span class="ls-text">Voltar à lista de serviços</span></a>
+    <nav class="ls-menu">
+      <% if user_signed_in? %>
         <ul>
           <li class="ls-active"><a href="/" class="ls-ico-dashboard">Dashboard</a></li>
           <li><%= link_to Promotion.model_name.human(count:2), promotions_path, class: "ls-ico-bars" %></li>
           <li><%= link_to ProductCategory.model_name.human(count:2), product_categories_path, 
                   class: "ls-ico-multibuckets" %></li>
-          <li><%= render partial: "coupons/search_form" %></li>
         </ul>
-      </nav>
-    </div>
-  </aside>
-<% end %>
+      <% end %>
+    </nav>
+  </div>
+</aside>

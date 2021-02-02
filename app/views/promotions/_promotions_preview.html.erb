@@ -1,19 +1,43 @@
 <% promotions.each do |promotion| %>
-  <h3><%= link_to promotion.name, promotion %></h3>
-  <dl>
-    <dt> <%= Promotion.human_attribute_name('product_categories') %> </dt>
-    <dd> <%= promotion.product_categories.names %></dd>
-    <dt> <%= Promotion.human_attribute_name('discount_rate') %></dt>
-    <dd> <%= number_to_percentage promotion.discount_rate, precision: 2, separator: ',' %></dd>
-    <dt> <%= Promotion.human_attribute_name('maximum_discount') %> </dt>
-    <dd> <%= number_to_currency promotion.maximum_discount %> </dd>
-    <dt> <%= Promotion.human_attribute_name('expiration_date') %> </dt>
-    <dd> <%= promotion.expiration_date.strftime('%d/%m/%Y') %></dd>
-  </dl>
-  
-  <% if promotion.curator.present? %>
-    <%= render partial: 'approved_interface', locals: { promotion: promotion } %>
-  <% else %>
-    <%= render partial: 'pending_interface', locals: { promotion: promotion } %>
-  <% end %>
+  <div class="ls-list">
+    <header class="ls-list-header">
+      <div class="ls-list-title col-md-9">
+        <%= link_to promotion.name, promotion, class:"strong" %>
+        <small><%= promotion.code %></small>
+      </div>
+      <div class="col-md-3 ls-txt-right">
+        <%= link_to 'Detalhes', promotion, class:"ls-btn-primary" %>
+        <% if promotion.curator.present? %>
+          <%= render partial: 'approved_interface', locals: { promotion: promotion } %>
+        <% else %>
+          <%= render partial: 'pending_interface', locals: { promotion: promotion } %>
+        <% end %>
+      </div>
+    </header>
+    <div class="ls-list-content ">
+      <div class="col-xs-12 col-md-3">
+        <span class="ls-list-label"><%= Promotion.human_attribute_name('product_categories') %></span>
+        <strong><%= promotion.product_categories.names %></strong>
+      </div>
+      <div class="col-xs-12 col-md-3">
+        <span class="ls-list-label"> <%= Promotion.human_attribute_name('discount_rate') %></span>
+        <strong><%= number_to_percentage promotion.discount_rate, precision: 2, separator: ',' %></strong>
+      </div>
+      <div class="col-xs-12 col-md-3">
+        <span class="ls-list-label"> <%= Promotion.human_attribute_name('maximum_discount') %></span>
+        <strong><%= number_to_currency promotion.maximum_discount %></strong>
+      </div>
+      <div class="col-xs-12 col-md-3">
+        <span class="ls-list-label"> <%= Promotion.human_attribute_name('expiration_date') %></span>
+        <strong><%= promotion.expiration_date.strftime('%d/%m/%Y') %></strong>
+      </div>
+    </div>
+    <div class="ls-list-content ">
+      <div class="col-xs-12 col-md-12">
+        <%= "#{t('.created_by')} #{promotion.creator.email}" %>
+        <%= "#{t('.approved_by')} #{promotion.curator.email}" if promotion.curator.present? %>
+        <%= t('.pending') if promotion.curator.nil? %>
+      </div>
+    </div>
+  </div>
 <% end %>
