@@ -1,8 +1,16 @@
-<p>
-  <%= coupon.name %> 
-  <% if coupon.active? %>
-    <%= link_to t('.archive_coupon'), archive_coupon_path(coupon), method: :put %>
-  <% else %>
-    <%= link_to t('.reactivate_coupon'), reactivate_coupon_path(coupon), method: :put %>
-  <% end %>
-</p>
+<div class='ls-list'>
+  <header class='ls-list-header'>
+    <div class='col-md-9'>
+      <%= coupon.name %> 
+    </div>
+    <div class='col-md-3 ls-txt-right'>
+      <% if coupon.active? %>
+        <%= link_to t('.archive_coupon'), archive_coupon_path(coupon), method: :put, 
+            class: 'ls-btn ls-btn-sm ls-btn-primary-danger' %>
+      <% else %>
+        <%= link_to t('.reactivate_coupon'), reactivate_coupon_path(coupon), method: :put,
+            class: 'ls-btn ls-btn-sm ls-btn-primary' %>
+      <% end %>
+    </div>
+  </header>
+</div>

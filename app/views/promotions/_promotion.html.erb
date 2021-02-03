@@ -12,17 +12,9 @@
     </div>
   </header>
   <% if promotion.description.present? %>
-    <div class="row">
-      <div class="col-sm-6 col-md-2">
-        <div class="ls-box">
-          <div class="ls-box-head">
-            <h4 class="ls-title-4"><%= Promotion.human_attribute_name('description') %></h4>
-          </div>
-          <div class="ls-box-body">
-            <p><%= promotion.description %></p>
-          </div>
-        </div>
-      </div>
+    <div class="ls-info-header">
+      <h5 class="ls-title-5"><%= Promotion.human_attribute_name('description') %></h5>
+      <p><%= promotion.description %></p>
     </div>
   <% end %>
   <div class="row">
@@ -88,6 +80,18 @@
     </div>
   </div>
 </div>
-<h4><%= "#{t('.created_by')} #{promotion.creator.email}" %></h4>
-<h4><%= "#{t('.approved_by')} #{promotion.curator.email}" if promotion.curator.present? %></h4>
-<h4><%= t('.pending') if promotion.curator.nil? %></h4>
+
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <h4><%= "#{t('.created_by')} #{promotion.creator.email}" %></h4>
+  </div>
+  <% if promotion.curator.present? %>
+    <div class="col-sm-6 col-md-4">
+      <h4><%= "#{t('.approved_by')} #{promotion.curator.email}" %></h4>
+    </div>
+  <% else %>
+    <div class="col-sm-6 col-md-4">
+      <h4><%= t('.pending') %></h4>
+    </div>
+  <% end %>
+</div>

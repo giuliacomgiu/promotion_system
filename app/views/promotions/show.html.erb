@@ -7,6 +7,6 @@
     <%= link_to t('.issue_coupons'), issue_coupons_promotion_path(@promotion), method: :post %>
   <% end %>
 <% else %>
-  <h1><%= Coupon.model_name.human(count:2) %></h1>
+  <h1 class="ls-title-3"><%= Coupon.model_name.human(count:2) %></h1>
   <%= render @promotion.coupons %>
 <% end %>
