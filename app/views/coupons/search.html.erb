@@ -1,8 +1,8 @@
 <% if @search_results.any? %>
-  <h1><%= t('.results_found') %></h1>
+  <h1 class='ls-title-intro ls-ico-list2 ls-no-bg'><%= t('.results_found') %></h1>
   <%= render partial: 'search_result', collection: @search_results %>
 <% else %>
-  <h1><%= t('.no_results_found') %></h1>
+  <h1 class='ls-title-intro ls-ico-list2 ls-no-bg'><%= t('.no_results_found') %></h1>
 <% end %>
 
-<%= link_to t(:back, scope: :interface), root_path %>
+<%= link_to t(:back, scope: :interface), root_path, class:'ls-btn' %>

@@ -1,5 +1,4 @@
 <%= form_with url: search_coupons_path, method: :get do |form| %>
-  <%= form.label :query, t('.coupon_search') %>
-  <%= form.text_field :query, id: 'coupon-search' %>
-  <%= form.submit t(:search, scope: :interface) , id: 'coupon-search-button' %>
+  <%= form.text_field :query, id: 'coupon-search', placeholder: t('.coupon_search') %>
+  <%= form.submit t(:search, scope: :interface) , id: 'coupon-search-button', class: 'ls-btn' %>
 <% end %>

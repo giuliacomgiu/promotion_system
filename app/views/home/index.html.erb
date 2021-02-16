@@ -8,7 +8,7 @@
     </div>
     <div class="col-md-10">
       <a href="promotions" id="dashboard-promo"> <!-- TODO: change to link to -->
-        <h3 class="ls-title-5"><strong>Promoções</strong></h3>
+        <h3 class="ls-title-5"><strong><%= Promotion.model_name.human %></strong></h3>
         <p>Gerencie as promoções do seu sistema e emita cupons!</p>
       </a>
     </div>
@@ -21,7 +21,7 @@
     </div>
     <div class="col-md-10">
       <a href="product_categories" id="dashboard-product"> <!-- TODO: change to link to -->
-        <h3 class="ls-title-5"><strong>Categorias de produtos</strong></h3>
+        <h3 class="ls-title-5"><strong><%= ProductCategory.model_name.human %></strong></h3>
         <p>Gerencie as categorias de produtos do sistema!</p>
       </a>
     </div>

@@ -1,13 +1,32 @@
-<dl>
-  <% @product_categories.each do |product_category| %>
-    <dt><%= product_category.code %></dt>
-    <dd><%= link_to product_category.name, product_category %></dd>
-  <% end %>
-</dl>
+<h1 class="ls-title-intro ls-ico-multibuckets ls-no-bg"><%= ProductCategory.model_name.human %></h1>
+
+<div class="ls-box ls-md-space">
+  <div class="row">
+    <div class="ls-float-left">
+      <%= link_to t('.new_category'), new_product_category_path, class: 'ls-btn' %>
+    </div>
+  </div>
+</div>
 
 <% if @product_categories.empty? %>
-  <p><%= t('.no_record_found') %></p>
+  <h1 class="ls-title-intro ls-ico-multibuckets ls-no-bg"><%= t('.no_record_found') %></h1>
 <% end %>
 
-<%= link_to t('.new_category'), new_product_category_path %>
-<%= link_to t(:back, scope: :interface), root_path %>
+<% @product_categories.each do |product_category| %>
+  <div class="ls-list">
+    <header class="ls-list-header">
+      <div class="ls-list-title col-md-9">
+        <%= link_to product_category.name, product_category, class:"strong" %>
+        <small><%= product_category.code %></small>
+      </div>
+      <div class="col-md-3 ls-txt-right">
+        <%= link_to 'Detalhes', product_category, class:"ls-btn-primary" %>
+        <%= link_to 'Editar', edit_product_category_path(product_category), class:"ls-btn-primary" %>
+        <%= link_to 'Deletar', product_category, method: :delete, class:"ls-btn-primary-danger" %>
+      </div>
+    </header>
+  </div>
+<% end %>
+
+<%= link_to t(:back, scope: :interface), root_path, class: 'ls-btn' %>
+

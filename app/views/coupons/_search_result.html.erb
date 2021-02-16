@@ -1,13 +1,35 @@
-<h5>
-  <%= search_result.name %> 
-  <% if search_result.active? %>
-    <%= link_to t('.archive_coupon'), archive_coupon_path(search_result), method: :put %>
-  <% elsif search_result.archived? %>
-    <%= link_to t('.reactivate_coupon'), reactivate_coupon_path(search_result), method: :put %>
-  <% end %>
-</h5>
-
-<p><%= "#{Promotion.model_name.human}: " %><%= link_to search_result.promotion.name, promotion_path(search_result.promotion) %></p>
-<p><%= "#{Promotion.human_attribute_name(:discount_rate)}: #{search_result.discount_rate}" %></p>
-<p><%= "#{Promotion.human_attribute_name(:expiration_date)}: #{l(search_result.expiration_date)}" %></p>
-<p><%= "#{Promotion.human_attribute_name(:maximum_discount)}: #{number_to_currency(search_result.maximum_discount)}" %></p>
+<div class="ls-list">
+  <header class="ls-list-header">
+    <div class="ls-list-title col-md-9">
+      <%= search_result.name %>
+    </div>
+    <div class="col-md-3 ls-txt-right">
+      <%= link_to 'Detalhes', search_result.promotion, class:"ls-btn-primary" %>
+      <% if search_result.active? %>
+        <%= link_to t('.archive_coupon'), archive_coupon_path(search_result), method: :put, 
+            class: 'ls-btn ls-btn-sm, ls-btn-primary-danger' %>
+      <% elsif search_result.archived? %>
+        <%= link_to t('.reactivate_coupon'), reactivate_coupon_path(search_result), method: :put, 
+            class: 'ls-btn ls-btn-sm, ls-btn-primary' %>
+      <% end %>
+    </div>
+  </header>
+  <div class="ls-list-content ">
+    <div class="col-xs-12 col-md-3">
+      <span class="ls-list-label"><%= Promotion.model_name.human %></span>
+      <strong><%= link_to search_result.promotion.name, promotion_path(search_result.promotion) %></strong>
+    </div>
+    <div class="col-xs-12 col-md-3">
+      <span class="ls-list-label"><%= Promotion.human_attribute_name(:discount_rate) %></span>
+      <strong><%= search_result.discount_rate %></strong>
+    </div>
+    <div class="col-xs-12 col-md-3">
+      <span class="ls-list-label"><%= Promotion.human_attribute_name(:expiration_date) %></span>
+      <strong><%= l(search_result.expiration_date) %></strong>
+    </div>
+    <div class="col-xs-12 col-md-3">
+      <span class="ls-list-label"><%= Promotion.human_attribute_name(:maximum_discount) %></span>
+      <strong><%= number_to_currency(search_result.maximum_discount) %></strong>
+    </div>
+  </div>
+</div>
