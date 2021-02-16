@@ -1,7 +1,17 @@
-<%= form_with model: product_category, local: true do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-  <%= f.label :code %>
-  <%= f.text_field :code %>
-  <%= f.submit t :save, scope: :interface %>
+<div class = 'ls-box ls-md-space'>
+<%= form_with model: product_category, local: true, class: 'ls-form row'  do |f| %>
+  <label class = 'ls-label col-md-6'>
+    <%= f.label :name, class: 'ls-label-text' %>
+    <%= f.text_field :name %>
+  </label>
+  
+  <label class = 'ls-label col-md-6'>
+    <%= f.label :code, class: 'ls-label-text' %>
+    <%= f.text_field :code %>
+  </label>
+  
+  <div class="ls-actions-btn">
+    <%= f.submit t(:save, scope: :interface), class: 'ls-btn ls-btn-lg' %>
+  </div>
 <% end %>
+</div>

@@ -1,8 +1,14 @@
-<dl>
-  <dt><%= @product_category.code %></dt>
-  <dd><%= @product_category.name %></dd>
-</dl>
+<div class="ls-list">
+  <header class="ls-list-header">
+    <div class="ls-list-title col-md-6">
+      <strong><%= @product_category.name %></strong>
+      <small><%= @product_category.code %></small>
+    </div>
+    <div class="col-md-6 ls-txt-right">
+      <%= link_to t(:edit, scope: :interface), edit_product_category_path(@product_category), class:"ls-btn-primary" %>
+      <%= link_to t(:delete, scope: :interface), @product_category, method: :delete, class:"ls-btn-primary-danger" %>
+    </div>
+  </header>
+</div>
 
-<%= link_to t(:edit, scope: :interface), edit_product_category_path(@product_category) %>
-<%= link_to t(:delete, scope: :interface), @product_category, method: :delete %>
-<%= link_to t(:back, scope: :interface), product_categories_path %>
+<%= link_to t(:back, scope: :interface), product_categories_path, class: 'ls-btn' %>

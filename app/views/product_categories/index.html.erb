@@ -15,11 +15,11 @@
 <% @product_categories.each do |product_category| %>
   <div class="ls-list">
     <header class="ls-list-header">
-      <div class="ls-list-title col-md-9">
+      <div class="ls-list-title col-md-6">
         <%= link_to product_category.name, product_category, class:"strong" %>
         <small><%= product_category.code %></small>
       </div>
-      <div class="col-md-3 ls-txt-right">
+      <div class="col-md-6 ls-txt-right">
         <%= link_to 'Detalhes', product_category, class:"ls-btn-primary" %>
         <%= link_to 'Editar', edit_product_category_path(product_category), class:"ls-btn-primary" %>
         <%= link_to 'Deletar', product_category, method: :delete, class:"ls-btn-primary-danger" %>

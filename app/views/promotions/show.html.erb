@@ -1,12 +1,19 @@
 <%= render @promotion %>
 
-<%= link_to t(:back, scope: :interface), promotions_path, class: 'ls-btn' %>
-
+<hr>
 <% if @promotion.coupons.empty? %>
   <% if @promotion.not_expired? && @promotion.curator.present? %>
-    <%= link_to t('.issue_coupons'), issue_coupons_promotion_path(@promotion), method: :post %>
+    <%= link_to t('.issue_coupons'), issue_coupons_promotion_path(@promotion), method: :post, class: 'ls-btn' %>
   <% end %>
 <% else %>
-  <h1 class="ls-title-3"><%= Coupon.model_name.human(count:2) %></h1>
-  <%= render @promotion.coupons %>
+  <div class='ls-box'>
+    <h1 class="ls-title-3"><%= Coupon.model_name.human(count:2) %></h1>
+    <%= render @promotion.coupons %>
+  </div>
 <% end %>
+
+<div class='row'>
+  <div class='col-md-12'>
+    <%= link_to t(:back, scope: :interface), promotions_path, class: 'ls-btn' %>
+  </div>
+</div>

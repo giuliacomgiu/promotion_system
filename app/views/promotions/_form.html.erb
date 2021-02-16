@@ -1,19 +1,49 @@
-<%= form_with model: promotion do |f| %>
-  <p><%= f.label :name %></p>
-  <p><%= f.text_field :name %></p>
-  <p><%= f.label :description %></p>
-  <p><%= f.text_area :description %></p>
-  <p><%= f.label :code %></p>
-  <p><%= f.text_field :code %></p>
-  <p><%= f.label :discount_rate %></p>
-  <p><%= f.number_field :discount_rate %></p>
-  <p><%= f.label :maximum_discount %></p>
-  <p><%= f.number_field :maximum_discount %></p>
-  <p><%= f.label :coupon_quantity %></p>
-  <p><%= f.number_field :coupon_quantity %></p>
-  <p><%= f.label :expiration_date %></p>
-  <p><%= f.date_field :expiration_date %></p>
-  <p><%= f.label :product_categories %></p>
-  <p><%= f.collection_check_boxes :product_category_ids, ProductCategory.all, :id, :name %></p>
-  <p><%= f.submit t :save, scope: :interface %></p>
+<div class = 'ls-box ls-md-space'>
+<%= form_with model: promotion, class: 'ls-form row' do |f| %>
+  <label class = 'ls-label col-md-6'>
+    <p><%= f.label :name, class: 'ls-label-text' %></p>
+    <%= f.text_field :name %>
+  </label>
+
+  <label class = 'ls-label col-md-6'>
+    <p><%= f.label :description, class: 'ls-label-text' %></p>
+    <p><%= f.text_area :description %></p>
+  </label>
+
+  <label class = 'ls-label col-md-6'>
+    <p><%= f.label :code, class: 'ls-label-text' %></p>
+    <p><%= f.text_field :code %></p>
+  </label>
+  
+  <label class = 'ls-label col-md-6'>
+    <p><%= f.label :discount_rate, class: 'ls-label-text' %></p>
+    <p><%= f.number_field :discount_rate %></p>
+  </label>
+  
+  <label class = 'ls-label col-md-6'>
+    <p><%= f.label :maximum_discount, class: 'ls-label-text' %></p>
+    <p><%= f.number_field :maximum_discount %></p>
+  </label>
+  
+  <label class = 'ls-label col-md-6'>
+    <p><%= f.label :coupon_quantity, class: 'ls-label-text' %></p>
+    <p><%= f.number_field :coupon_quantity %></p>
+  </label>
+  
+  <label class = 'ls-label col-md-6'>
+    <p><%= f.label :expiration_date, class: 'ls-label-text' %></p>
+    <p><%= f.date_field :expiration_date, class: 'datepicker', placeholder: 'dd/mm/yyyy' %></p>
+  </label>
+  
+  <label class = 'ls-label col-md-6'>
+    <p><%= f.label :product_categories, class: 'ls-label-text' %></p>
+    <%= f.collection_check_boxes :product_category_ids, ProductCategory.all, :id, :name do |b| %>
+      <%= b.label(:"data-value" => b.value, class: 'ls-label-text') { b.check_box + ' ' + b.text } %>
+    <% end %>
+  </label>
+
+  <div class="ls-actions-btn">
+    <%= f.submit t(:save, scope: :interface), class: 'ls-btn ls-btn-lg' %>
+  </div>
 <% end %>
+</div>

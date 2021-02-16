@@ -1,11 +1,11 @@
 <% promotions.each do |promotion| %>
   <div class="ls-list">
     <header class="ls-list-header">
-      <div class="ls-list-title col-md-9">
+      <div class="ls-list-title col-md-6">
         <%= link_to promotion.name, promotion, class:"strong" %>
         <small><%= promotion.code %></small>
       </div>
-      <div class="col-md-3 ls-txt-right">
+      <div class="col-md-6 ls-txt-right">
         <%= link_to 'Detalhes', promotion, class:"ls-btn-primary" %>
         <% if promotion.curator.present? %>
           <%= render partial: 'approved_interface', locals: { promotion: promotion } %>
