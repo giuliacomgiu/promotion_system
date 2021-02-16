@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 feature 'Creator edits a promotion' do
-
-  let!(:creator){ create :user, email: 'maria@locaweb.com.br' }
+  let!(:creator) { create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'there is an editing path' do
     login_as(creator, scope: :user)
@@ -29,16 +28,16 @@ feature 'Creator edits a promotion' do
     fill_in 'Desconto', with: '15'
     fill_in 'Valor máximo de desconto',	with: '20'
     fill_in 'Quantidade de cupons', with: '2'
-    fill_in 'Data de término', with: 2.day.from_now.strftime('%d/%m/%Y')
+    fill_in 'Data de término', with: 2.days.from_now.strftime('%d/%m/%Y')
     click_on 'Salvar'
 
-    expect(current_path).to eq(promotion_path(promotion))
+    expect(page).to have_current_path(promotion_path(promotion), ignore_query: true)
     expect(page).to have_content('Black Friday')
     expect(page).to have_content('Promoção de Black Friday')
     expect(page).to have_content('15,00%')
     expect(page).to have_content('R$ 20,00')
     expect(page).to have_content('FRIDAY15')
-    expect(page).to have_content(2.day.from_now.strftime('%d/%m/%Y'))
+    expect(page).to have_content(2.days.from_now.strftime('%d/%m/%Y'))
     expect(page).to have_content('2')
     expect(page).to have_link('Voltar')
   end

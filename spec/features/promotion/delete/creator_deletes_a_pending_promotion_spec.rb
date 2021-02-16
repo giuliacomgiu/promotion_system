@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Creator deletes a promotion' do
-  let!(:creator){ create :user, email: 'maria@locaweb.com.br' }
+  let!(:creator) { create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'and it succeeds' do
     login_as(creator, scope: :user)

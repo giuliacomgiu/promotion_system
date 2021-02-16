@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 feature 'Creator views a pending promotion' do
-
-  let!(:user){ create :user, email: 'maria@locaweb.com.br' }
+  let!(:user) { create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'and view details' do
     login_as(user, scope: :user)
@@ -15,9 +14,9 @@ feature 'Creator views a pending promotion' do
     expect(page).to have_content(promotion.name)
     expect(page).to have_content('10,00%')
     expect(page).to have_content(promotion.code)
-    expect(page).to have_content(1.day.from_now.strftime('%d/%m/%Y')) 
+    expect(page).to have_content(1.day.from_now.strftime('%d/%m/%Y'))
     expect(page).to have_content('5')
-    expect(page).to have_content('50') 
+    expect(page).to have_content('50')
     expect(page).to have_content "Criada por: #{user.email}"
   end
 
@@ -49,6 +48,6 @@ feature 'Creator views a pending promotion' do
     click_on promotion.name
     click_on 'Voltar'
 
-    expect(current_path).to eq promotions_path
+    expect(page).to have_current_path promotions_path, ignore_query: true
   end
 end

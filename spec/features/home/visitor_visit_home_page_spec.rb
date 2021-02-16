@@ -4,7 +4,7 @@ feature 'Visitor visits home page' do
   scenario 'successfully' do
     visit root_path
 
-    expect(current_path).to eq new_user_session_path
+    expect(page).to have_current_path new_user_session_path, ignore_query: true
     expect(page).to have_link(href: new_user_session_path)
     expect(page).to have_link(href: new_user_registration_path)
   end

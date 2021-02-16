@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 feature 'User attempts to edit a promotion' do
-
-  let!(:creator){ create :user, email: 'maria@locaweb.com.br' }
-  let!(:user){ create :user, email: 'user@locaweb.com.br' }
+  let!(:creator) { create :user, email: 'maria@locaweb.com.br' }
+  let!(:user) { create :user, email: 'user@locaweb.com.br' }
 
   scenario 'there is no editing path' do
     login_as(user, scope: :user)
@@ -14,7 +13,7 @@ feature 'User attempts to edit a promotion' do
     click_on promotion.name
 
     expect(page).not_to have_link('Editar',
-                              href: edit_promotion_path(promotion))
+                                  href: edit_promotion_path(promotion))
   end
 
   scenario 'cant visit path directly' do
@@ -27,7 +26,7 @@ feature 'User attempts to edit a promotion' do
   end
 
   xscenario 'there is forbidden alert' do
-    #TODO: solve redirecting issue on redirect_back method
+    # TODO: solve redirecting issue on redirect_back method
     login_as(user, scope: :user)
     promotion = create :promotion, :with_product_category, creator: creator
 
@@ -37,7 +36,7 @@ feature 'User attempts to edit a promotion' do
   end
 
   xscenario 'and there is a forbidden alert' do
-    #TODO: solve redirecting issue on redirect_back method
+    # TODO: solve redirecting issue on redirect_back method
     login_as(user, scope: :user)
     promotion = create :promotion, :with_product_category, :approved, creator: creator
 

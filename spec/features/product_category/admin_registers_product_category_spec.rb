@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 feature 'Admin views product category' do
-
-  let!(:user){ create :user, email: 'maria@locaweb.com.br' }
+  let!(:user) { create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'and succeeds' do
     login_as(user, scope: :user)
@@ -15,7 +14,7 @@ feature 'Admin views product category' do
 
     click_on 'Salvar'
 
-    expect(current_path).to eq product_category_path(ProductCategory.last)
+    expect(page).to have_current_path product_category_path(ProductCategory.last), ignore_query: true
   end
 
   scenario 'and fields cant be blank' do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Creator registers a promotion' do
-  let!(:user){ create :user, email: 'maria@locaweb.com.br' }
+  let!(:user) { create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'from index page' do
     login_as(user, scope: :user)
@@ -28,7 +28,7 @@ feature 'Creator registers a promotion' do
     check product_category.name
     click_on 'Salvar'
 
-    expect(current_path).to eq(promotion_path(Promotion.last))
+    expect(page).to have_current_path(promotion_path(Promotion.last), ignore_query: true)
     expect(page).to have_content('Cyber Monday')
     expect(page).to have_content('Promoção de Cyber Monday')
     expect(page).to have_content('15,00%')

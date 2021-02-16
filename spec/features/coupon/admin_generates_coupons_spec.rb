@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 feature 'Admin generates coupons' do
-
-  let!(:user){ create :user, email: 'maria@locaweb.com.br' }
+  let!(:user) { create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'and there are coupons available to be generated' do
     login_as user, scope: :user
@@ -13,7 +12,7 @@ feature 'Admin generates coupons' do
     click_on promotion.name
     click_on 'Emitir cupons'
 
-    expect(current_path).to eq(promotion_path(promotion))
+    expect(page).to have_current_path(promotion_path(promotion), ignore_query: true)
     expect(page).to have_content("#{promotion.code}-0001 (Disponível)")
     expect(page).to have_content("#{promotion.code}-0002 (Disponível)")
     expect(page).to have_content("#{promotion.code}-0003 (Disponível)")
@@ -25,7 +24,7 @@ feature 'Admin generates coupons' do
 
   scenario 'but they had already been generated' do
     login_as user, scope: :user
-    promotion = create :promotion, :with_product_category, :with_coupons, 
+    promotion = create :promotion, :with_product_category, :with_coupons,
                        :approved, coupon_quantity: 1, creator: user
 
     visit promotion_path(promotion)
@@ -46,9 +45,9 @@ feature 'Admin generates coupons' do
   scenario 'but promotion is not approved' do
     login_as user, scope: :user
     promotion = create :promotion, :with_product_category, creator: user
-    
+
     visit promotion_path(promotion.name)
 
-    expect(page).not_to have_link('Emitir cupons') 
+    expect(page).not_to have_link('Emitir cupons')
   end
 end

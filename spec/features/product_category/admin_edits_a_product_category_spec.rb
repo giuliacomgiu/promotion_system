@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 feature 'Admin edits a product category' do
-
-  let!(:user){ create :user, email: 'maria@locaweb.com.br' }
+  let!(:user) { create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'and succeeds' do
     login_as(user, scope: :user)
@@ -17,7 +16,7 @@ feature 'Admin edits a product category' do
     fill_in 'Código',	with: 'novo'
     click_on 'Salvar'
 
-    expect(current_path).to eq product_category_path(product_category)
+    expect(page).to have_current_path product_category_path(product_category), ignore_query: true
     expect(page).to have_content('Novo')
     expect(page).to have_content('NOVO')
     expect(page).not_to have_content(product_category.name)

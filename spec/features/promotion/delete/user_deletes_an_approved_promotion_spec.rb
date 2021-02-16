@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 feature 'User attemps to delete an approved promotion' do
-
-  let!(:user){ create :user }
-  let!(:creator){ create :user, email: 'maria@locaweb.com.br' }
+  let!(:user) { create :user }
+  let!(:creator) { create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'and there is no delete button' do
     login_as(user, scope: :user)

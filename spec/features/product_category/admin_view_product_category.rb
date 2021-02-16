@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 feature 'Admin views product category' do
-
-  let!(:user){ create :user, email: 'maria@locaweb.com.br' }
+  let!(:user) { create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'index view is successful' do
     login_as(user, scope: :user)

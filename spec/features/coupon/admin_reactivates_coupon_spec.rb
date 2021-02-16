@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 feature 'Admin attemps to reactivate coupon' do
-
-  let!(:user){ create :user }
+  let!(:user) { create :user }
 
   scenario 'and there is a reactivate button' do
     login_as user, scope: :user

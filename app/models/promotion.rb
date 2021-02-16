@@ -33,7 +33,7 @@ class Promotion < ApplicationRecord
   end
 
   def expired?
-    Time.now > expiration_date
+    Time.now.getlocal > expiration_date
   end
 
   def not_expired?
@@ -46,7 +46,7 @@ class Promotion < ApplicationRecord
     raise 'A promoção deve estar aprovada' if curator.nil?
 
     coupons
-      .create_with(created_at: Time.now, updated_at: Time.now)
+      .create_with(created_at: Time.now.getlocal, updated_at: Time.now.getlocal)
       .insert_all!(coupon_codes)
   end
 

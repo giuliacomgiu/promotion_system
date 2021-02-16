@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'User approves promotion' do
-  let!(:creator){ create :user, email: 'maria@locaweb.com.br' }
-  let!(:curator){ create :user, email: 'dandara@locaweb.com.br' }
+  let!(:creator) { create :user, email: 'maria@locaweb.com.br' }
+  let!(:curator) { create :user, email: 'dandara@locaweb.com.br' }
 
   scenario 'and succeeds' do
     login_as(curator, scope: :user)

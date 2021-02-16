@@ -17,7 +17,7 @@ class Coupon < ApplicationRecord
       .merge(api_status)
       .merge(api_data)
   end
-  
+
   def name
     "#{code} (#{Coupon.human_attribute_name("status.#{status}")})"
   end
@@ -29,16 +29,19 @@ class Coupon < ApplicationRecord
   end
 
   def api_status
-    return { 'status' => 'valid' } if active? && promotion.not_expired?
-    return { 'status' => 'burned' } if burned? && promotion.not_expired?
-    return { 'status' => 'expired' } if active? && promotion.expired?
-    return { 'status' => 'burned, expired' } if burned? && promotion.expired?
+    if promotion.expired?
+      return { 'status' => 'expired' } if active?
+      return { 'status' => 'burned, expired' } if burned?
+    else
+      return { 'status' => 'valid' } if active?
+      return { 'status' => 'burned' } if burned?
+    end
   end
 
   def api_data
-    { discount_rate: discount_rate, 
+    { discount_rate: discount_rate,
       expiration_date: I18n.l(expiration_date),
       maximum_discount: "R$ #{promotion.maximum_discount}" }
-    #TODO: change maximum discount to I18n formatting, correct precision and separator
+    # TODO: change maximum discount to I18n formatting, correct precision and separator
   end
 end

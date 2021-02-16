@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 feature 'Admin deletes a product category' do
-
-  let!(:user){ create :user, email: 'maria@locaweb.com.br' }
+  let!(:user) { create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'from show view and it succeeds' do
     login_as(user, scope: :user)
@@ -13,7 +12,7 @@ feature 'Admin deletes a product category' do
     click_on product_category.name
     click_on 'Deletar'
 
-    expect(current_path).to eq product_categories_path
+    expect(page).to have_current_path product_categories_path, ignore_query: true
     expect(page).to have_content('Nenhuma categoria de produto cadastrada')
   end
 

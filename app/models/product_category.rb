@@ -5,6 +5,8 @@ class ProductCategory < ApplicationRecord
   validates :name, :code, presence: { message: 'não pode ficar em branco' }
   validates :code, uniqueness: { case_sensitive: false }
 
+  before_destroy :destroy_promotion, prepend: true
+
   def code
     self[:code].upcase if self[:code].present?
   end
@@ -13,10 +15,9 @@ class ProductCategory < ApplicationRecord
     self[:code] = val.upcase
   end
 
-  def destroy
+  def destroy_promotion
     promotions.each do |promotion|
       promotion.destroy unless promotion.product_categories.count > 1
     end
-    super
   end
 end

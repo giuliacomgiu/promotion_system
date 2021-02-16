@@ -26,27 +26,27 @@ describe 'Coupon management' do
 
       get "/api/v1/coupons/#{coupon.code}"
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(response.body).to include('expired')
     end
 
     it 'coupon is burned' do
       promotion = create :promotion, :with_product_category
       coupon = create :coupon, :burned, promotion: promotion
-      
+
       get "/api/v1/coupons/#{coupon.code}"
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(response.body).to include('burned')
     end
 
     it 'coupon is burned and expired' do
       promotion = create :promotion, :with_product_category, :expired
       coupon = create :coupon, :burned, promotion: promotion
-      
+
       get "/api/v1/coupons/#{coupon.code}"
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(response.body).to include('burned')
       expect(response.body).to include('expired')
     end
@@ -57,7 +57,7 @@ describe 'Coupon management' do
 
       patch "/api/v1/coupons/#{coupon.code}/burn"
 
-      expect(response).to have_http_status(400)
+      expect(response).to have_http_status(:bad_request)
       expect(response.body).to include('Cupom só pode ser utilizado com código do pedido')
       expect(coupon.reload).to be_active
     end
@@ -69,10 +69,10 @@ describe 'Coupon management' do
       coupon = create :coupon, promotion: promotion
       product_category = promotion.product_categories.first.code
 
-      patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' }, 
-                                                             product_category: { code: "#{product_category}" } }
+      patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' },
+                                                             product_category: { code: product_category.to_s } }
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
       expect(response.body).to include('Cupom utilizado com sucesso')
       expect(coupon.reload).to be_burned
       expect(coupon.reload.order).to eq 'ORDER123'
@@ -82,10 +82,10 @@ describe 'Coupon management' do
       promotion = create :promotion, :with_product_category
       coupon = create :coupon, promotion: promotion
 
-      patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' }, 
+      patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' },
                                                              product_category: { code: '1234' } }
 
-      expect(response).to have_http_status(400)
+      expect(response).to have_http_status(:bad_request)
       expect(response.body).to include('Categoria de produto inválida para este cupom')
       expect(coupon.reload).to be_active
       expect(coupon.reload.order).to be nil
@@ -96,9 +96,9 @@ describe 'Coupon management' do
       coupon = create :coupon, promotion: promotion
       product_category = promotion.product_categories.first.code
 
-      patch "/api/v1/coupons/#{coupon.code}/burn", params: { product_category: { code: "#{product_category}" } }
+      patch "/api/v1/coupons/#{coupon.code}/burn", params: { product_category: { code: product_category.to_s } }
 
-      expect(response).to have_http_status(400)
+      expect(response).to have_http_status(:bad_request)
       expect(response.body).to include('Cupom só pode ser utilizado com código do pedido')
       expect(coupon.reload).to be_active
     end
@@ -109,7 +109,7 @@ describe 'Coupon management' do
 
       patch "/api/v1/coupons/#{coupon.code}/burn", params: { order: { code: 'ORDER123' } }
 
-      expect(response).to have_http_status(400)
+      expect(response).to have_http_status(:bad_request)
       expect(response.body).to include('Cupom só pode ser utilizado com código da categoria de produto')
       expect(coupon.reload).to be_active
     end

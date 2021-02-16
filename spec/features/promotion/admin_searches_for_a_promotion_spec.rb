@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 feature 'Admin searches for a promotion' do
-
-  let!(:user){ create :user, email: 'maria@locaweb.com.br' }
+  let!(:user) { create :user, email: 'maria@locaweb.com.br' }
 
   scenario 'successfully' do
     login_as(user, scope: :user)
@@ -21,20 +20,20 @@ feature 'Admin searches for a promotion' do
     expect(page).to have_content 'Valor máximo de desconto', count: 2
     expect(page).to have_content 'R$ 50,00', count: 2
     expect(page).to have_content 'Data de término', count: 2
-    expect(page).to have_content  1.day.from_now.strftime('%d/%m/%Y'), count: 2
+    expect(page).to have_content 1.day.from_now.strftime('%d/%m/%Y'), count: 2
     expect(page).to have_link('Voltar', href: promotions_path)
   end
 
   scenario 'and displays message if search field is blank' do
     login_as(user, scope: :user)
-    
+
     visit root_path
     click_on 'Promoções'
     click_on 'promo-search-button'
 
     expect(page).to have_content 'não pode ficar em branco'
     expect(page).not_to have_content 'Nenhum resultado foi encontrado'
-    expect(current_path).to eq promotions_path
+    expect(page).to have_current_path promotions_path, ignore_query: true
   end
 
   scenario 'and no results message is displayed' do

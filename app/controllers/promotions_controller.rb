@@ -53,7 +53,7 @@ class PromotionsController < ApplicationController
     else
       query_param = "%#{params[:query]}%"
       @promotions = Promotion.where('name LIKE ? OR description LIKE ?',
-                                        query_param, query_param)
+                                    query_param, query_param)
     end
   end
 

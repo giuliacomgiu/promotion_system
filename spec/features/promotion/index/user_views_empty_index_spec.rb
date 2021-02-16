@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 feature 'User views empty index' do
-  
   let!(:user) { create :user, email: 'maria@locaweb.com.br' }
-  
+
   scenario 'and no promotions message are created' do
     login_as(user, scope: :user)
 
@@ -20,6 +19,6 @@ feature 'User views empty index' do
     click_on 'Promoções'
     click_on 'Voltar'
 
-    expect(current_path).to eq root_path
+    expect(page).to have_current_path root_path, ignore_query: true
   end
 end

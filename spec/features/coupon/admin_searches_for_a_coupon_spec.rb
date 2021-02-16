@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 feature 'Admin searches for a coupon' do
-
-  let!(:user){ create :user }
+  let!(:user) { create :user }
 
   scenario 'and includes coupon status' do
     login_as(user, scope: :user)
@@ -29,7 +28,7 @@ feature 'Admin searches for a coupon' do
     expect(page).to have_link promotion.name, href: promotion_path(promotion)
     expect(page).to have_content "Desconto (%) #{promotion.discount_rate}"
     expect(page).to have_content "Data de término #{promotion.expiration_date.strftime('%d/%m/%Y')}"
-    expect(page).to have_content "Valor máximo de desconto (R$) R$ 50,00"
+    expect(page).to have_content 'Valor máximo de desconto (R$) R$ 50,00'
     expect(page).to have_link('Voltar', href: root_path)
   end
 
@@ -64,7 +63,7 @@ feature 'Admin searches for a coupon' do
 
   scenario 'and no results message is displayed' do
     login_as(user, scope: :user)
-    
+
     visit root_path
     fill_in 'coupon-search',	with: 'PASCOA10'
     click_on 'coupon-search-button'
@@ -75,11 +74,10 @@ feature 'Admin searches for a coupon' do
 
   scenario 'and field cant be blank' do
     login_as(user, scope: :user)
-    
+
     visit root_path
     click_on 'coupon-search-button'
 
     expect(page).to have_content 'Campo não pode ficar em branco'
   end
 end
-
