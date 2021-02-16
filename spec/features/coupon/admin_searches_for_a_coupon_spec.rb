@@ -33,7 +33,7 @@ feature 'Admin searches for a coupon' do
     expect(page).to have_link('Voltar', href: root_path)
   end
 
-  scenario 'and search is case insensitive' do
+  scenario 'and search is case sensitive' do
     login_as(user, scope: :user)
     promotion = create :promotion, :with_product_category, :with_coupons, creator: user
     coupon =  promotion.coupons.first.code
@@ -42,8 +42,8 @@ feature 'Admin searches for a coupon' do
     fill_in 'coupon-search',	with: coupon.downcase
     click_on 'coupon-search-button'
 
-    expect(page).to have_content 'Os seguintes resultados foram encontrados'
-    expect(page).to have_content coupon
+    expect(page).to have_content 'Nenhum resultado foi encontrado'
+    expect(page).not_to have_content coupon
     expect(page).to have_link('Voltar', href: root_path)
   end
 

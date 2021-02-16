@@ -12,8 +12,9 @@ class CouponsController < ApplicationController
   end
 
   def search
-    redirect_back fallback_location: root_path, alert: t('.blank_field') if params[:query].empty?
+    search_data = params[:query].strip
+    redirect_back fallback_location: root_path, alert: t('.blank_field') if search_data.empty?
 
-    @search_results = Coupon.where('code = upper(?)', params[:query].upcase)
+    @search_results = Coupon.where('code = (?)', search_data)
   end
 end
